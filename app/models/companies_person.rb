@@ -1,0 +1,2 @@
+class CompaniesPerson < ApplicationRecord
+end

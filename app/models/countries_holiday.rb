@@ -1,0 +1,2 @@
+class CountriesHoliday < ApplicationRecord
+end
