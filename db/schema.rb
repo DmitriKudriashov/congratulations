@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_19_084653) do
+ActiveRecord::Schema.define(version: 2019_04_19_095138) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name", default: ""
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 2019_04_19_084653) do
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "company_id"
+    t.index ["company_id", "person_id"], name: "index_companies_people_on_company_id_and_person_id", unique: true
+    t.index ["company_id"], name: "index_companies_people_on_company_id"
     t.index ["person_id"], name: "index_companies_people_on_person_id"
   end
 
