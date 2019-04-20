@@ -1,0 +1,2 @@
+class EmailCard < ApplicationRecord
+end
