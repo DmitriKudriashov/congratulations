@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_19_095138) do
+ActiveRecord::Schema.define(version: 2019_04_20_210617) do
+
+  create_table "cardtexts", force: :cascade do |t|
+    t.string "filename", default: ""
+    t.text "text", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name", default: ""
@@ -49,6 +56,36 @@ ActiveRecord::Schema.define(version: 2019_04_19_095138) do
     t.index ["holiday_id"], name: "index_countries_holidays_on_holiday_id"
   end
 
+  create_table "email_cards", force: :cascade do |t|
+    t.integer "email_id", null: false
+    t.integer "postcard_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_id", "postcard_id"], name: "index_email_cards_on_email_id_and_postcard_id", unique: true
+    t.index ["email_id"], name: "index_email_cards_on_email_id"
+    t.index ["postcard_id"], name: "index_email_cards_on_postcard_id"
+  end
+
+  create_table "email_texts", force: :cascade do |t|
+    t.integer "email_id", null: false
+    t.integer "cardtext_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cardtext_id"], name: "index_email_texts_on_cardtext_id"
+    t.index ["email_id", "cardtext_id"], name: "index_email_texts_on_email_id_and_cardtext_id", unique: true
+    t.index ["email_id"], name: "index_email_texts_on_email_id"
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.string "name", default: ""
+    t.string "address", default: "", null: false
+    t.integer "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address"], name: "index_emails_on_address"
+    t.index ["company_id"], name: "index_emails_on_company_id"
+  end
+
   create_table "holidays", force: :cascade do |t|
     t.string "name", default: ""
     t.integer "country_id", null: false
@@ -69,6 +106,13 @@ ActiveRecord::Schema.define(version: 2019_04_19_095138) do
     t.index ["country_id"], name: "index_people_on_country_id"
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["name"], name: "index_people_on_name", unique: true
+  end
+
+  create_table "postcards", force: :cascade do |t|
+    t.string "filename", default: ""
+    t.binary "image", limit: 16777216
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
