@@ -1,4 +1,4 @@
 class CompaniesPerson < ApplicationRecord
-  belongs_to :companies
+  belongs_to :company
   belongs_to :person
 end
