@@ -1,3 +1,3 @@
 class Type < ApplicationRecord
-  has_many :holidays
+  # has_many :holidays
 end
