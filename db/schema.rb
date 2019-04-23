@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_140156) do
+ActiveRecord::Schema.define(version: 2019_04_23_165931) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
     t.text "text", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["filename"], name: "index_cardtexts_on_filename", unique: true
   end
 
   create_table "companies", force: :cascade do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_140156) do
     t.integer "holiday_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id", "holiday_id"], name: "index_companies_holidays_on_company_id_and_holiday_id", unique: true
     t.index ["company_id"], name: "index_companies_holidays_on_company_id"
     t.index ["holiday_id"], name: "index_companies_holidays_on_holiday_id"
   end
@@ -61,6 +63,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_140156) do
     t.integer "holiday_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["country_id", "holiday_id"], name: "index_countries_holidays_on_country_id_and_holiday_id", unique: true
     t.index ["country_id"], name: "index_countries_holidays_on_country_id"
     t.index ["holiday_id"], name: "index_countries_holidays_on_holiday_id"
   end
@@ -88,12 +91,10 @@ ActiveRecord::Schema.define(version: 2019_04_23_140156) do
   create_table "emails", force: :cascade do |t|
     t.string "name", default: ""
     t.string "address", default: "", null: false
-    t.integer "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "mail_address_id"
     t.index ["address"], name: "index_emails_on_address"
-    t.index ["company_id"], name: "index_emails_on_company_id"
     t.index ["mail_address_id"], name: "index_emails_on_mail_address_id"
   end
 
