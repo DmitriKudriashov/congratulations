@@ -1,0 +1,23 @@
+<%= form_with model: @type, local: true do |form| %>
+
+  <p>
+    <%= form.label :id %>
+  </p>
+
+  <p>
+    <%= form.text_field :id %>
+  </p>
+
+  <p>
+    <%= form.label :name %>:
+  </p>
+
+  <p>
+    <%= form.text_field :name %>
+  </p>
+
+
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<br>

@@ -1,0 +1,21 @@
+<tr>
+  <td>
+    <%= type.id %>
+  </td>
+  <td>
+    <%= type.name %>
+  </td>
+
+  <td>
+    <%= link_to 'show', type_path(type) %>
+  </td>
+
+  <td>
+    <%= link_to 'edit', type_path(type) %>
+  </td>
+
+  <td>
+    <%= link_to 'delete', type_path(type),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
