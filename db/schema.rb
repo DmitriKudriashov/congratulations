@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_165931) do
+ActiveRecord::Schema.define(version: 2019_05_03_114913) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
@@ -100,11 +100,9 @@ ActiveRecord::Schema.define(version: 2019_04_23_165931) do
 
   create_table "holidays", force: :cascade do |t|
     t.string "name", default: ""
-    t.integer "country_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "type_id"
-    t.index ["country_id"], name: "index_holidays_on_country_id"
     t.index ["name"], name: "index_holidays_on_name", unique: true
     t.index ["type_id"], name: "index_holidays_on_type_id"
   end
