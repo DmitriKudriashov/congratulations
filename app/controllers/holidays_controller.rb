@@ -4,7 +4,7 @@ class HolidaysController < ApplicationController
 
   def index;  end
 
-   def new
+  def new
     @holiday = Holiday.new
   end
 

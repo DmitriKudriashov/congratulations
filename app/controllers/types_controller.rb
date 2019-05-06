@@ -4,7 +4,7 @@ class TypesController < ApplicationController
 
   def index;  end
 
-   def new
+  def new
     @type = Type.new
   end
 
