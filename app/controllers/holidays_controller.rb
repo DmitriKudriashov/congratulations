@@ -51,7 +51,7 @@ class HolidaysController < ApplicationController
   end
 
   def holiday_params
-    params.require(:holiday).permit(:name)
+    params.require(:holiday).permit(:name, :type_id)
   end
 
   def rescue_with_holiday_not_found
