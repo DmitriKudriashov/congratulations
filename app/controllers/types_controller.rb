@@ -1,6 +1,6 @@
 class TypesController < ApplicationController
-  before_action :set_types, only: %i[index update_inline]
-  before_action :find_type, only: %i[show edit update destroy update_inline]
+  before_action :set_types, only: %i[index]
+  before_action :find_type, only: %i[show edit update destroy]
 
   def index;  end
 
