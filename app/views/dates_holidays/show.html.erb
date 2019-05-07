@@ -1,0 +1,26 @@
+<h2>Date Holiday Show </h2>
+<p>
+  id: <%= @dates_holiday.id %>
+</p>
+
+<p>
+  Day: <%= @dates_holiday.day %>
+</p>
+
+<p>
+  Month: <%= @dates_holiday.month %>
+</p>
+
+<p>
+  Year: <%= @dates_holiday.year %>
+</p>
+<p>
+  Holiday: <%= @dates_holiday.holiday.name %>
+</p>
+
+<%= link_to 'Edit Date holiday', edit_dates_holiday_path(@dates_holiday) %>
+
+<br>
+<p>
+  <%= link_to 'Back to all Dates holidays', dates_holidays_path %>
+</p>

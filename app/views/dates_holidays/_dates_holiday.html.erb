@@ -1,0 +1,27 @@
+<tr>
+  <td>
+    <%= dates_holiday.id %>
+  </td>
+  <td>
+    <%= dates_holiday.day %>
+  </td>
+  <td>
+    <%= dates_holiday.month %>
+  </td>
+  <td>
+    <%= dates_holiday.year %>
+  </td>
+  <td>
+    <%= dates_holiday.holiday.name %>
+  </td>
+  <td>
+    <%= link_to 'show', dates_holiday_path(dates_holiday) %>
+  </td>
+  <td>
+    <%= link_to 'edit', edit_dates_holiday_path(dates_holiday) %>
+  </td>
+  <td>
+    <%= link_to 'delete', dates_holiday_path(dates_holiday),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

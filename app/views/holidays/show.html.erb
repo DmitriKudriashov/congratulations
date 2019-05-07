@@ -1,0 +1,16 @@
+<h2> Holiday Show </h2>
+<p>
+  id: <%= @holiday.id %>
+</p>
+
+<p>
+  Name holiday:
+  <%= @holiday.name %>
+</p>
+
+<%= link_to 'Edit holiday', edit_holiday_path(@holiday) %>
+
+<br>
+<p>
+  <%= link_to 'Back to all holidays', holidays_path %>
+</p>

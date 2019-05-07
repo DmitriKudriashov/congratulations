@@ -1,0 +1,21 @@
+<tr>
+  <td>
+    <%= holiday.id %>
+  </td>
+  <td>
+    <%= holiday.name %>
+  </td>
+  <td>
+    <%= holiday.type.name %>
+  </td>
+  <td>
+    <%= link_to 'show', holiday_path(holiday) %>
+  </td>
+  <td>
+    <%= link_to 'edit', edit_holiday_path(holiday) %>
+  </td>
+  <td>
+    <%= link_to 'delete', holiday_path(holiday),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
