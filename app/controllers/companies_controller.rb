@@ -51,7 +51,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:name, :type_id)
+    params.require(:company).permit(:name, :country_id)
   end
 
   def rescue_with_company_not_found
