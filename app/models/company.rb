@@ -1,4 +1,5 @@
 class Company < ApplicationRecord
   belongs_to :country
-  belongs_to :companies_person
+  has_many :companies_people
+  has_many :companies_holidays
 end
