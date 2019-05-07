@@ -2,10 +2,10 @@ class DatesHolidaysController < ApplicationController
   before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
-    @dates_holiday = Dates_holiday.new
+    @dates_holiday = DatesHoliday.new
   end
 
   def edit; end
@@ -22,7 +22,7 @@ class DatesHolidaysController < ApplicationController
   def show; end
 
   def create
-    @dates_holiday = Dates_holiday.new(dates_holiday_params)
+    @dates_holiday = DatesHoliday.new(dates_holiday_params)
     if @dates_holiday.save
       redirect_to dates_holiday_path(@dates_holiday), notice: 'Success!'
     else
@@ -43,11 +43,11 @@ class DatesHolidaysController < ApplicationController
   private
 
   def set_dates_holidays
-    @dates_holidays = Dates_holiday.all
+    @dates_holidays = DatesHoliday.all
   end
 
   def find_dates_holiday
-    @dates_holiday = Dates_holiday.find(params[:id])
+    @dates_holiday = DatesHoliday.find(params[:id])
   end
 
   def dates_holiday_params

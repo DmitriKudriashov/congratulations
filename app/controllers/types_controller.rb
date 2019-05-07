@@ -51,7 +51,7 @@ class TypesController < ApplicationController
   end
 
   def type_params
-    params.require(:type).permit(:name)
+    params.require(:type).permit(:id, :name)
   end
 
   def rescue_with_type_not_found

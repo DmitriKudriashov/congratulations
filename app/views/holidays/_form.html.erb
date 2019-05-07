@@ -1,23 +1,13 @@
 <%= form_with model: @holiday, local: true do |form| %>
-
-<!--  <p>
-    <%= form.label :id %>
-  </p>
-
   <p>
-    <%= form.text_field :id %>
+    <%= form.label :name %>
   </p>
--->
-  <p>
-    <%= form.label :name %>:
-  </p>
-
   <p>
     <%= form.text_field :name %>
   </p>
   <p>
     <%= 'Type: ' %>:
-    <%= form.collection_select :type_id, Type.all, :id, :name, prompt: 'Prompt: Type Holiday' %>
+    <%= form.collection_select :type_id, Type.all, :id, :name, prompt: 'Select Type Holiday' %>
   </p>
 
 
