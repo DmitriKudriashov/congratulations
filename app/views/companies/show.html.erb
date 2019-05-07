@@ -1,0 +1,16 @@
+<h2> Company Show </h2>
+<p>
+  id: <%= @company.id %>
+</p>
+
+<p>
+  Name:
+  <%= @company.name %>
+</p>
+
+<%= link_to 'Edit company', edit_company_path(@company) %>
+
+<br>
+<p>
+  <%= link_to 'Back to all companies', companies_path %>
+</p>
