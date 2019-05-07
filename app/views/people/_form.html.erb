@@ -1,0 +1,16 @@
+<%= form_with model: @person, local: true do |form| %>
+
+  <p>
+    <%= 'Name: ' %>:
+    <%= form.label :name %>:
+  </p>
+
+  <p>
+    <%= 'Email: ' %>:
+    <%= form.text_field :name %>
+  </p>
+
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<br>
