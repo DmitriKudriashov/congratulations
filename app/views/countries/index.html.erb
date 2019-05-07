@@ -1,0 +1,24 @@
+  <div>
+    <h1> Countries </h1>
+
+    <p> <%= link_to 'New Country', new_country_path %> </p>
+
+      <% if @countries.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th> N record</th>
+              <th> Country </th>
+              <th> Code </th>
+            </tr>
+          </thead>
+          <%= render @countries %>
+        </table>
+      <% else %>
+        <p>
+          <%= 'Empty list' %>
+        </p>
+      <% end %>
+    <br>
+  </div>
+

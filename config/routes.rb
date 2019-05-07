@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'companies#index'
+  root 'countries#index'
 
+  resources :countries
   resources :companies
   resources :types
   resources :people

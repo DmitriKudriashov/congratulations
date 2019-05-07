@@ -1,0 +1,24 @@
+<tr>
+  <td>
+    <%= country.id %>
+  </td>
+  <td>
+    <%= country.name %>
+  </td>
+  <td>
+    <%= country.code %>
+  </td>
+
+  <td>
+    <%= link_to 'show', country_path(country) %>
+  </td>
+
+  <td>
+    <%= link_to 'edit', edit_country_path(country) %>
+  </td>
+
+  <td>
+    <%= link_to 'delete', country_path(country),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
