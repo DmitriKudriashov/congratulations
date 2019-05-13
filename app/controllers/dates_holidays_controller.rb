@@ -1,38 +1,39 @@
 class DatesHolidaysController < ApplicationController
   before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
+  before_action :find_holiday, only: %i[new create]
 
   def index; end
 
   def new
-    @dates_holiday = DatesHoliday.new
+    @dates_holiday =  @holiday.dates_holidays.new
   end
 
   def edit; end
 
   def update
     if @dates_holiday.update(dates_holiday_params)
-      redirect_to dates_holiday_path(@dates_holiday)
+      redirect_to holiday_path(@dates_holiday.holiday), notice: 'Date was successfully updated.'
     else
       render :edit
     end
   end
 
-
   def show; end
 
   def create
-    @dates_holiday = DatesHoliday.new(dates_holiday_params)
+    @dates_holiday = @holiday.dates_holidays.new(dates_holiday_params) # DatesHoliday.new(dates_holiday_params)
     if @dates_holiday.save
-      redirect_to dates_holiday_path(@dates_holiday), notice: 'Success!'
+      redirect_to dates_holiday_path(@dates_holiday.holiday), notice: 'Successully created!'
     else
       render :new
     end
   end
 
   def destroy
-    @dates_holiday.destroy
-    redirect_to dates_holidays_path, notice: 'Destroy !'
+    if @dates_holiday.destroy  # надо бы проверить на успешность удаления
+      redirect_to holiday_path(@dates_holiday.holiday_id), notice: 'Date was successfully Destroy!'
+    end
   end
 
   def search
@@ -41,6 +42,10 @@ class DatesHolidaysController < ApplicationController
   end
 
   private
+
+  def find_holiday
+    @holiday = Holiday.find(params[:holiday_id])
+  end
 
   def set_dates_holidays
     @dates_holidays = DatesHoliday.all
