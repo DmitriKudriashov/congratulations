@@ -6,7 +6,7 @@
   <%#= link_to 'Back to all Dates holidays', dates_holiday_path(@dates_holiday) %>
 </p>
 <%# byebug %>
-<%= form_with model: @dates_holiday, local: true do |form| %>
+<%= form_tag new_dates_holiday_path(@dates_holiday) do |form| %>
   <p>
     <%= 'Day: ' %>
     <%= form.text_field :day %>

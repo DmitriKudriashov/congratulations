@@ -35,23 +35,6 @@ class DatesHolidaysController < ApplicationController
     end
   end
 
-# -------------------------------
-
-#   def update
-#     if @question.update(question_params)
-#       redirect_to admin_question_path(@question), notice: 'Question was successfully updated.'
-#     else
-#       render :edit
-#     end
-#   end
-
-
-
-# -------------------------------
-
-
-
-
   def destroy
     if @dates_holiday.destroy  # надо бы проверить на успешность удаления
       redirect_to holiday_path(@dates_holiday.holiday_id), notice: 'Date was successfully Destroy!'
