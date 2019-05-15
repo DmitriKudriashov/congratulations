@@ -1,19 +1,24 @@
 class DatesHolidaysController < ApplicationController
-  before_action :set_dates_holidays, only: %i[index]
+  # before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
   before_action :find_holiday, only: %i[new create]
 
-  def index; end
+  def index
+    find_holiday
+    @dates_holidays = @holiday.dates_holidays
+  end
 
   def new
+    # byebug
     @dates_holiday =  @holiday.dates_holidays.new
+    # byebug
   end
 
   def edit; end
 
   def update
     if @dates_holiday.update(dates_holiday_params)
-      redirect_to holiday_path(@dates_holiday.holiday), notice: 'Date was successfully updated.'
+      redirect_to dates_holiday_path(@dates_holiday), notice: 'Date was successfully updated.'
     else
       render :edit
     end
@@ -24,11 +29,28 @@ class DatesHolidaysController < ApplicationController
   def create
     @dates_holiday = @holiday.dates_holidays.new(dates_holiday_params) # DatesHoliday.new(dates_holiday_params)
     if @dates_holiday.save
-      redirect_to dates_holiday_path(@dates_holiday.holiday), notice: 'Successully created!'
+      redirect_to dates_holiday_path(@dates_holiday), notice: 'Successully created!'
     else
       render :new
     end
   end
+
+# -------------------------------
+
+#   def update
+#     if @question.update(question_params)
+#       redirect_to admin_question_path(@question), notice: 'Question was successfully updated.'
+#     else
+#       render :edit
+#     end
+#   end
+
+
+
+# -------------------------------
+
+
+
 
   def destroy
     if @dates_holiday.destroy  # надо бы проверить на успешность удаления

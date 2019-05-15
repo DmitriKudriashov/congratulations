@@ -1,7 +1,29 @@
 <h1>Date Holiday New </h1>
-  <%= render 'form' %>
+  <%# byebug %>
+  <%#= render 'form' %>
 <br>
 <p>
-  <%= link_to 'Back to all Dates holidays', dates_holiday_path(@dates_holiday) %>
+  <%#= link_to 'Back to all Dates holidays', dates_holiday_path(@dates_holiday) %>
 </p>
+<%# byebug %>
+<%= form_with model: @dates_holiday, local: true do |form| %>
+  <p>
+    <%= 'Day: ' %>
+    <%= form.text_field :day %>
+  </p>
 
+  <p>
+    <%= 'Month: ' %>
+    <%= form.text_field :month %>
+  </p>
+  <p>
+    <%= 'Year: ' %>
+    <%= form.text_field :year %>
+  </p>
+  <p>
+    <%= 'Holiday: ' %>
+    <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
+  </p>
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>

@@ -1,0 +1,2 @@
+module CompaniesHolidaysHelper
+end
