@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_07_102216) do
+ActiveRecord::Schema.define(version: 2019_05_15_115816) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2019_05_07_102216) do
     t.integer "day", default: 1, null: false
     t.integer "month", default: 1, null: false
     t.integer "year", default: 0, null: false
-    t.integer "holiday_id", null: false
+    t.integer "holiday_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["holiday_id", "day", "month", "year"], name: "index_dates_holidays_on_holiday_id_and_day_and_month_and_year", unique: true
