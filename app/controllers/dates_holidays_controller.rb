@@ -10,7 +10,8 @@ class DatesHolidaysController < ApplicationController
 
   def new
     # byebug
-    @dates_holiday =  @holiday.dates_holidays.new
+    @dates_holiday = @holiday.nil? ? DatesHoliday.new : @holiday.dates_holidays.new
+
     # byebug
   end
 

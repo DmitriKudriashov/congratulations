@@ -1,21 +1,26 @@
 <tr>
-  <td>
+<tr>
+  <td class="celltab10center">
     <%= holiday.id %>
   </td>
-  <td>
+  <td class="celltab100left">
     <%= holiday.name %>
   </td>
-  <td>
+  <td class="celltab100left">
     <%= holiday.type.name %>
   </td>
-  <td>
-    <%= link_to 'show', holiday_path(holiday) %>
-  </td>
-  <td>
+<!--  <td class="s_e_d">-->
+    <%#= link_to 'show', holiday_path(holiday) %>
+<!--  </td>-->
+  <td class="s_e_d">
     <%= link_to 'edit', edit_holiday_path(holiday.id) %>
   </td>
-  <td>
+  <td class="s_e_d">
     <%= link_to 'delete', holiday_path(holiday),
                 method: :delete, data: { confirm: 'Are you sure' } %>
   </td>
+</tr>
+</tr>
+<tr>
+
 </tr>

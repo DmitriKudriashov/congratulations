@@ -1,7 +1,7 @@
   <div>
     <h1>Dates Holidays</h1>
 
-    <p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(holiday) %> </p>
+    <p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(@holiday) %> </p>
 
       <% if @dates_holidays.present? %>
         <table>

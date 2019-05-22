@@ -1,15 +1,19 @@
-  <div>
-    <h1> Holidays </h1>
-
-    <p> <%= link_to 'New Holiday', new_holiday_path %> </p>
+  <table class="container">
+    <article class="row">
+    <th class="span8">
+      <div>
+       <h1> Holidays </h1>
+        <p>
+          <%= link_to 'New Holiday', new_holiday_path %>
+        </p>
 
       <% if @holidays.present? %>
         <table>
           <thead>
             <tr>
-              <th> N record</th>
-              <th> Holiday name </th>
-              <th> Type </th>
+              <th class="celltab10center"> N </th>
+              <th class="celltab100center"> Holiday </th>
+              <th class="celltab100center"> Type </th>
             </tr>
           </thead>
           <%= render @holidays %>
@@ -19,6 +23,23 @@
           <%= 'Empty list' %>
         </p>
       <% end %>
-    <br>
-  </div>
+
+        <br>
+      </div>
+    </th>
+
+    <th class="span4">
+      <h1> Hand-book </h1>
+      <div>
+        <p> <%= link_to 'Companies', companies_path %> </p>
+        <p> <%= link_to 'Countries', countries_path %> </p>
+
+<!--        <table>-->
+<!--            Second tab-->
+<!--          </table>-->
+      </div>
+    </th>
+
+    </article>
+  </table>
 
