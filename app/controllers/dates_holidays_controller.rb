@@ -5,12 +5,13 @@ class DatesHolidaysController < ApplicationController
 
   def index
     find_holiday
-    @dates_holidays = @holiday.dates_holidays
+    @dates_holidays = @holiday.nil? ? DatesHoliday.all : @holiday.dates_holidays
   end
 
   def new
     # byebug
-    @dates_holiday =  @holiday.dates_holidays.new
+    @dates_holiday = @holiday.nil? ? DatesHoliday.new : @holiday.dates_holidays.new
+
     # byebug
   end
 
@@ -27,7 +28,8 @@ class DatesHolidaysController < ApplicationController
   def show; end
 
   def create
-    @dates_holiday = @holiday.dates_holidays.new(dates_holiday_params) # DatesHoliday.new(dates_holiday_params)
+
+    @dates_holiday = @holiday.nil? ?  DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
     if @dates_holiday.save
       redirect_to dates_holiday_path(@dates_holiday), notice: 'Successully created!'
     else
@@ -49,7 +51,7 @@ class DatesHolidaysController < ApplicationController
   private
 
   def find_holiday
-    @holiday = Holiday.find(params[:holiday_id])
+    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].nil?
   end
 
   def set_dates_holidays

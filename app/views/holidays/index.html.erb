@@ -1,24 +1,24 @@
-  <div>
-    <h1> Holidays </h1>
+<table class="container">
+   <h3> Holidays </h3>
+   <p>
+     <%= link_to 'New Holiday', new_holiday_path %>
+   </p>
 
-    <p> <%= link_to 'New Holiday', new_holiday_path %> </p>
-
-      <% if @holidays.present? %>
-        <table>
-          <thead>
-            <tr>
-              <th> N record</th>
-              <th> Holiday name </th>
-              <th> Type </th>
-            </tr>
-          </thead>
+   <% if @holidays.present? %>
+     <table class="table table-bordered">
+       <thead class="thead-light" align="center">
+        <tr>
+          <th > N </th>
+          <th > Holiday </th>
+          <th > Type </th>
+        </tr>
+       </thead>
           <%= render @holidays %>
-        </table>
-      <% else %>
-        <p>
-          <%= 'Empty list' %>
-        </p>
-      <% end %>
-    <br>
-  </div>
+     </table>
+   <% else %>
+     <p>
+       <%= 'Empty list' %>
+     </p>
+  <% end %>
+  </table>
 

@@ -8,6 +8,7 @@
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
   </p>
   <br>
+  <%# byebug %>
   <p> <%= form.submit %> </p>
 <% end %>
 <br>

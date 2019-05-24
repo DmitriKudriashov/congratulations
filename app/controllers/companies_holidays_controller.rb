@@ -2,13 +2,15 @@ class CompaniesHolidaysController < ApplicationController
 
   before_action :set_companies_holidays, only: %i[index]
   before_action :find_companies_holiday, only: %i[show edit update destroy]
-  before_action :find_holiday, only: %i[new create]
-  before_action :find_company, only: %i[new create]
+  before_action :find_holiday, only: %i[new] #create]
+  # before_action :find_company, only: %i[new create]
 
   def index; end
 
   def new
-    @companies_holiday =  @holiday.companies_holidays.new
+    @companies_holiday =  @holiday.nil? ? CompaniesHoliday.new : @holiday.companies_holidays.new
+    @companies_holiday.holiday_id = 1
+    @companies_holiday.company_id = 1
   end
 
   def new_company_holiday
@@ -18,6 +20,7 @@ class CompaniesHolidaysController < ApplicationController
   def edit; end
 
   def update
+
     if @companies_holiday.update(companies_holiday_params)
       redirect_to holiday_path(@companies_holiday.holiday), notice: 'Date was successfully updated.'
     else
@@ -28,9 +31,12 @@ class CompaniesHolidaysController < ApplicationController
   def show; end
 
   def create
-    @companies_holiday = @holiday.companies_holidays.new(companies_holiday_params)
+    # byebug
+    @companies_holiday = CompaniesHoliday.new(companies_holiday_params)#@holiday.companies_holidays.new(companies_holiday_params)
+    # byebug
     if @companies_holiday.save
-      redirect_to companies_holiday_path(@companies_holiday.holiday), notice: 'Successully created!'
+      byebug
+      redirect_to holiday_companies_holidays_path(@companies_holiday.holiday_id), notice: 'Successully created!'
     else
       render :new
     end
@@ -50,7 +56,7 @@ class CompaniesHolidaysController < ApplicationController
   private
 
   def find_holiday
-    @holiday = Holiday.find(params[:holiday_id])
+    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].nil?
   end
 
   def find_company
