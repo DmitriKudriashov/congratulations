@@ -35,7 +35,7 @@ class CompaniesHolidaysController < ApplicationController
     @companies_holiday = CompaniesHoliday.new(companies_holiday_params)#@holiday.companies_holidays.new(companies_holiday_params)
     # byebug
     if @companies_holiday.save
-      byebug
+      # byebug
       redirect_to holiday_companies_holidays_path(@companies_holiday.holiday_id), notice: 'Successully created!'
     else
       render :new

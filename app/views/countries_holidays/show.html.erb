@@ -1,0 +1,29 @@
+<h2>Country - Holiday Link Show </h2>
+<p>
+  id: <%= @countries_holiday.id %>
+</p>
+
+<p>
+  Country: <%= @countries_holiday.country.name %>
+</p>
+<p>
+  Code: <%= @countries_holiday.country.code %>
+</p>
+
+<p>
+  Holiday: <%= @countries_holiday.holiday.name %>
+</p>
+
+<p>
+  Type holiday: <%= @countries_holiday.holiday.type.name %>
+</p>
+  <%= link_to 'Edit Country holiday', edit_countries_holiday_path(@countries_holiday) %>
+<br>
+
+<p>
+  <%= link_to 'Back to all Countries - Holiday Links', holiday_countries_holidays_path(@countries_holiday) %>
+</p>
+<br>
+<p>
+  <%= link_to 'Back to all Holidays', holidays_path %>
+</p>

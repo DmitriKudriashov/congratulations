@@ -1,0 +1,27 @@
+<tr>
+  <td>
+    <%= countries_holiday.id %>
+  </td>
+  <td>
+    <%= countries_holiday.country.name %>
+  </td>
+  <td>
+    <%= countries_holiday.country.code %>
+  </td>
+  <td>
+    <%= countries_holiday.holiday.name %>
+  </td>
+  <td>
+    <%= countries_holiday.holiday.type.name %>
+  </td>
+  <td>
+    <%= link_to 'show', countries_holiday_path(countries_holiday) %>
+  </td>
+  <td>
+    <%= link_to 'edit', edit_countries_holiday_path(countries_holiday) %>
+  </td>
+  <td>
+    <%= link_to 'delete', countries_holiday_path(countries_holiday),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
