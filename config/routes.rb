@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get '/companies_holidays', to: 'companies_holidays#index'
   get '/companies_holidays/new', to: 'companies_holidays#new'
 
+  get '/dates_holidays/new', to: 'dates_holidays#new'
+  get '/dates_holidays', to: 'dates_holidays#index'
+  post '/dates_holidays', to: 'dates_holidays#create'
   resources :countries
   resources :companies
   resources :types
@@ -17,5 +20,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
   # post 'companies_holidays', to: 'companies_holidays#create'
 end

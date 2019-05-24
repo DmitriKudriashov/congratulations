@@ -1,9 +1,11 @@
 class HolidaysController < ApplicationController
-  before_action :set_holidays, only: %i[index]
+  # before_action :set_holidays, only: %i[index]
   before_action :find_holiday, only: %i[show update destroy]
   before_action :set_holiday_companies, only: %i[show edit]
 
-  def index;  end
+  def index
+    set_holidays
+  end
 
   def new
     @holiday = Holiday.new
