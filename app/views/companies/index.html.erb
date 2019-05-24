@@ -1,0 +1,24 @@
+  <div>
+    <h1> Companies </h1>
+
+    <p> <%= link_to 'New Company', new_company_path %> </p>
+
+      <% if @companies.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th> N rec</th>
+              <th> Name </th>
+              <th> Country </th>
+            </tr>
+          </thead>
+          <%= render @companies %>
+        </table>
+      <% else %>
+        <p>
+          <%= 'Empty list' %>
+        </p>
+      <% end %>
+    <br>
+  </div>
+

@@ -1,0 +1,19 @@
+<h2> Country Show </h2>
+<p>
+  id: <%= @country.id %>
+</p>
+<p>
+  Name:
+  <%= @country.name %>
+</p>
+<p>
+  Code country:
+  <%= @country.code %>
+</p>
+
+<%= link_to 'Edit country', edit_country_path(@country) %>
+
+<br>
+<p>
+  <%= link_to 'Back to all countries', countries_path %>
+</p>

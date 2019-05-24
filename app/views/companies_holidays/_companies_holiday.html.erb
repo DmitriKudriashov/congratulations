@@ -1,0 +1,23 @@
+<tr>
+  <td>
+    <%= companies_holiday.id %>
+  </td>
+  <td>
+    <%= companies_holiday.company.name %>
+  </td>
+  <td>
+    <%= companies_holiday.holiday.name %>
+  </td>
+  <td>
+    <%= companies_holiday.holiday.type.name %>
+  </td>
+    <%= link_to 'show', companies_holiday_path(companies_holiday) %>
+  </td>
+  <td>
+    <%= link_to 'edit', edit_companies_holiday_path(companies_holiday) %>
+  </td>
+  <td>
+    <%= link_to 'delete', companies_holiday_path(companies_holiday),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

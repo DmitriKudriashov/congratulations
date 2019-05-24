@@ -1,5 +1,11 @@
 <h1> Edit Holiday</h1>
 <%= render 'form' %>
 <p>
-  <%= link_to 'Back to all holidays', holiday_path %>
-</p>
+  <%= link_to 'Back to all holidays', holidays_path %>
+</p><br>
+<!-- <ol>
+  <%#= render @holiday.dates_holidays  %>
+</ol>
+ -->
+ <%= render 'dates_holidays/list_dates_holidays', holiday: @holiday  %>
+

@@ -1,0 +1,21 @@
+<h2> Person Show </h2>
+<p>
+  id: <%= @person.id %>
+</p>
+
+<p>
+  Name:
+  <%= @person.name %>
+</p>
+
+<p>
+  Email:
+  <%= @person.email %>
+</p>
+
+<%= link_to 'Edit person', edit_person_path(@person) %>
+
+<br>
+<p>
+  <%= link_to 'Back to all people', people_path %>
+</p>

@@ -1,0 +1,26 @@
+<h2>Company Holiday Show </h2>
+<p>
+  id: <%= @companies_holiday.id %>
+</p>
+
+<p>
+  Company: <%= @companies_holiday.company.name %>
+</p>
+
+<p>
+  Holiday: <%= @companies_holiday.holiday.name %>
+</p>
+
+<p>
+  Type holiday: <%= @companies_holiday.holiday.type.name %>
+</p>
+  <%= link_to 'Edit Company holiday', edit_companies_holiday_path(@companies_holiday) %>
+<br>
+
+<p>
+  <%= link_to 'Back to all Companies holidays', holiday_companies_holidays_path(@companies_holiday) %>
+</p>
+<br>
+<p>
+  <%= link_to 'Back to all Holidays', holidays_path %>
+</p>

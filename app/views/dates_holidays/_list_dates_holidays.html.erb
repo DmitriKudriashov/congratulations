@@ -1,0 +1,20 @@
+<p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(holiday) %> </p>
+
+<% if holiday.dates_holidays.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th> N record</th>
+        <th> Day </th>
+        <th> Month </th>
+        <th> Year </th>
+        <th> Holiday </th>
+      </tr>
+    </thead>
+    <%= render holiday.dates_holidays %>
+  </table>
+<% else %>
+  <p>
+    <%= 'Empty list' %>
+  </p>
+<% end %>

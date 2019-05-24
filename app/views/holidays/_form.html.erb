@@ -9,9 +9,5 @@
     <%= 'Type: ' %>:
     <%= form.collection_select :type_id, Type.all, :id, :name, prompt: 'Select Type Holiday' %>
   </p>
-
-
-  <br>
   <p> <%= form.submit %> </p>
 <% end %>
-<br>
