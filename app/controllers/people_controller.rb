@@ -12,7 +12,8 @@ class PeopleController < ApplicationController
 
   def update
     if @person.update(person_params)
-      redirect_to person_path(@person)
+#      redirect_to person_path(@person)
+      redirect_to people_path
     else
       render :edit
     end

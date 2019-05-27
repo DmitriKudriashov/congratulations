@@ -1,0 +1,7 @@
+  <p> <%= link_to 'New Company-Person link', new_companies_person_path(person) %> </p>
+
+  <%= render 'companies_people/header_companies_people_list', companies_people: @companies_people %>
+
+  <p>
+    <%= link_to 'Back to all Companies', companies_path %>
+  </p>

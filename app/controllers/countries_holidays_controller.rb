@@ -21,7 +21,7 @@ class CountriesHolidaysController < ApplicationController
   def update
 
     if @countries_holiday.update(countries_holiday_params)
-      redirect_to holiday_path(@countries_holiday.holiday), notice: 'Date was successfully updated.'
+      redirect_to holiday_path(@countries_holiday.holiday), notice: 'CountriesHoliday was successfully updated.'
     else
       render :edit
     end
@@ -30,11 +30,8 @@ class CountriesHolidaysController < ApplicationController
   def show; end
 
   def create
-    # byebug
-    @countries_holiday = CountriesHoliday.new(countries_holiday_params)#@holiday.countries_holidays.new(countries_holiday_params)
-    # byebug
+    @countries_holiday = CountriesHoliday.new(countries_holiday_params)  # @holiday.countries_holidays.new(countries_holiday_params)
     if @countries_holiday.save
-      # byebug
       redirect_to holiday_countries_holidays_path(@countries_holiday.holiday_id), notice: 'Successully created!'
     else
       render :new
@@ -43,7 +40,7 @@ class CountriesHolidaysController < ApplicationController
 
   def destroy
     if @countries_holiday.destroy  # надо бы проверить на успешность удаления
-      redirect_to holiday_path(@countries_holiday.holiday_id), notice: 'Date was successfully Destroy!'
+      redirect_to holiday_path(@countries_holiday.holiday_id), notice: 'CountriesHoliday was successfully Destroy!'
     end
   end
 
@@ -75,6 +72,6 @@ class CountriesHolidaysController < ApplicationController
   end
 
   def rescue_with_countries_holiday_not_found
-    render plain: 'Dates Holiday record was not found!'
+    render plain: 'CountriesHoliday record was not found!'
   end
 end

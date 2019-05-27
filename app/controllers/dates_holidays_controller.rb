@@ -31,7 +31,11 @@ class DatesHolidaysController < ApplicationController
 
     @dates_holiday = @holiday.nil? ?  DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
     if @dates_holiday.save
-      redirect_to dates_holiday_path(@dates_holiday), notice: 'Successully created!'
+      if @holiday.nil?
+        redirect_to dates_holidays_path, notice: 'Successully created!'
+      else
+        redirect_to dates_holiday_path(@dates_holiday), notice: 'Successully created!'
+      end
     else
       render :new
     end
@@ -39,7 +43,12 @@ class DatesHolidaysController < ApplicationController
 
   def destroy
     if @dates_holiday.destroy  # надо бы проверить на успешность удаления
-      redirect_to holiday_path(@dates_holiday.holiday_id), notice: 'Date was successfully Destroy!'
+      if @holiday.nil?
+        redirect_to dates_holidays_path, notice: 'Date was successfully Destroy!'
+      else
+        redirect_to holiday_path(@dates_holiday.holiday_id), notice: 'Date was successfully Destroy!'
+      end
+
     end
   end
 
@@ -67,6 +76,6 @@ class DatesHolidaysController < ApplicationController
   end
 
   def rescue_with_dates_holiday_not_found
-    render plain: 'Dates Holiday record was not found!'
+    render plain: 'DateHoliday record was not found!'
   end
 end

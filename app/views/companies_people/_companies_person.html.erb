@@ -1,0 +1,21 @@
+<tr>
+  <td>
+    <%= companies_person.id %>
+  </td>
+  <td>
+    <%= companies_person.company.name %>
+  </td>
+  <td>
+    <%= companies_person.person.name %>
+  </td>
+  <td>
+    <%= link_to 'show', companies_person_path(companies_person) %>
+  </td>
+  <td>
+    <%= link_to 'edit', edit_companies_person_path(companies_person) %>
+  </td>
+  <td>
+    <%= link_to 'delete', companies_person_path(companies_person),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

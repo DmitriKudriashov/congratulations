@@ -1,0 +1,2 @@
+module CompaniesPeopleHelper
+end

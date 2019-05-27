@@ -14,11 +14,15 @@ Rails.application.routes.draw do
   # get '/dates_holidays', to: 'dates_holidays#index'
   # post '/dates_holidays', to: 'dates_holidays#create'
   resources :dates_holidays, only: [:index, :new, :create]
-
+  resources :people #, only: [:index, :new, :create]
   resources :countries
-  resources :companies
+
+  resources :companies_people, only: [:index, :new, :create]
+
+  resources :companies do
+    resources :companies_people, shallow: true
+  end
   resources :types
-  resources :people
   resources :holidays do
     resources :dates_holidays, shallow: true #, except: :index
     resources :companies_holidays, shallow: true  do #, except: :index
