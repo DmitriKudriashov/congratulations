@@ -15,7 +15,8 @@ class HolidaysController < ApplicationController
 
   def update
     if @holiday.update(holiday_params)
-      redirect_to holiday_path(@holiday)
+      # redirect_to holiday_path(@holiday)
+      redirect_to holidays_path
     else
       render :edit
     end
