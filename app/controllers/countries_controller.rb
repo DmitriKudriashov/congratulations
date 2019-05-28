@@ -12,7 +12,8 @@ class CountriesController < ApplicationController
 
   def update
     if @country.update(country_params)
-      redirect_to country_path(@country)
+      # redirect_to country_path(@country), notice: 'Success!'
+      redirect_to countries_path, notice: 'Success!'
     else
       render :edit
     end
@@ -24,7 +25,8 @@ class CountriesController < ApplicationController
   def create
     @country = Country.new(country_params)
     if @country.save
-      redirect_to country_path(@country), notice: 'Success!'
+      # redirect_to country_path(@country), notice: 'Success!'
+      redirect_to countries_path, notice: 'Success!'
     else
       render :new
     end

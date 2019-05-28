@@ -1,0 +1,16 @@
+<%= form_with model: @mail_address, local: true do |form| %>
+  <p>
+    <%= form.label :email %>:
+    <%= form.text_field :email %>
+  </p>
+  <p>
+    <%= 'Company Person: ' %>
+    <%= form.collection_select :companies_person_id,
+        list_companies_people(CompaniesPerson.all), :first, :last, prompt: 'Select id Company Person' %>
+  </p>
+
+
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<brid

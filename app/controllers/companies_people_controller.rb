@@ -15,7 +15,6 @@ class CompaniesPeopleController < ApplicationController
   def edit; end
 
   def update
-
     if @companies_person.update(companies_person_params)
       redirect_to companies_person_path(@companies_person), notice: 'CompaniesPerson was successfully updated.'
     else
@@ -49,6 +48,7 @@ class CompaniesPeopleController < ApplicationController
     result = ["Class: #{params.class}", "Parameters: #{params.inspect}"]
     render plain: result.join("\n")
   end
+
 
   private
 

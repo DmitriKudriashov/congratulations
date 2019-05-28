@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :dates_holidays, only: [:index, :new, :create]
   resources :people #, only: [:index, :new, :create]
   resources :countries
+  resources :mail_addresses
 
   resources :companies_people, only: [:index, :new, :create]
 
