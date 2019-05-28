@@ -34,6 +34,8 @@ class CompaniesController < ApplicationController
 
   def destroy
     @company.destroy
+  # rescue StandardError => err
+  #   raise err.message
     redirect_to companies_path, notice: 'Destroy !'
   end
 

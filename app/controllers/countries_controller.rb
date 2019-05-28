@@ -34,6 +34,8 @@ class CountriesController < ApplicationController
 
   def destroy
     @country.destroy
+  # rescue StandardError => err
+  #   raise err.message
     redirect_to countries_path, notice: 'Destroy !'
   end
 
