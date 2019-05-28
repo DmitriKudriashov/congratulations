@@ -8,8 +8,8 @@
   <%= @mail_address.email %>
 </p>
 <p>
-  Persona:
-  <%= @mail_address.companies_people.person.name %>
+  Persona/company:
+  <%= person_company_name(@mail_address.companies_people) %>
 </p>
 
 <%= link_to 'Edit mail address', edit_mail_address_path(@mail_address) %>

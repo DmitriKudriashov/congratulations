@@ -7,7 +7,8 @@
   </td>
 
   <td>
-    <%= "#{mail_address.companies_person.person.name};  #{mail_address.companies_person.company.name} " %>
+     <%= person_company_name(mail_address.companies_person) %>
+    <%#= "#{mail_address.companies_person.person.name};  #{mail_address.companies_person.company.name} " %>
   </td>
 
 <!--   <td>
