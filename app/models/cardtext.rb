@@ -1,3 +1,3 @@
 class Cardtext < ApplicationRecord
-  has_many :email_cards
+  has_many :email_texts, dependent: :restrict_with_exception
 end
