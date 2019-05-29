@@ -4,8 +4,8 @@
     <p> <%= link_to 'New Postcard', new_postcard_path %> </p>
 
       <% if @postcards.present? %>
-        <table>
-          <thead>
+        <table class="table table-bordered">
+          <thead class="thead-light" align="center">
             <tr>
               <th> N rec</th>
               <th> File name </th>

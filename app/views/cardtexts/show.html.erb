@@ -1,0 +1,21 @@
+<h2> Card Text Show </h2>
+<p>
+  id: <%= @cardtext.id %>
+</p>
+
+<p>
+  Filename:
+<br>  <%= @cardtext.filename %>
+</p>
+<p>
+  Text:
+  <%=  @cardtext.text %>
+</p>
+
+<%= link_to 'Edit Card Text', edit_cardtext_path(@cardtext) %>
+
+<br>
+
+<p>
+  <%= link_to 'Back to all Card texts', cardtexts_path %>
+</p>

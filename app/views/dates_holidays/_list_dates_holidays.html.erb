@@ -1,8 +1,8 @@
 <p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(holiday) %> </p>
 
 <% if holiday.dates_holidays.present? %>
-  <table>
-    <thead>
+  <table class="table table-bordered">
+    <thead class="thead-light" align="center">
       <tr>
         <th> N record</th>
         <th> Day </th>

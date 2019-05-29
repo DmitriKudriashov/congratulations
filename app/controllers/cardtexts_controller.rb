@@ -19,7 +19,6 @@ class CardtextsController < ApplicationController
     end
   end
 
-
   def show; end
 
   def create
@@ -53,7 +52,7 @@ class CardtextsController < ApplicationController
   end
 
   def cardtext_params
-    params.require(:cardtext).permit(:filename, :image)
+    params.require(:cardtext).permit(:filename, :text)
   end
 
   def rescue_with_cardtext_not_found

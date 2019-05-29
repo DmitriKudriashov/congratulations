@@ -1,0 +1,26 @@
+<tr>
+  <td>
+    <%= cardtext.id %>
+  </td>
+  <td>
+    <%= cardtext.filename %>
+  </td>
+
+  <td>
+    <%#= cardtext.text :text, rows: 4, cols: 30, class: 'form-control' %>
+    <%= cardtext.text %>
+  </td>
+
+ <!--  <td>
+    <%#= link_to 'show', cardtext_path(cardtext) %>
+  </td>
+ -->
+  <td>
+    <%= link_to 'edit', edit_cardtext_path(cardtext) %>
+  </td>
+
+  <td>
+    <%= link_to 'delete', cardtext_path(cardtext),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

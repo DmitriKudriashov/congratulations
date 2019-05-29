@@ -4,8 +4,8 @@
     <p> <%= link_to 'New Company', new_company_path %> </p>
 
       <% if @companies.present? %>
-        <table>
-          <thead>
+        <table class="table table-bordered">
+          <thead class="thead-light" align="center">
             <tr>
               <th> N rec</th>
               <th> Name </th>

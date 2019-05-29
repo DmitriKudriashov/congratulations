@@ -1,18 +1,18 @@
   <div>
-    <h1> People </h1>
+    <h1> Card Texts </h1>
 
-    <p> <%= link_to 'New Person', new_person_path %> </p>
+    <p> <%= link_to 'New Card Text', new_cardtext_path %> </p>
 
-      <% if @people.present? %>
+      <% if @cardtexts.present? %>
         <table class="table table-bordered">
           <thead class="thead-light" align="center">
             <tr>
               <th> N rec</th>
-              <th> Name </th>
-              <th> Email </th>
+              <th> Description </th>
+              <th> Text </th>
             </tr>
           </thead>
-          <%= render @people %>
+          <%= render @cardtexts %>
         </table>
       <% else %>
         <p>

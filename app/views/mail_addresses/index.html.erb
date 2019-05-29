@@ -4,8 +4,8 @@
     <p> <%= link_to 'New Mail Address', new_mail_address_path %> </p>
 
       <% if @mail_addresses.present? %>
-        <table>
-          <thead>
+        <table class="table table-bordered">
+          <thead class="thead-light" align="center">
             <tr>
               <th> N rec</th>
               <th> Name </th>
