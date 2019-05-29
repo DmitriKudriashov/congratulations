@@ -1,0 +1,24 @@
+  <div>
+    <h1> Postcards </h1>
+
+    <p> <%= link_to 'New Postcard', new_postcard_path %> </p>
+
+      <% if @postcards.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th> N rec</th>
+              <th> File name </th>
+              <th> Image </th>
+            </tr>
+          </thead>
+          <%= render @postcards %>
+        </table>
+      <% else %>
+        <p>
+          <%= 'Empty list' %>
+        </p>
+      <% end %>
+    <br>
+  </div>
+

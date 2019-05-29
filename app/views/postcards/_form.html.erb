@@ -1,0 +1,26 @@
+<%= form_with model: @postcard, local: true do |form| %>
+
+<!--   <p>
+    <%= form.label :id %>
+  </p>
+
+  <p>
+    <%= form.text_field :id %>
+  </p>
+ -->
+
+ <!--  <p>
+    <%= form.text_field :filename %>
+   --></p>
+<p>
+  <%= form.label :filename %><br>
+  <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
+</p>
+<p>
+  <%= postcard_image(@postcard) %>
+</p>
+
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<br>

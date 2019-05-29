@@ -1,0 +1,25 @@
+<tr>
+  <td>
+    <%= postcard.id %>
+  </td>
+  <td>
+    <%= postcard.filename %>
+  </td>
+
+  <td class="text-center">
+    <%= postcard_image(postcard) %>
+  </td>
+
+  <td>
+    <%= link_to 'show', postcard_path(postcard) %>
+  </td>
+
+  <td>
+    <%= link_to 'edit', edit_postcard_path(postcard) %>
+  </td>
+
+  <td>
+    <%= link_to 'delete', postcard_path(postcard),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

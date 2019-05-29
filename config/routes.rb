@@ -14,8 +14,12 @@ Rails.application.routes.draw do
   # get '/dates_holidays', to: 'dates_holidays#index'
   # post '/dates_holidays', to: 'dates_holidays#create'
   resources :dates_holidays, only: [:index, :new, :create]
+
   resources :people #, only: [:index, :new, :create]
   resources :countries
+  resources :postcards
+  resources :cardtexts
+  resources :emails
   resources :mail_addresses
 
   resources :companies_people, only: [:index, :new, :create]
