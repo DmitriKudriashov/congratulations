@@ -1,0 +1,26 @@
+<tr>
+  <td>
+    <%= mail_address.id %>
+  </td>
+  <td>
+    <%= mail_address.email %>
+  </td>
+
+  <td>
+     <%= person_company_name(mail_address.companies_person) %>
+    <%#= "#{mail_address.companies_person.person.name};  #{mail_address.companies_person.company.name} " %>
+  </td>
+
+<!--   <td>
+    <%#= link_to 'show', mail_address_path(mail_address) %>
+  </td>
+ -->
+  <td>
+    <%= link_to 'edit', edit_mail_address_path(mail_address) %>
+  </td>
+
+  <td>
+    <%= link_to 'delete', mail_address_path(mail_address),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

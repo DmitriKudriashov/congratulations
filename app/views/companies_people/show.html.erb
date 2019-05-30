@@ -1,0 +1,24 @@
+<h2>Company Person Show </h2>
+<p>
+  id: <%= @companies_person.id %>
+</p>
+
+<p>
+  Company: <%= @companies_person.company.name %>
+</p>
+
+<p>
+  Person: <%= @companies_person.person.name %>
+</p>
+
+<p>
+  <%= link_to 'Edit Company holiday', edit_companies_person_path(@companies_person) %>
+<br>
+
+<p>
+  <%= link_to 'Back to all Companies-People', companies_people_path(@companies_person) %>
+</p>
+<br>
+<p>
+  <%= link_to 'Back to all People', people_path %>
+</p>

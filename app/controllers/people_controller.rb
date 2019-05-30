@@ -12,7 +12,8 @@ class PeopleController < ApplicationController
 
   def update
     if @person.update(person_params)
-      redirect_to person_path(@person)
+#      redirect_to person_path(@person)
+      redirect_to people_path
     else
       render :edit
     end
@@ -24,7 +25,8 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_params)
     if @person.save
-      redirect_to person_path(@person), notice: 'Success!'
+      # redirect_to person_path(@person), notice: 'Success!'
+      redirect_to people_path, notice: 'Success!'
     else
       render :new
     end

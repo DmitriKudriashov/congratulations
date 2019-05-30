@@ -1,0 +1,20 @@
+<h2> Mail Address Show </h2>
+<p>
+  id: <%= @mail_address.id %>
+</p>
+
+<p>
+  Email:
+  <%= @mail_address.email %>
+</p>
+<p>
+  Persona/company:
+  <%= person_company_name(@mail_address.companies_people) %>
+</p>
+
+<%= link_to 'Edit mail address', edit_mail_address_path(@mail_address) %>
+
+<br>
+<p>
+  <%= link_to 'Back to all Mail Addresses', mail_address_path %>
+</p>

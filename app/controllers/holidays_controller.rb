@@ -15,7 +15,8 @@ class HolidaysController < ApplicationController
 
   def update
     if @holiday.update(holiday_params)
-      redirect_to holiday_path(@holiday)
+      # redirect_to holiday_path(@holiday)
+      redirect_to holidays_path
     else
       render :edit
     end
@@ -27,7 +28,8 @@ class HolidaysController < ApplicationController
   def create
     @holiday = Holiday.new(holiday_params)
     if @holiday.save
-      redirect_to holiday_path(@holiday), notice: 'Success!'
+      # redirect_to holiday_path(@holiday), notice: 'Success!'
+      redirect_to holidays_path, notice: 'Success!'
     else
       render :new
     end

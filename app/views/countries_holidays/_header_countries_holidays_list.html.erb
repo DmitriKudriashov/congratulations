@@ -1,0 +1,18 @@
+      <% if @countries_holidays.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th> # </th>
+              <th> Country </th>
+              <th> Code </th>
+              <th> Holiday </th>
+              <th> Type </th>
+            </tr>
+          </thead>
+          <%= render @countries_holidays %>
+        </table>
+      <% else %>
+        <p>
+          <%= 'Empty list' %>
+        </p>
+      <% end %>
