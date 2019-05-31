@@ -1,0 +1,30 @@
+<tr>
+  <td >
+    <%= email.id %>
+  </td>
+  <td >
+    <%= email.name %>
+  </td>
+  <td >
+    <%= email.address %>
+  </td>
+<!--   <td >
+    -! not ready yet !-
+    <%#= email.postcard.filename %>
+  </td>
+ -->  <td >
+    <%= email.mail_address.email %>
+  </td>
+
+<!--  <td class="s_e_d">-->
+    <%#= link_to 'show', email_path(email) %>
+<!--  </td>-->
+  <td class="s_e_d">
+    <%= link_to 'edit', edit_email_path(email.id) %>
+  </td>
+  <td class="s_e_d">
+    <%= link_to 'delete', email_path(email),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
+

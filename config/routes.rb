@@ -19,7 +19,17 @@ Rails.application.routes.draw do
   resources :countries
   resources :postcards
   resources :cardtexts
-  resources :emails
+
+  resources :emails do
+    resources :email_cards do
+      resources :postcards, shallow: true
+    end
+
+    resources :email_texts do
+      resources :cardtexts, shallow: true
+    end
+  end
+
   resources :mail_addresses
 
   resources :companies_people, only: [:index, :new, :create]

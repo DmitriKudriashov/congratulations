@@ -1,0 +1,25 @@
+<table class="container">
+   <h3> Emails </h3>
+   <p>
+     <%= link_to 'New Email', new_email_path %>
+   </p>
+
+   <% if @emails.present? %>
+     <table class="table table-bordered">
+       <thead class="thead-light" align="center">
+        <tr>
+          <th > N </th>
+          <th > Name </th>
+          <th > Address </th>
+          <th > Mail Address </th>
+        </tr>
+       </thead>
+          <%= render @emails %>
+     </table>
+   <% else %>
+     <p>
+       <%= 'Empty list' %>
+     </p>
+  <% end %>
+  </table>
+
