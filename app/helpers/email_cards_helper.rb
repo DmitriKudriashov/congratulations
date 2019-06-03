@@ -1,0 +1,2 @@
+module EmailCardsHelper
+end

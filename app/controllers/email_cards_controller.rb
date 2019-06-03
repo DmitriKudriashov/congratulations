@@ -1,0 +1,2 @@
+class EmailCardsController < ApplicationController
+end

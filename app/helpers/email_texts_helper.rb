@@ -1,0 +1,2 @@
+module EmailTextsHelper
+end

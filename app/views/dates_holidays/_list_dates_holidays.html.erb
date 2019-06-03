@@ -1,17 +1,17 @@
-<p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(holiday) %> </p>
+<p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(@dates_holidays) %> </p>
 
-<% if holiday.dates_holidays.present? %>
+<% if @dates_holidays.present? %>
   <table class="table table-bordered">
     <thead class="thead-light" align="center">
       <tr>
-        <th> N record</th>
-        <th> Day </th>
-        <th> Month </th>
-        <th> Year </th>
+        <th> N </th>
+        <th> Day / Month </th>
         <th> Holiday </th>
+        <th> Companies </th>
+        <th> People </th>
       </tr>
     </thead>
-    <%= render holiday.dates_holidays %>
+    <%= render @dates_holidays %>
   </table>
 <% else %>
   <p>

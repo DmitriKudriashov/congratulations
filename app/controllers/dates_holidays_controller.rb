@@ -9,17 +9,14 @@ class DatesHolidaysController < ApplicationController
   end
 
   def new
-    # byebug
     @dates_holiday = @holiday.nil? ? DatesHoliday.new : @holiday.dates_holidays.new
-
-    # byebug
   end
 
   def edit; end
 
   def update
     if @dates_holiday.update(dates_holiday_params)
-      redirect_to dates_holiday_path(@dates_holiday), notice: 'Date was successfully updated.'
+       redirect_after('Date was successfully updated.!')
     else
       render :edit
     end
@@ -27,29 +24,27 @@ class DatesHolidaysController < ApplicationController
 
   def show; end
 
-  def create
+  def redirect_after(notice)
+     if @holiday.nil?
+        redirect_to dates_holidays_path, notice: notice
+      else
+        redirect_to dates_holidays_path, notice: notice
+      end
+  end
 
+  def create
     @dates_holiday = @holiday.nil? ?  DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
     if @dates_holiday.save
-      if @holiday.nil?
-        redirect_to dates_holidays_path, notice: 'Successully created!'
-      else
-        redirect_to dates_holiday_path(@dates_holiday), notice: 'Successully created!'
-      end
+      redirect_after('Successully created!')
     else
       render :new
     end
   end
 
   def destroy
-    if @dates_holiday.destroy  # надо бы проверить на успешность удаления
-      if @holiday.nil?
-        redirect_to dates_holidays_path, notice: 'Date was successfully Destroy!'
-      else
-        redirect_to holiday_path(@dates_holiday.holiday_id), notice: 'Date was successfully Destroy!'
-      end
-
-    end
+    if @dates_holiday.destroy
+       redirect_after('Date was successfully Destroy!')
+   end
   end
 
   def search

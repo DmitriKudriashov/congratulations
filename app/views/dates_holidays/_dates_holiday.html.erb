@@ -2,17 +2,26 @@
   <td>
     <%= dates_holiday.id %>
   </td>
-  <td>
-    <%= dates_holiday.day %>
+  <td  align="center">
+    <%= "#{dates_holiday.day} / #{dates_holiday.month}" %>
   </td>
-  <td>
+<!--   <td>
     <%= dates_holiday.month %>
   </td>
-  <td>
+ -->
+ <!--   <td>
     <%= dates_holiday.year %>
   </td>
+ -->
   <td>
     <%= dates_holiday.holiday.name %>
+  </td>
+
+  <td>
+    <%= dates_holiday.name_of_company%>
+  </td>
+  <td>
+    <%= dates_holiday.list_people%>
   </td>
 <!--   <td>
     <%#= link_to 'show', dates_holiday_path(dates_holiday) %>
