@@ -1,6 +1,8 @@
 class DatesHoliday < ApplicationRecord
   belongs_to :holiday
 
+  MONTHNAMES = ["","January","February","March","April","May","June","July",
+                "August", "September", "October", "November", "December" ].freeze
 
   def list_companies
     self.holiday.companies
@@ -12,7 +14,9 @@ class DatesHoliday < ApplicationRecord
     return '---' if holiday.nil?
     holiday.name
   end
-
+  def name_month
+    MONTHNAMES[self.month]
+  end
   def name_of_company
     list =  ''
     holiday = self.holiday

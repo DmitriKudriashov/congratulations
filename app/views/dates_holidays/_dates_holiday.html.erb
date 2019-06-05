@@ -3,7 +3,7 @@
     <%= dates_holiday.id %>
   </td>
   <td  align="center">
-    <%= "#{dates_holiday.day} / #{dates_holiday.month}" %>
+    <%= "#{dates_holiday.day} / #{dates_holiday.name_month}" %>
   </td>
 <!--   <td>
     <%= dates_holiday.month %>
@@ -18,10 +18,12 @@
   </td>
 
   <td>
-    <%= dates_holiday.name_of_company%>
+    <%= text_area_tag(:text, dates_holiday.name_of_company, size: :auto) %>
+    <%#= dates_holiday.name_of_company%>
   </td>
   <td>
-    <%= dates_holiday.list_people%>
+    <%#= dates_holiday.list_people%>
+    <%= text_area_tag(:text, dates_holiday.list_people, size: :auto) %>
   </td>
 <!--   <td>
     <%#= link_to 'show', dates_holiday_path(dates_holiday) %>

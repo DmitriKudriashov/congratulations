@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_15_115816) do
+ActiveRecord::Schema.define(version: 2019_06_04_115123) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2019_05_15_115816) do
     t.string "email", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "birthday"
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["name"], name: "index_people_on_name", unique: true
   end

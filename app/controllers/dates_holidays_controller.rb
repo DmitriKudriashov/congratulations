@@ -6,6 +6,11 @@ class DatesHolidaysController < ApplicationController
   def index
     find_holiday
     @dates_holidays = @holiday.nil? ? DatesHoliday.all : @holiday.dates_holidays
+    @dates_holidays = @dates_holidays.order(:month, :day)
+    today = Time.now()
+    month = today.month
+    day = today.day
+    @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
   end
 
   def new
@@ -16,7 +21,7 @@ class DatesHolidaysController < ApplicationController
 
   def update
     if @dates_holiday.update(dates_holiday_params)
-       redirect_after('Date was successfully updated.!')
+      redirect_after('Date was successfully updated.!')
     else
       render :edit
     end

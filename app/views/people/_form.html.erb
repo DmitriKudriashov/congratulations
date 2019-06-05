@@ -6,6 +6,13 @@
   </p>
 
   <p>
+    <%= 'Birthday: ' %>
+    <%#= form.text_field :bithday %>
+    <%#= form.text_field :birthday, value: @person.birthday_form %>
+    <%= date_select :person, :birthday %>
+  </p>
+
+  <p>
     <%= 'Email: ' %>
     <%= form.text_field :email %>
   </p>

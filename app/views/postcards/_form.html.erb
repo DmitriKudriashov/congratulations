@@ -13,11 +13,15 @@
     <%= form.text_field :filename %>
    --></p>
 <p>
-  <%= form.label :filename %><br>
+  <%= form.label :filename %> <br>
   <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
 </p>
 <p>
-  <%= postcard_image(@postcard) %>
+    <%= form.file_field :image %>
+    <%# upload(image) %>
+</p>
+<p>
+  <%#= postcard_image(@postcard) %>
 </p>
 
   <br>

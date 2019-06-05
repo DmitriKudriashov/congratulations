@@ -53,7 +53,7 @@ class PeopleController < ApplicationController
   end
 
   def person_params
-    params.require(:person).permit(:name, :email, :country_id, :company_id )
+    params.require(:person).permit(:name, :email, :country_id, :company_id, :birthday )
   end
 
   def rescue_with_person_not_found
