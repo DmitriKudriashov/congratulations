@@ -8,7 +8,7 @@
 <br>  <%= @postcard.filename %>
 </p>
 <p>
-  <%= postcard_image(@postcard) %>
+  <%= image_tag @postcard.image.url(:medium) %>
 </p>
 
 <%= link_to 'Edit postcard', edit_postcard_path(@postcard) %>

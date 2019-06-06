@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_04_115123) do
+ActiveRecord::Schema.define(version: 2019_06_06_104432) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
@@ -139,9 +139,12 @@ ActiveRecord::Schema.define(version: 2019_06_04_115123) do
 
   create_table "postcards", force: :cascade do |t|
     t.string "filename", default: ""
-    t.binary "image", limit: 16777216
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.bigint "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "types", force: :cascade do |t|

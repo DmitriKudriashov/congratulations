@@ -13,13 +13,11 @@ class PostcardsController < ApplicationController
   def update
     if @postcard.update(postcard_params)
       # redirect_to postcard_path(@postcard), notice: 'Success!'
-      upload
       redirect_to postcards_path
     else
       render :edit
     end
   end
-
 
   def show; end
 
@@ -33,6 +31,11 @@ class PostcardsController < ApplicationController
     end
   end
 
+  def clear_attachment
+    @postcard.image = nil
+    @postcard.save
+  end
+
   def destroy
     @postcard.destroy
     redirect_to postcards_path, notice: 'Destroy !'
@@ -41,14 +44,6 @@ class PostcardsController < ApplicationController
   def search
     result = ["Class: #{params.class}", "Parameters: #{params.inspect}"]
     render plain: result.join("\n")
-  end
-
-  def upload
-    uploaded_file = params[:image]
-    # byebug
-    File.open(Rails.root.join('app','assets','images', @postcard.filename), 'wb') do |file|
-      file.write(uploaded_file.read) if uploaded_file.present?
-    end
   end
 
   private

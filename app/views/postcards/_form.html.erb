@@ -1,4 +1,4 @@
-<%= form_with model: @postcard, local: true do |form| %>
+<%= form_with model: @postcard, html: { multipart: true }, local: true do |form| %>
 
 <!--   <p>
     <%= form.label :id %>
@@ -17,11 +17,7 @@
   <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
 </p>
 <p>
-    <%= form.file_field :image %>
-    <%# upload(image) %>
-</p>
-<p>
-  <%#= postcard_image(@postcard) %>
+    <%= form.file_field :image%>
 </p>
 
   <br>
