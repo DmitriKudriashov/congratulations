@@ -2,7 +2,7 @@ RailsAdmin.config do |config|
 
   config.main_app_name = ["CONGRATULATION", " Admin "]
   # or something more dynamic
-  config.main_app_name = Proc.new { |controller| [ "CONGRATULATION", "Administration - #{controller.params[:action].try(:titleize)}" ] }
+  config.main_app_name = Proc.new { |controller| [ "CONGRATULATIONS", "Administration - #{controller.params[:action].try(:titleize)}" ] }
 
 
   ### Popular gems integration
@@ -37,7 +37,8 @@ RailsAdmin.config do |config|
     show
     edit
     delete
-    show_in_app
+
+   # show_in_app # kds 070619
 
     ## With an audit adapter, you can add:
     # history_index
