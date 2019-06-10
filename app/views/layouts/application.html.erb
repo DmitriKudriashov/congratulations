@@ -30,8 +30,8 @@
   <body>
     <div>
       <% if user_signed_in? %>
-        <%= "Hello!   #{current_user.first_and_last_name}  (#{current_user.email}) " %>
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: t('are_you_sure') } %><br>
+        <%= "Hello!   #{current_user.name}  (#{current_user.email}) " %>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure' } %><br>
         <%= render 'navbar/nav' %>
       <% else %>
         <p>
