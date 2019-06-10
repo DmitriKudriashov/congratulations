@@ -1,2 +1,2 @@
-class EmailTextsController < ApplicationController
+class EmailTextsController < AuthenticatedController
 end

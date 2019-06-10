@@ -1,4 +1,4 @@
-class CardtextsController < ApplicationController
+class CardtextsController < AuthenticatedController
   before_action :set_cardtexts, only: %i[index]
   before_action :find_cardtext, only: %i[show edit update destroy]
 

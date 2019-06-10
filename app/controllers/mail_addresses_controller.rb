@@ -1,4 +1,4 @@
-class MailAddressesController < ApplicationController
+class MailAddressesController < AuthenticatedController
   before_action :set_mail_addresses, only: %i[index]
   before_action :find_mail_address, only: %i[show edit update destroy]
 

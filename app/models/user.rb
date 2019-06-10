@@ -7,4 +7,9 @@ class User < ApplicationRecord
           :rememberable,
           :validatable,
           :confirmable
+  validates :email, uniqueness: true, presence: true, format: /.+@.+\..+/i
+
+  def admin?
+    self.admin
+  end
 end

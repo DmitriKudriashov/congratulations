@@ -1,4 +1,4 @@
-class PeopleController < ApplicationController
+class PeopleController < AuthenticatedController
   before_action :set_people, only: %i[index]
   before_action :find_person, only: %i[show edit update destroy]
 

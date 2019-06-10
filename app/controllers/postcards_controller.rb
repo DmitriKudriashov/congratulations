@@ -1,4 +1,4 @@
-class PostcardsController < ApplicationController
+class PostcardsController < AuthenticatedController
   before_action :set_postcards, only: %i[index]
   before_action :find_postcard, only: %i[show edit update destroy]
 

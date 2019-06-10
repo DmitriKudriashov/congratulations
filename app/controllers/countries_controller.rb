@@ -1,4 +1,4 @@
-class CountriesController < ApplicationController
+class CountriesController < AuthenticatedController
   before_action :set_countries, only: %i[index]
   before_action :find_country, only: %i[show edit update destroy]
 

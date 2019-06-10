@@ -1,4 +1,4 @@
-class CompaniesPeopleController < ApplicationController
+class CompaniesPeopleController < AuthenticatedController
 
   before_action :set_companies_people, only: %i[index]
   before_action :find_companies_person, only: %i[show edit update destroy]

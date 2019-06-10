@@ -28,12 +28,24 @@
   </head>
 
   <body>
-    <div class="container">
-      <%= render 'navbar/nav' %>
-
-     <%= yield %>
-
+    <div>
+      <% if user_signed_in? %>
+        <%= "Hello!   #{current_user.first_and_last_name}  (#{current_user.email}) " %>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: t('are_you_sure') } %><br>
+        <%= render 'navbar/nav' %>
+      <% else %>
+        <p>
+          <%= link_to 'Login' , new_user_session_path %> |
+          <%= link_to 'Sign Up' , new_user_registration_path %>
+        </p>
+      <% end %>
     </div>
+
+    <div class="container">
+      <%= render 'shared/flash' %>
+      <%= yield %>
+    </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

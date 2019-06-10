@@ -1,4 +1,4 @@
-class TypesController < ApplicationController
+class TypesController < AuthenticatedController
   before_action :set_types, only: %i[index]
   before_action :find_type, only: %i[show edit update destroy]
 

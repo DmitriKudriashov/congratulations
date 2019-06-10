@@ -1,4 +1,4 @@
-class DatesHolidaysController < ApplicationController
+class DatesHolidaysController < AuthenticatedController
   # before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
   before_action :find_holiday, only: %i[new create]

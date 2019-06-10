@@ -1,4 +1,4 @@
-class EmailsController < ApplicationController
+class EmailsController < AuthenticatedController
   # before_action :set_emails, only: %i[index]
   before_action :find_email, only: %i[show update destroy]
   before_action :set_email_cards, only: %i[show edit]
