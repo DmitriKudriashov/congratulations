@@ -19,6 +19,13 @@
 <!--  <td class="s_e_d">-->
     <%#= link_to 'show', email_path(email) %>
 <!--  </td>-->
+
+  <td class="s_e_d">
+    <%#= link_to 'SEND', send_greeting_  path(email) %>
+    <%= link_to 'SEND', "/emails/send/#{email.id}" %>
+  </td>
+
+
   <td class="s_e_d">
     <%= link_to 'edit', edit_email_path(email.id) %>
   </td>

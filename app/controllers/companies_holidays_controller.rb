@@ -22,7 +22,8 @@ class CompaniesHolidaysController < AuthenticatedController
   def update
 
     if @companies_holiday.update(companies_holiday_params)
-      redirect_to holiday_path(@companies_holiday.holiday), notice: 'CompaniesHoliday was successfully updated.'
+      # redirect_to holiday_companies_holidays_path(@companies_holiday)
+      redirect_to holiday_path(@companies_holiday.holiday), notice: 'Companies-Holiday was successfully updated.'
     else
       render :edit
     end

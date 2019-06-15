@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'holidays#index'
+  root  'dates_holidays#index'
   # get '/companies_holidays', to: 'companies_holidays#index'
   # get '/companies_holidays/new', to: 'companies_holidays#new'
   resources :companies_holidays, only: [:index, :new, :create]
@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   resources :countries
   resources :postcards
   resources :cardtexts
+
+  get '/emails/send/:id(.:format)', to: 'emails#send_e'
 
   resources :emails do
     resources :email_cards do
@@ -52,5 +54,9 @@ Rails.application.routes.draw do
     end
     resources :countries_holidays,  shallow: true
   end
+
+
+# post '/send-greeting', to: 'application#greeting_mailer_send'
+# get '/greeting', to: 'application#greeting'
 
 end

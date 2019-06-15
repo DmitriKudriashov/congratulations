@@ -7,9 +7,7 @@
 
   <p>
     <%= 'Birthday: ' %>
-    <%#= form.text_field :bithday %>
-    <%#= form.text_field :birthday, value: @person.birthday_form %>
-    <%= date_select :person, :birthday %>
+    <%= date_select :person, :birthday, start_year: Time.now.year - 70, end_year: Time.now.year - 18 %>
   </p>
 
   <p>

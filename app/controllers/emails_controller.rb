@@ -10,6 +10,7 @@ class EmailsController < AuthenticatedController
 
   def new
     @email = Email.new
+
   end
 
   def edit; end
@@ -23,6 +24,10 @@ class EmailsController < AuthenticatedController
     end
   end
 
+  def send_e
+    GreetingsMailer.send_message(find_email).deliver_now
+    redirect_to emails_path, notice: 'Success!'
+end
 
   def show; end
 

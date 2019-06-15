@@ -19,16 +19,15 @@
 
   <td>
     <%= text_area_tag(:text, dates_holiday.name_of_company, size: :auto) %>
-    <%#= dates_holiday.name_of_company%>
   </td>
   <td>
-    <%#= dates_holiday.list_people%>
     <%= text_area_tag(:text, dates_holiday.list_people, size: :auto) %>
   </td>
 <!--   <td>
     <%#= link_to 'show', dates_holiday_path(dates_holiday) %>
   </td>
- -->  <td>
+ -->
+  <td>
     <%= link_to 'edit', edit_dates_holiday_path(dates_holiday) %>
   </td>
   <td>

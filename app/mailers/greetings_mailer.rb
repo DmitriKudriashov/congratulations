@@ -1,10 +1,10 @@
 class GreetingsMailer < ApplicationMailer
 
-  def send(email)
+  def send_message(email)
     @name = email.name
     @address = email.address
-    @textmail = email.cardtext
-
-    mail to: @address
+    # @greetings_text = email.greetings_text
+    mail to: @address, subject: "CON-GRATULATIONS !!!"
   end
+
 end
