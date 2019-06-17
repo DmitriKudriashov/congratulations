@@ -27,7 +27,7 @@ class EmailsController < AuthenticatedController
   def send_e
     GreetingsMailer.send_message(find_email).deliver_now
     redirect_to emails_path, notice: 'Success!'
-end
+  end
 
   def show; end
 

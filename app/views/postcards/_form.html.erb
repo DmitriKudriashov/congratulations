@@ -17,9 +17,9 @@
   <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
 </p>
 <p>
-    <%= form.file_field :image%>
+    <%= form.file_field :image %>
+    <%#= form.input :image, as: :file !!!  undefined method `input' for #<ActionView::Helpers::FormBuilder:0 ..%>
 </p>
-
   <br>
   <p> <%= form.submit %> </p>
 <% end %>

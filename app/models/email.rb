@@ -6,4 +6,8 @@ class Email < ApplicationRecord
   has_many :cardtexts, through: :email_texts
 
   belongs_to :mail_address
+
+  def greetings_text
+    self.cardtexts.first.present? ? self.cardtexts.first.text : "Text not avalable !"
+  end
 end
