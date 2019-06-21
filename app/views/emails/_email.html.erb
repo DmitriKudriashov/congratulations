@@ -12,18 +12,34 @@
     -! not ready yet !-
     <%#= email.postcard.filename %>
   </td>
- -->  <td >
+ -->
+  <td >
     <%= email.mail_address.email %>
   </td>
+<!--   <td align="center">
+    <%#= check_box_tag email.checkit, "1", "0" , disable: false%>
+    <%#= email.checkit %>
+  </td>
+ -->
+  <td align="center">
+    <%= email.sent_date %>
+  </td>
 
-<!--  <td class="s_e_d">-->
+<!--  <td class="<s>    </s>">-->
     <%#= link_to 'show', email_path(email) %>
 <!--  </td>-->
 
-  <td class="s_e_d">
     <%#= link_to 'SEND', send_greeting_  path(email) %>
+    <% if  email.checkit > 0 %>
+  <td class="s_e_d">
     <%= link_to 'SEND', "/emails/send/#{email.id}" %>
   </td>
+    <% else %>
+  <td class="checkit">
+    <%= link_to 'CHECK IT !', edit_email_path(email.id), :style=> 'color: red;' %>
+  </td>
+    <% end %>
+
 
 
   <td class="s_e_d">

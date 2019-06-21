@@ -1,19 +1,20 @@
 <%= form_with model: @email, local: true do |form| %>
   <p>
     <%= form.label :name %>
-  </p>
-  <p>
     <%= form.text_field :name %>
   </p>
   <p>
     <%= form.label :address %>
-  </p>
-  <p>
     <%= form.text_field :address %>
   </p>
   <p>
-    <%= 'Mail Address: ' %>:
+    <%= 'Company Email Address: ' %>:
     <%= form.collection_select :mail_address_id, MailAddress.all, :id, :email, prompt: 'Select Mail Address Company' %>
   </p>
+  <p>
+    <%= 'Check It: '%>
+    <%= form.check_box :checkit %>
+  </p>
+
   <p> <%= form.submit %> </p>
 <% end %>

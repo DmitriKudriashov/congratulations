@@ -2,7 +2,9 @@ class Person < ApplicationRecord
   has_many :companies_people, dependent: :restrict_with_error
   has_many :companies, through: :companies_people
 
-  scope :selectmonth, ->(m) { where("birthday.month = ?", m) } #  self.birthday.month
+  scope :selectmonth0, ->(m) { where("birthday.month = ?", m) } #  self.birthday.month
+  scope :selectmonth, ->(m) { where("cast(strftime('%m', birthday) as int) = ?", m) }
+  scope :birthday_men, ->(date) { where("birthday = ?", date) }
   scope :selectid, ->(id) { where(id: id) }
 
 
@@ -11,7 +13,7 @@ class Person < ApplicationRecord
   end
 
   def birthday_index
-     self.birthday.nil? ? "" : self.birthday.strftime("%d-%m-%Y")
+    self.birthday.nil? ? "" : self.birthday.strftime("%d-%m-%Y")
   end
 
   def dob_month

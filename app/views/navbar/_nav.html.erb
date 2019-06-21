@@ -13,20 +13,23 @@
 
       <li class="nav-item active">
         <a class="nav-link">
-          <%= link_to 'ADMIN DASHBOARD ', rails_admin_path %>
+          <%= link_to 'Calendar ', dates_holidays_path %>
         </a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link">
-          <%= link_to 'Calendar ', dates_holidays_path %>
+        <a class="nav-link" href="#">
+          <%= link_to 'Emails', emails_path %>
         </a>
       </li>
+
+
       <li class="nav-item active">
         <a class="nav-link active">
           <%= link_to ' Holidays', holidays_path  %>
         </a>
       </li>
+
       <li class="nav-item active">
         <a class="nav-link" href="#">
           <%= link_to 'Holidays Types', types_path %>
@@ -85,10 +88,11 @@
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">
-          <%= link_to 'Emails', emails_path %>
+        <a class="nav-link">
+          <%= link_to 'ADMIN DASHBOARD ', rails_admin_path %>
         </a>
       </li>
+
   <!--     <li class="nav-item active">
         <a class="nav-link" href="#">
           <%= link_to 'Reserved Item', mail_addresses_path %>

@@ -10,7 +10,6 @@ class EmailsController < AuthenticatedController
 
   def new
     @email = Email.new
-
   end
 
   def edit; end
@@ -25,8 +24,14 @@ class EmailsController < AuthenticatedController
   end
 
   def send_e
-    GreetingsMailer.send_message(find_email).deliver_now
-    redirect_to emails_path, notice: 'Success!'
+    find_email
+    if @email.checkit == 0
+      flash[:alert] = " This is NOT CHECKED Email yet ! "
+    else
+      GreetingsMailer.send_message(@email).deliver_now
+      flash[:notice] = " This is Email Sent SUCCESSFULY ! "
+    end
+      redirect_to emails_path
   end
 
   def show; end
@@ -69,7 +74,7 @@ class EmailsController < AuthenticatedController
   end
 
   def email_params
-    params.require(:email).permit(:name, :address, :mail_address_id)
+    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit)
   end
 
   def rescue_with_email_not_found

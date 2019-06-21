@@ -15,7 +15,11 @@ class GreetingsMailer < ApplicationMailer
       end
     end
 
-    mail from: @from, to: @address, subject: "CONGRATULATIONS !!!"
+    2 from: @from, to: @address, subject: "CONGRATULATIONS !!!"
+    email.sent_date = Time.now
+    email.save
+  rescue
+
   end
 
   def list_attachments(email)
