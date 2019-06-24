@@ -1,13 +1,13 @@
-<% if @companies_people.present? %>
+<% if @email_texts.present? %>
   <table class="table table-bordered">
     <thead class="thead-light" align="center">
       <tr>
-        <th> N rec</th>
-        <th> Company </th>
-        <th> Person </th>
+        <th> # </th>
+        <th> Email </th>
+        <th> CardText </th>
       </tr>
     </thead>
-    <%= render @companies_people %>
+    <%= render @email_texts  %>
   </table>
 <% else %>
   <p>

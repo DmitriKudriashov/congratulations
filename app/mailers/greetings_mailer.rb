@@ -15,7 +15,7 @@ class GreetingsMailer < ApplicationMailer
       end
     end
 
-    2 from: @from, to: @address, subject: "CONGRATULATIONS !!!"
+    mail from: @from, to: @address, subject: "CONGRATULATIONS !!!"
     email.sent_date = Time.now
     email.save
   rescue

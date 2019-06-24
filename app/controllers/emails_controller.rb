@@ -67,10 +67,11 @@ class EmailsController < AuthenticatedController
   end
 
   def set_email_cards
-    @mail_adds = find_email.email_cards
+    @email_cards = find_email.email_cards
   end
+
   def set_email_texts
-    @mail_adds = find_email.email_texts
+    @email_texts = find_email.email_texts
   end
 
   def email_params

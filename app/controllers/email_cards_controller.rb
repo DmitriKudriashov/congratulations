@@ -1,27 +1,24 @@
 class EmailCardsController < AuthenticatedController
-  before_action :set_email_cards, only: %i[index]
+  # before_action :set_email_cards, only: %i[index]
   before_action :find_email_card, only: %i[show edit update destroy]
-  before_action :find_card, only: %i[new create]
-  before_action :find_email, only: %i[new create]
+  before_action :find_card, only: %i[edit create index]
+  before_action :find_email, only: %i[new create edit update destroy]
 
-  def index; end
+  def index
+    @email_cards = @email.nil? ? EmailCard.all : EmailCard.where(email_id: params[:email_id])
+  end
 
   def new
     @email_card =  @email.nil? ? EmailCard.new : @email.email_cards.new
-    # @email_card.postcard_id = 1
-    # @email_card.email_id = 1
   end
 
-  def new_email_card
-    @email_card =  EmailCard.new
-  end
 
   def edit; end
 
   def update
 
     if @email_card.update(email_card_params)
-      redirect_to email_email_cards_path(@email_card.email_id), notice: 'EmailCard was successfully updated.'
+      redirect_to edit_email_path(@email_card.email_id), notice: 'EmailCard was successfully updated.'
     else
       render :edit
     end
@@ -30,17 +27,20 @@ class EmailCardsController < AuthenticatedController
   def show; end
 
   def create
+    # byebug
     @email_card = EmailCard.new(email_card_params)  # @card.email_cards.new(email_card_params)
+
     if @email_card.save
-      redirect_to email_email_cards_path(@email_card.email_id), notice: 'Successully created!'
+      redirect_to edit_email_path(@email_card.email_id), notice: 'Successully created!'  # email_email_cards_path(@email)
     else
       render :new
     end
   end
 
   def destroy
-    if @email_card.destroy  # надо бы проверить на успешность удаления
-      redirect_to email_email_cards_path(@email_card.email_id), notice: 'EmailCard was successfully Destroy!'
+    if @email_card.destroy
+      redirect_to  edit_email_path(@email_card.email_id), notice: 'EmailCard was successfully Destroy!'
+      # redirect_to set_path_after_action(@email), notice: 'EmailCard was successfully Destroy!'
     end
   end
 
@@ -51,12 +51,16 @@ class EmailCardsController < AuthenticatedController
 
   private
 
+  def set_path_after_action(email)
+    email.nil? ? email_cards_path : edit_email_path(email)
+  end
+
   def find_card
     @card = card.find(params[:card_id]) unless params[:card_id].nil?
   end
 
   def find_email
-    @email = Email.find(params[:email_id])
+    @email = params[:email_id].nil? ? nil : Email.find(params[:email_id])
   end
 
   def set_email_cards

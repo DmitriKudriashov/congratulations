@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   # get '/companies_holidays', to: 'companies_holidays#index'
   # get '/companies_holidays/new', to: 'companies_holidays#new'
   resources :companies_holidays, only: [:index, :new, :create]
-
   # get '/countries_holidays', to: 'countries_holidays#index'
   # get '/countries_holidays/new', to: 'countries_holidays#new'
   resources :countries_holidays, only: [:index, :new, :create]
@@ -22,20 +21,24 @@ Rails.application.routes.draw do
 
   resources :people #, only: [:index, :new, :create]
   resources :countries
-  resources :postcards
-  resources :cardtexts
 
   get '/emails/send/:id(.:format)', to: 'emails#send_e'
 
+  resources :postcards, only: [:index, :new, :create]
+  resources :cardtexts, only: [:index, :new, :create]
+
+
   resources :emails do
-    resources :email_cards do
+    resources :email_cards, shallow: true, except: [:index, :edit] do
       resources :postcards, shallow: true
     end
 
-    resources :email_texts do
-      resources :cardtexts, shallow: true
+    resources :email_texts, shallow: true do
+      resources :cardtexts, shallow: true #,  except: [:index, :new, :create]
     end
   end
+
+  resources :email_cards, only: [:index, :create, :edit]
 
   resources :mail_addresses
 
@@ -47,11 +50,12 @@ Rails.application.routes.draw do
   resources :types
   resources :holidays do
     resources :dates_holidays, shallow: true #, except: :index
-    resources :companies_holidays, shallow: true  do #, except: :index
-      member do
-        # post :create
-      end
-    end
+    resources :companies_holidays, shallow: true
+     # do #, except: :index
+     #  member do
+     #    # post :create
+     #  end
+    # end
     resources :countries_holidays,  shallow: true
   end
 

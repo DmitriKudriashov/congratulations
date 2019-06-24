@@ -1,5 +1,8 @@
 <%= form_with model: @email, local: true do |form| %>
   <p>
+    <%= "Email Id: #{@email.id}" %>
+  </p>
+  <p>
     <%= form.label :name %>
     <%= form.text_field :name %>
   </p>

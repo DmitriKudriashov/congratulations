@@ -1,0 +1,22 @@
+<tr>
+  <td>
+    <%= email_text.id %>
+  </td>
+  <td>
+    <%= email_text.email.name %>
+  </td>
+  <td>
+    <%= email_text.cardtext.text %>
+  </td>
+<!--   <td>
+    <%#= link_to 'show', email_text_path(email_text) %>
+  </td>
+ -->
+  <td>
+    <%= link_to 'edit', edit_email_text_path(email_text) %>
+  </td>
+  <td>
+    <%= link_to 'delete', email_text_path(email_text),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

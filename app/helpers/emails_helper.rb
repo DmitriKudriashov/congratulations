@@ -6,4 +6,8 @@ module EmailsHelper
   def checkit_boolean(checkit)
     checkit.to_i > 0 ? true : false
   end
+
+  def set_email_cards(id)
+    @email_cards = EmailCard.where(email_id: id)
+  end
 end

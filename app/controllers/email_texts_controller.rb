@@ -2,7 +2,7 @@ class EmailTextsController < AuthenticatedController
   before_action :set_email_texts, only: %i[index]
   before_action :find_email_text, only: %i[show edit update destroy]
   before_action :find_cardtext, only: %i[new create]
-  before_action :find_email, only: %i[new create]
+  before_action :find_email, only: %i[new create update]
 
   def index; end
 
@@ -52,7 +52,7 @@ class EmailTextsController < AuthenticatedController
   private
 
   def find_cardtext
-    @cardtext = cardtext.find(params[:cardtext_id]) unless params[:cardtext_id].nil?
+    @cardtext = Cardtext.find(params[:cardtext_id]) unless params[:cardtext_id].nil?
   end
 
   def find_email

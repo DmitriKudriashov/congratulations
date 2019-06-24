@@ -1,0 +1,13 @@
+<%= form_with model:  @email_card, local: true do |form| %>
+  <p>
+    <%= 'Email: ' %>
+    <%= form.collection_select :email_id, Email.all, :id, :name, prompt: 'Select Email' %>
+  </p>
+  <p>
+    <%= 'Post Card: ' %>
+    <%= form.collection_select :postcard_id, Postcard.all, :id, :filename, prompt: 'Select PostCard' %>
+  </p>
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<br>

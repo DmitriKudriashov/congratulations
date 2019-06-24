@@ -1,0 +1,24 @@
+<tr>
+  <td>
+    <%= @email_card.id %>
+  </td>
+  <td>
+    <%= @email_card.email.name %>
+  </td>
+  <td>
+    <%= image_tag @email_card.postcard.image.url(:small) %>
+    <%= @email_card.postcard.filename %>
+  </td>
+
+
+<!--   <td>
+    <%#= link_to 'show', email_@email_card_path(@email_cards) %>
+  </td>
+ -->  <td>
+    <%= link_to 'edit', edit_email_card_path(@email_card.id) %>
+  </td>
+  <td>
+    <%= link_to 'delete', email_card_path(@email_card),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
