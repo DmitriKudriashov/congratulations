@@ -8,7 +8,10 @@
 
   <td>
     <%#= cardtext.text :text, rows: 4, cols: 30, class: 'form-control' %>
-    <%= cardtext.text %>
+    <%= text_area_tag(:text, cardtext.text, size: :auto)  %>
+  </td>
+  <td>
+    <%= cardtext.holiday.name if cardtext.holiday_id.present? %>
   </td>
 
  <!--  <td>

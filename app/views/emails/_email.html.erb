@@ -6,21 +6,24 @@
     <%= email.name %>
   </td>
   <td >
-    <%= email.address %>
+    <%= "#{email.address} / #{email.mail_address.email}" %>
   </td>
-<!--   <td >
-    -! not ready yet !-
-    <%#= email.postcard.filename %>
+  <td>
+    <%= email.holiday.name if email.holiday_id.present? %>
   </td>
- -->
-  <td >
-    <%= email.mail_address.email %>
+  <td>
+    <%= text_area_tag(:text, email.message, size: :auto) if email.message.present? %>
   </td>
-<!--   <td align="center">
+
+<!-- <td align="center">
     <%#= check_box_tag email.checkit, "1", "0" , disable: false%>
     <%#= email.checkit %>
   </td>
  -->
+  <td align="center">
+    <%= email.will_send if email.will_send.present? %>
+  </td>
+
   <td align="center">
     <%= email.sent_date %>
   </td>

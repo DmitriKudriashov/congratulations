@@ -57,7 +57,7 @@ class PostcardsController < AuthenticatedController
   end
 
   def postcard_params
-    params.require(:postcard).permit(:filename, :image)
+    params.require(:postcard).permit(:filename, :image, :holiday_id)
   end
 
   def rescue_with_postcard_not_found

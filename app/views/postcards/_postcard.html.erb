@@ -1,7 +1,11 @@
 <tr>
-  <td>
+ <!--  <td>
     <%= postcard.id %>
+  --> </td>
+  <td>
+    <%= postcard.holiday.name if postcard.holiday_id.present? %>
   </td>
+
   <td>
     <%= postcard.filename %>
   </td>
@@ -10,16 +14,16 @@
      <%= image_tag postcard.image.url(:small) %>
   </td>
 
-  <td>
+ <!--  <td>
     <%= link_to 'show', postcard_path(postcard) %>
   </td>
-
+ -->
   <td>
     <%= link_to 'edit', edit_postcard_path(postcard) %>
   </td>
-
   <td>
     <%= link_to 'delete', postcard_path(postcard),
                 method: :delete, data: { confirm: 'Are you sure' } %>
   </td>
 </tr>
+

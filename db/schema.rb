@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_090218) do
+ActiveRecord::Schema.define(version: 2019_06_24_150406) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
     t.text "text", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "holiday_id"
     t.index ["filename"], name: "index_cardtexts_on_filename", unique: true
+    t.index ["holiday_id"], name: "index_cardtexts_on_holiday_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -107,7 +109,11 @@ ActiveRecord::Schema.define(version: 2019_06_20_090218) do
     t.integer "mail_address_id"
     t.integer "checkit"
     t.date "sent_date"
+    t.datetime "will_send"
+    t.text "message"
+    t.integer "holiday_id"
     t.index ["address"], name: "index_emails_on_address"
+    t.index ["holiday_id"], name: "index_emails_on_holiday_id"
     t.index ["mail_address_id"], name: "index_emails_on_mail_address_id"
   end
 
@@ -147,6 +153,8 @@ ActiveRecord::Schema.define(version: 2019_06_20_090218) do
     t.string "image_content_type"
     t.bigint "image_file_size"
     t.datetime "image_updated_at"
+    t.integer "holiday_id"
+    t.index ["holiday_id"], name: "index_postcards_on_holiday_id"
   end
 
   create_table "types", force: :cascade do |t|

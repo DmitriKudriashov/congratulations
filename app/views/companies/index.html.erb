@@ -1,24 +1,22 @@
-  <div>
-    <h1> Companies </h1>
+<h1> Companies </h1>
 
-    <p> <%= link_to 'New Company', new_company_path %> </p>
+<p> <%= link_to 'New Company', new_company_path %> </p>
 
-      <% if @companies.present? %>
-        <table class="table table-bordered">
-          <thead class="thead-light" align="center">
-            <tr>
-              <th> N rec</th>
-              <th> Name </th>
-              <th> Country </th>
-            </tr>
-          </thead>
-          <%= render @companies %>
-        </table>
-      <% else %>
-        <p>
-          <%= 'Empty list' %>
-        </p>
-      <% end %>
-    <br>
-  </div>
+<% if @companies.present? %>
+  <table class="table table-bordered">
+    <thead class="thead-light" align="center">
+      <tr>
+        <th> N rec</th>
+        <th> Name </th>
+        <th> Country </th>
+      </tr>
+    </thead>
+    <%= render @companies %>
+  </table>
+<% else %>
+  <p>
+    <%= 'Empty list' %>
+  </p>
+<% end %>
+<br>
 

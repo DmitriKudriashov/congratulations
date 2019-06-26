@@ -7,4 +7,9 @@ class Holiday < ApplicationRecord
 
   has_many :dates_holidays, dependent: :restrict_with_error
   belongs_to :type
+
+  has_many :cardtexts, dependent: :restrict_with_error
+  has_many :postcards, dependent: :restrict_with_error
+  has_many :emails, dependent: :restrict_with_error
+
 end

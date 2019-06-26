@@ -17,3 +17,14 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
+// example from http://dreamhelg.ru/2009/08/learning-jquery-hide-and-show-methods/
+//---------------------------------------
+// $().ready(function(){
+//            $("#menu_com ul li").hover(
+//             function(){
+//                $(this).find('ul').show();
+//            },
+//             function(){
+//                $(this).find('ul').hide();
+//            })
+//        })

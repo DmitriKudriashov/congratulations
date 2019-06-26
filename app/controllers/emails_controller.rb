@@ -17,8 +17,11 @@ class EmailsController < AuthenticatedController
   def update
     if @email.update(email_params)
       # redirect_to email_path(@email)
-      redirect_to emails_path
+    flash[:notice] = 'Update SUCCESSFULY !'
+    redirect_to emails_path
     else
+      flash[:alert] = 'Update ERROR !!!'
+      set_email_cards
       render :edit
     end
   end
@@ -75,7 +78,7 @@ class EmailsController < AuthenticatedController
   end
 
   def email_params
-    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit)
+    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message)
   end
 
   def rescue_with_email_not_found

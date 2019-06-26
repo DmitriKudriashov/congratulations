@@ -1,4 +1,6 @@
-<h1> Edit Card Text</h1>
+<h1> Edit Card Text
+  <%= " : #{@cardtext.id}" %>
+</h1>
 <%= render 'form' %>
 <p>
   <%= link_to 'Back to all Card Text', cardtexts_path %>

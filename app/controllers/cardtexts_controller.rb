@@ -52,7 +52,7 @@ class CardtextsController < AuthenticatedController
   end
 
   def cardtext_params
-    params.require(:cardtext).permit(:filename, :text)
+    params.require(:cardtext).permit(:filename, :text, :holiday_id)
   end
 
   def rescue_with_cardtext_not_found
