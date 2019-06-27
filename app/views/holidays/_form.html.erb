@@ -6,8 +6,10 @@
     <%= form.text_field :name %>
   </p>
   <p>
-    <%= 'Type: ' %>:
-    <%= form.collection_select :type_id, Type.all, :id, :name, prompt: 'Select Type Holiday' %>
+    <%= 'Type: ' %>
+    <%#= form.collection_select :type_id, Type.all, :id, :name, prompt: 'Select Type Holiday' %>
+    <%= form.collection_select :type_id, Type.all, :id, :name,
+        { prompt: "Select Type Holiday",  id: "holiday_type_id" } %>
   </p>
   <p> <%= form.submit %> </p>
 <% end %>

@@ -10,21 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
+//= require jquery
+// require jquery-ui
+// require jquery_ujs
+// require rails-ujs
 //= require activestorage
-//= require turbolinks
-//= require jquery3
+// require turbolinks
+// require jquery3
 //= require popper
-//= require bootstrap-sprockets
+//= require select2
+// require bootstrap-sprockets
 //= require_tree .
-// example from http://dreamhelg.ru/2009/08/learning-jquery-hide-and-show-methods/
-//---------------------------------------
-// $().ready(function(){
-//            $("#menu_com ul li").hover(
-//             function(){
-//                $(this).find('ul').show();
-//            },
-//             function(){
-//                $(this).find('ul').hide();
-//            })
-//        })

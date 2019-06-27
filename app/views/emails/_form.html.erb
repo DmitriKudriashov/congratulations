@@ -5,8 +5,6 @@
   <p>
     <%= 'FOR HOLIDAY: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
-  </p>
-  <p>
     <%= 'Will be Send: ' %>
     <%= date_select :will_send, start_year: Time.now, end_year: Time.now.year , order: [:month, :day] %>
   </p>
