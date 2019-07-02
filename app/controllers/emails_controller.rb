@@ -118,7 +118,7 @@ class EmailsController < AuthenticatedController
     list_people_mails.each do |data_hash|
         person = Person.find(data_hash[:person_id])
         mail_address = MailAddress.find(data_hash[:mail_address_id])
-
+        year = holiday_date.year == 0 ? Time.now.year : holiday_date.year
         create_new_email({
           name: " #{person.name},  #{for_holiday.name}",
           holiday_id: for_holiday.id,
@@ -126,6 +126,7 @@ class EmailsController < AuthenticatedController
           mail_address_id: data_hash[:mail_address_id],
           will_send: will_send,
           person_id: person.id,
+          year: year,
           message: "Conratulations! Happy: #{for_holiday.name} "
         })
     end
@@ -156,7 +157,9 @@ class EmailsController < AuthenticatedController
     email_new.will_send = opt[:will_send]
     email_new.message = opt[:message]
     email_new.person_id = opt[:person_id]
-    unless Email.where(holiday_id: opt[:holiday_id], will_send: opt[:will_send], person_id: opt[:person_id]).present?
+    email_new.year = opt[:year]
+
+    unless Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id]).present?
       email_new.save
       add_postcard(email_new)
       # add_cardtext(email_new)
@@ -188,14 +191,9 @@ class EmailsController < AuthenticatedController
     # ps = Postcard.
   end
 
-
-
-  def unvalid?
-    Email.where(holiday_id: params[:holiday_id], will_send: params[:will_send], person_id: params[:person_id]).present? ? true : false
-  end
-
   def set_emails
-    @emails = Email.all
+    year = Time.now.year
+    @emails = Email.where(year: year)
   end
 
   def find_email
@@ -211,7 +209,7 @@ class EmailsController < AuthenticatedController
   end
 
   def email_params
-    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message, :person_id)
+    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message, :person_id, :year)
   end
 
   def rescue_with_email_not_found
