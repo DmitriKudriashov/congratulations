@@ -7,6 +7,7 @@ class Email < ApplicationRecord
 
   belongs_to :mail_address
   belongs_to :holiday
+  belongs_to :person
 
 
   def greetings_text
@@ -16,8 +17,6 @@ class Email < ApplicationRecord
   def self.new_emails_to_date(date)
     dh = DatesHoliday.first
     dh.holiday.companies.first.people.first.dob_month
-
-
   end
 
 end

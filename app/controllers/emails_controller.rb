@@ -15,15 +15,15 @@ class EmailsController < AuthenticatedController
   def edit; end
 
   def update
-    if @email.update(email_params)
-      # redirect_to email_path(@email)
+    begin
+      @email.update(email_params)
+    rescue ActiveRecord::RecordNotUnique => e
+      flash[:alert] =   "Emails Already Exist !"
+      render :edit
+      return
+    end
     flash[:notice] = 'Update SUCCESSFULY !'
     redirect_to emails_path
-    else
-      flash[:alert] = 'Update ERROR !!!'
-      set_email_cards
-      render :edit
-    end
   end
 
   def send_e
@@ -48,12 +48,15 @@ class EmailsController < AuthenticatedController
 
   def create
     @email = Email.new(email_params)
-    if @email.save
-      # redirect_to email_path(@email), notice: 'Success!'
-      redirect_to emails_path, notice: 'Success!'
-    else
+    begin
+      @email.save
+    rescue ActiveRecord::RecordNotUnique => e
+      flash[:alert] =   "Emails Already Exist !"
       render :new
+      return
     end
+      # redirect_to email_path(@email), notice: 'Success!'
+      redirect_to emails_path, notice: 'Crete New Email Successfully!'
   end
 
   def destroy
@@ -122,6 +125,7 @@ class EmailsController < AuthenticatedController
           address: person.email,
           mail_address_id: data_hash[:mail_address_id],
           will_send: will_send,
+          person_id: person.id,
           message: "Conratulations! Happy: #{for_holiday.name} "
         })
     end
@@ -151,9 +155,10 @@ class EmailsController < AuthenticatedController
     email_new.checkit = 0
     email_new.will_send = opt[:will_send]
     email_new.message = opt[:message]
-    unless Email.where(holiday_id: opt[:holiday_id], will_send: opt[:will_send], address: opt[:address]).present?
+    email_new.person_id = opt[:person_id]
+    unless Email.where(holiday_id: opt[:holiday_id], will_send: opt[:will_send], person_id: opt[:person_id]).present?
       email_new.save
-      # add_postcard(email_new)
+      add_postcard(email_new)
       # add_cardtext(email_new)
        flash[:notice] = " Created New Emails ! "
     else
@@ -163,7 +168,7 @@ class EmailsController < AuthenticatedController
   end
 
   def add_postcard(email)
-    # ps = Postcard.
+
     # ps = Postcard.joins(:email_cards).where(holiday_id: 2).joins(:emails).count
     # ems = Email.all
     # ems.joins(mail_address: :companies_person)
@@ -185,7 +190,9 @@ class EmailsController < AuthenticatedController
 
 
 
-
+  def unvalid?
+    Email.where(holiday_id: params[:holiday_id], will_send: params[:will_send], person_id: params[:person_id]).present? ? true : false
+  end
 
   def set_emails
     @emails = Email.all
@@ -204,7 +211,7 @@ class EmailsController < AuthenticatedController
   end
 
   def email_params
-    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message)
+    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message, :person_id)
   end
 
   def rescue_with_email_not_found
