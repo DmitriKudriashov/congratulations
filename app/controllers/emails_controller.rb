@@ -17,13 +17,21 @@ class EmailsController < AuthenticatedController
   def update
     begin
       @email.update(email_params)
+
     rescue ActiveRecord::RecordNotUnique => e
       flash[:alert] =   "Emails Already Exist !"
       render :edit
       return
     end
-    flash[:notice] = 'Update SUCCESSFULY !'
-    redirect_to emails_path
+    @email.year = @email.will_send.year
+    if already_exists?({holiday_id: @email.holiday_id, person_id: @email.person_id, year: @email.year})
+      @email.save
+      flash[:notice] = 'Update SUCCESSFULY !'
+      redirect_to emails_path
+    else
+      flash[:alert] =   "The Email for this Holiday in #{@email.year} Already Exist !"
+      render :edit
+    end
   end
 
   def send_e
@@ -40,16 +48,17 @@ class EmailsController < AuthenticatedController
   def show; end
 
   def create_emails
-
-      set_holiday(Time.now)
-
-      redirect_to emails_path
+    set_holiday(Time.now)
+    redirect_to emails_path
   end
 
   def create
-    @email = Email.new(email_params)
+    @email = Email.create(email_params)
+    @email.year = @email.will_send.year
+    # set_email_fields(@email, email_params) #
     begin
       @email.save
+
     rescue ActiveRecord::RecordNotUnique => e
       flash[:alert] =   "Emails Already Exist !"
       render :new
@@ -70,6 +79,9 @@ class EmailsController < AuthenticatedController
   end
 
   private
+  def set_year(date)
+    date.year  #DatesHoliday.where(holiday_id: params[:holiday_id]).order(year: :desc)
+  end
 
   def set_holiday(date)
     d = date.day
@@ -126,6 +138,7 @@ class EmailsController < AuthenticatedController
           mail_address_id: data_hash[:mail_address_id],
           will_send: will_send,
           person_id: person.id,
+          checkit: 0,
           year: year,
           message: "Conratulations! Happy: #{for_holiday.name} "
         })
@@ -147,21 +160,29 @@ class EmailsController < AuthenticatedController
     #   }], :emails).select('dates_holidays.id,dates_holidays.day, dates_holidays.month').order('dates_holidays.id')
 
     # найти почтовые открытки для этого праздника, и не использовавшиеся ранее для этого человека
+  def set_email_fields(email, opt = {})
+    email.name = opt[:name]
+    email.holiday_id = opt[:holiday_id]
+    email.address = opt[:address]
+    email.mail_address_id = opt[:mail_address_id]
+    email.checkit = opt[:checkit]
+    email.will_send = opt[:will_send]
+    email.message = opt[:message]
+    email.person_id = opt[:person_id]
+    email.year = opt[:will_send].year
+  end
+
+  def already_exists?(opt = {})
+    Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id]).present?
+  end
+
   def create_new_email(opt = {})
-    email_new = Email.new
-    email_new.name = opt[:name]
-    email_new.holiday_id = opt[:holiday_id]
-    email_new.address = opt[:address]
-    email_new.mail_address_id = opt[:mail_address_id]
-    email_new.checkit = 0
-    email_new.will_send = opt[:will_send]
-    email_new.message = opt[:message]
-    email_new.person_id = opt[:person_id]
-    email_new.year = opt[:year]
+    @email_new = Email.new
+    set_email_fields(@email_new, opt)
 
     unless Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id]).present?
-      email_new.save
-      add_postcard(email_new)
+      @email_new.save
+      add_postcard(@email_new)
       # add_cardtext(email_new)
        flash[:notice] = " Created New Emails ! "
     else

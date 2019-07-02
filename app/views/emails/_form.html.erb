@@ -8,7 +8,7 @@
     <%= 'FOR HOLIDAY: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
     <%= 'Will be Send: ' %>
-    <%= date_select :email, :will_send, start_year: Time.now.year, end_year: Time.now.year  %>
+    <%= date_select :email, :will_send, start_year: Time.now.year, end_year: Time.now.year + 1 %>
   </p>
   <p>
     <%= "Name This Email: "  %>
