@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   devise_for :users, path: :congratulation, path_names: { sign_in: :login, sign_out: :logout }
 
-
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root  'dates_holidays#index'
@@ -24,9 +23,10 @@ Rails.application.routes.draw do
 
   get '/emails/send/:id(.:format)', to: 'emails#send_e'
 
+  get '/emails/create_emails', to: 'emails#create_emails', except: :show
+
   resources :postcards, only: [:index, :new, :create]
   resources :cardtexts, only: [:index, :new, :create]
-
 
   resources :emails do
     resources :email_cards, shallow: true, except: [:index, :edit] do
@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   resources :companies do
     resources :companies_people, shallow: true
   end
+
   resources :types
   resources :holidays do
     resources :dates_holidays, shallow: true #, except: :index
@@ -58,9 +59,5 @@ Rails.application.routes.draw do
     # end
     resources :countries_holidays,  shallow: true
   end
-
-
-# post '/send-greeting', to: 'application#greeting_mailer_send'
-# get '/greeting', to: 'application#greeting'
 
 end

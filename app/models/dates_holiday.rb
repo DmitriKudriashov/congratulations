@@ -3,6 +3,7 @@ class DatesHoliday < ApplicationRecord
 
   MONTHNAMES = ["","January","February","March","April","May","June","July",
                 "August", "September", "October", "November", "December" ].freeze
+  scope :holidays_to_date, -> (day, month, year) { where(day: day, month: month, year: year) }
 
   def list_companies
     self.holiday.companies
@@ -14,6 +15,11 @@ class DatesHoliday < ApplicationRecord
     return '---' if holiday.nil?
     holiday.name
   end
+
+  def self.list_to_day(day, month)
+    self.holidays_to_date(day, month,0)
+  end
+
   def name_month
     MONTHNAMES[self.month]
   end
@@ -46,5 +52,21 @@ class DatesHoliday < ApplicationRecord
     end
     list
   end
+
+  def self.easter(year)
+    c = year/100
+    n = year - 19*(year/19)
+    k = (c-17)/25
+    i = c - c/4 - (c-k)/3 + 19*n + 15
+    i = i - 30*(i/30)
+    i = i - (i/28)* (1 -(i/28)*(29/(i + 1))*((21-n)/11))
+    j = year + year/4 + i + 2 - c + c/4
+    j = j - 7*(j/7)
+    l = i - j
+    month = 3 + (l+40)/44
+    day = (28 + l ) - 31 * (month/4)
+    [month, day]
+  end
+
 
 end

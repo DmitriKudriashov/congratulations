@@ -1,8 +1,11 @@
 <table class="container">
    <h1> Emails </h1>
-   <p>
-     <%= link_to 'New Email', new_email_path %>
-   </p>
+      <li class="nav-item active">
+         <%= link_to 'New Email', new_email_path %>
+      </li>
+      <li class="nav-item active">
+      <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
+      </li>
 
    <% if @emails.present? %>
      <table class="table table-bordered">

@@ -9,7 +9,7 @@
     <%= date_select :will_send, start_year: Time.now, end_year: Time.now.year , order: [:month, :day] %>
   </p>
   <p>
-    <%= form.label :name %>
+    <%= "Name This Email: "  %>
     <%= form.text_field :name %>
     <%= form.label :address %>
     <%= form.text_field :address %>
@@ -18,9 +18,11 @@
     <%= 'Company Email Address: ' %>:
     <%= form.collection_select :mail_address_id, MailAddress.all, :id, :email, prompt: 'Select Mail Address Company' %>
   </p>
-  <ol class="table-bordered">
-    <%= render @email.cardtexts if @email.cardtexts.present? %>
-  </ol>
+<!--   <ol class="table-bordered">
+    <%#= render @email.cardtexts if @email.cardtexts.present? %>
+  </ol
+ -->
+
   <p>
     <%= form.label :message %>
     <%= form.text_area :message, rows: 3, cols: 50, class: 'form-control' %>

@@ -1,3 +1,3 @@
-$(document).ready(function(){
-  $('.holiday_type_id').select2();
-});
+// $(document).ready(function(){
+//   $('.holiday_type_id').select2();
+// });

@@ -7,5 +7,19 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def list_holidays_to_date(day, month)
+    Holiday.where(day: day, month: month)
+  end
 
+  def lis_companies_people_to_holiday(holiday)
+
+  end
+
+  def list_people_birthday(date)
+
+  end
+
+  def list_pervious_email(person)
+
+  end
 end
