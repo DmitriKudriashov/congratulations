@@ -42,7 +42,6 @@ class EmailsController < AuthenticatedController
   def create_emails
 
       set_holiday(Time.now)
-      flash[:notice] = " Created New Emails ! "
 
       redirect_to emails_path
   end
@@ -150,15 +149,16 @@ class EmailsController < AuthenticatedController
     email_new.address = opt[:address]
     email_new.mail_address_id = opt[:mail_address_id]
     email_new.checkit = 0
-    email_new.will_send = opt[:will_send].to_datetime
+    email_new.will_send = opt[:will_send]
     email_new.message = opt[:message]
-    unless Email.where(holiday_id: opt[:holiday_id], will_send: opt[:will_send]).present?
+    unless Email.where(holiday_id: opt[:holiday_id], will_send: opt[:will_send], address: opt[:address]).present?
       email_new.save
       # add_postcard(email_new)
       # add_cardtext(email_new)
+       flash[:notice] = " Created New Emails ! "
     else
       # flash[:alert] = " For #{Holiday.find( opt[:holiday_id])/.name} to #{opt[:will_send]} Email Already Exist! "
-      flash[:alert] = "Email Already Exist! "
+      flash[:alert] = "Emails Already Exist! "
     end
   end
 

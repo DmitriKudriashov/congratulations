@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_24_150406) do
+ActiveRecord::Schema.define(version: 2019_07_02_055700) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
@@ -108,8 +108,8 @@ ActiveRecord::Schema.define(version: 2019_06_24_150406) do
     t.datetime "updated_at", null: false
     t.integer "mail_address_id"
     t.integer "checkit"
-    t.date "sent_date"
-    t.datetime "will_send"
+    t.datetime "sent_date"
+    t.date "will_send"
     t.text "message"
     t.integer "holiday_id"
     t.index ["address"], name: "index_emails_on_address"
