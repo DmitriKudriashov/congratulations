@@ -47,7 +47,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'rails_admin', '~> 1.3'
 
 gem "select2-rails"
-
+gem 'active_record_union'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

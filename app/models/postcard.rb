@@ -4,12 +4,14 @@ class Postcard < ApplicationRecord
 
   validates :image, attachment_presence: true
   validates_with AttachmentPresenceValidator, attributes: :image
-  validates_with AttachmentSizeValidator, attributes: :image, less_than: 100.kilobytes
+  validates_with AttachmentSizeValidator, attributes: :image , less_than: 2.megabytes
 
 
   has_many :email_cards, dependent: :restrict_with_error
   has_many :emails, through: :email_cards
 
   belongs_to :holiday
+
+  scope :for_holiday_id, -> (id) { where(holiday_id: id)}
 
 end

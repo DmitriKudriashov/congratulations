@@ -202,6 +202,45 @@ class EmailsController < AuthenticatedController
     # ems.joins([{email_cards: :postcard}], mail_address: [{companies_person: :person}]).select('people.id').where('postcards.id = 2')
 
     #  people_ids = Postcard.joins(email_cards: [{email: [{mail_address: [companies_person: :person]}]}]).select('people.id').distinct
+
+    # pcd = Postcard.left_outer_joins(email_cards: [email: [mail_address: [companies_person: :person]]]).where('emails.id is null').where(holiday_id: 6).select(:id)
+
+    postcards_for_holiday = Postcard.for_holiday_id(email.holiday_id)
+    unless postcards_for_holiday.present?
+      flash[:alert] = "Not found Postcards for Holiday: #{Holiday.find(email.holiday_id).name} "
+      return
+
+    end
+
+      cards_for_holiday = postcards_for_holiday.left_outer_joins(email_cards: [email: :person])
+    # unless cards_for_holiday.present?
+    #   flash[:alert] = "Not found Postcards for Holiday: #{Holiday.find(email.holiday_id).name} "
+    #   return
+    # end
+
+    cards_ids = cards_for_holiday.select(:id)
+
+
+    only_null =  cards_ids.where('people.id is null')
+    unless cards_ids.present?
+      flash[:alert] = "Not found FREE Postcards for Holiday: #{Holiday.find(email.holiday_id).name}  "
+
+      return
+    end
+
+    cards_no_using_id = only_null.first.id
+
+    begin
+      new_link_email_card = EmailCard.create({
+          email_id: email.id,
+          postcard_id: cards_no_using_id
+        })
+    rescue ActiveRecord::RecordNotUnique => e
+
+      flash[:alert] =   "Emails Already Exist !"
+      return
+    end
+      flash[:notice] =   "Successfully Added new record !Link Email - Post Card"
   end
 
   def add_cardtext(email)

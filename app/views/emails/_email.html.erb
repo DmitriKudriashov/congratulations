@@ -24,6 +24,11 @@
     <%#= email.checkit %>
   </td>
  -->
+  <td>
+    <% email.postcards.each do |postcard|  %>
+      <%= image_tag postcard.image.url(:small) %>
+    <% end %>
+  </td>
   <td align="center">
     <%= email.will_send if email.will_send.present? %>
   </td>

@@ -20,6 +20,7 @@
     <thead class="thead-light" align="center">
       <tr>
         <th> Post Card </th>
+        <th> Holiday </th>
       </tr>
     </thead>
 
@@ -29,6 +30,9 @@
       <td>
         <%= image_tag email_card.postcard.image.url(:small) %>
         <%= email_card.postcard.filename %>
+      </td>
+      <td>
+        <%= email_card.postcard.holiday.name %>
       </td>
       <td>
         <%= link_to 'edit', edit_email_card_path(email_card.id) %>
@@ -52,6 +56,6 @@
 
 
 
- <%#= render 'list_email_texts', email: @email  %>
+ <%= render 'list_email_texts', email: @email  %>
 
 
