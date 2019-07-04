@@ -100,8 +100,7 @@ class EmailsController < AuthenticatedController
     # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
     # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
 
-    people_holiday = Person.joins(companies_people: [company: [companies_holidays: :holiday]] ).
-                            where("holidays.id = #{holiday.id}").order(:name)
+    people_holiday = Person.joins(companies_people: [company: [companies_holidays: :holiday]] ).where("holidays.id = #{holiday.id}").order(:name)
 
     list_people_mails = []
     people_holiday.each do |person|
@@ -193,18 +192,6 @@ class EmailsController < AuthenticatedController
 
   def add_postcard(email)
 
-    # ps = Postcard.joins(:email_cards).where(holiday_id: 2).joins(:emails).count
-    # ems = Email.all
-    # ems.joins(mail_address: :companies_person)
-    # Person.where(email: "name1@gmail.com").joins(:companies).select('people.id, people.name, companies.name')
-    # ems.joins(:email_cards, mail_address: [{companies_person: :person}]).select('email_cards.id').where('email_cards.id = 15')
-    #  ems.joins([{email_cards: :postcard}], mail_address: [{companies_person: :person}]).select('postcards.id').distinct
-    # ems.joins([{email_cards: :postcard}], mail_address: [{companies_person: :person}]).select('people.id').where('postcards.id = 2')
-
-    #  people_ids = Postcard.joins(email_cards: [{email: [{mail_address: [companies_person: :person]}]}]).select('people.id').distinct
-
-    # pcd = Postcard.left_outer_joins(email_cards: [email: [mail_address: [companies_person: :person]]]).where('emails.id is null').where(holiday_id: 6).select(:id)
-
     postcards_for_holiday = Postcard.for_holiday_id(email.holiday_id)
     unless postcards_for_holiday.present?
       flash[:alert] = "Not found Postcards for Holiday: #{Holiday.find(email.holiday_id).name} "
@@ -212,20 +199,22 @@ class EmailsController < AuthenticatedController
 
     end
 
-      cards_for_holiday = postcards_for_holiday.left_outer_joins(email_cards: [email: :person])
-    # unless cards_for_holiday.present?
-    #   flash[:alert] = "Not found Postcards for Holiday: #{Holiday.find(email.holiday_id).name} "
-    #   return
-    # end
+    cards_for_holiday = postcards_for_holiday.left_outer_joins(email_cards: [email: :person])
+    unless cards_for_holiday.present?
+      flash[:alert] = "Not found Postcards for Holiday: #{Holiday.find(email.holiday_id).name} "
+      return
+    end
 
     cards_ids = cards_for_holiday.select(:id)
-
-
     only_null =  cards_ids.where('people.id is null')
     unless cards_ids.present?
       flash[:alert] = "Not found FREE Postcards for Holiday: #{Holiday.find(email.holiday_id).name}  "
 
       return
+    end
+    if  only_null.first.nil?
+       flash[:alert] = "Not found NEW Postcards for Holiday: #{Holiday.find(email.holiday_id).name}  "
+       return
     end
 
     cards_no_using_id = only_null.first.id
