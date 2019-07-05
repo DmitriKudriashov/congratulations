@@ -1,15 +1,16 @@
 <%= form_with model: @holiday, local: true do |form| %>
   <p>
-    <%= form.label :name %>
-  </p>
-  <p>
-    <%= form.text_field :name %>
+    <%= "Holiday name:" %>
+
+    <%= form.text_field :name, size: 50 %>
   </p>
   <p>
     <%= 'Type: ' %>
-    <%#= form.collection_select :type_id, Type.all, :id, :name, prompt: 'Select Type Holiday' %>
     <%= form.collection_select :type_id, Type.all, :id, :name,
-        { prompt: "Select Type Holiday",  id: "holiday_type_id" } %>
+        { prompt: "Type select", id: "holiday_type_id" } %>
   </p>
   <p> <%= form.submit %> </p>
 <% end %>
+<script>
+  $('select').select2();
+</script>
