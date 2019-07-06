@@ -45,7 +45,7 @@ class MailAddressesController < AuthenticatedController
   private
 
   def set_mail_addresses
-    @mail_addresses = MailAddress.all
+    @mail_addresses = MailAddress.paginate(page: params[:page]) # .all
   end
 
   def find_mail_address

@@ -44,7 +44,7 @@ class CardtextsController < AuthenticatedController
   private
 
   def set_cardtexts
-    @cardtexts = Cardtext.all
+    @cardtexts = Cardtext.paginate(page: params[:page]) # .all
   end
 
   def find_cardtext

@@ -5,7 +5,7 @@ class DatesHolidaysController < AuthenticatedController
 
   def index
     find_holiday
-    @dates_holidays = @holiday.nil? ? DatesHoliday.all : @holiday.dates_holidays
+    @dates_holidays = @holiday.nil? ? set_dates_holidays : @holiday.dates_holidays
     @dates_holidays = @dates_holidays.order(:month, :day)
     today = Time.now()
     month = today.month
@@ -65,7 +65,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def set_dates_holidays
-    @dates_holidays = DatesHoliday.all
+    @dates_holidays = DatesHoliday.paginate(page: params[:page]) # .all
   end
 
   def find_dates_holiday

@@ -29,7 +29,7 @@ class HolidaysController < AuthenticatedController
     @holiday = Holiday.new(holiday_params)
     if @holiday.save
       # redirect_to holiday_path(@holiday), notice: 'Success!'
-      redirect_to holidays_path, notice: 'Success!'
+      redirect_to holidays_path #, notice: 'Success!'
     else
       render :new
     end
@@ -48,7 +48,7 @@ class HolidaysController < AuthenticatedController
   private
 
   def set_holidays
-    @holidays = Holiday.all
+    @holidays = Holiday.paginate(page: params[:page]) #, per_page: 5)
   end
 
   def find_holiday

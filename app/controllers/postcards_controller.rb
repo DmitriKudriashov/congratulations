@@ -49,7 +49,7 @@ class PostcardsController < AuthenticatedController
   private
 
   def set_postcards
-    @postcards = Postcard.all
+    @postcards = Postcard.paginate(page: params[:page])  # .all
   end
 
   def find_postcard

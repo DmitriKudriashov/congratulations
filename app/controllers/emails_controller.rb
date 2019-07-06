@@ -5,7 +5,8 @@ class EmailsController < AuthenticatedController
   before_action :set_email_texts, only: %i[show edit]
 
   def index
-    set_emails
+    year = Time.now.year
+    @emails = Email.where(year: year).order(updated_at: :desc).paginate(page: params[:page]) # set_emails
   end
 
   def new
@@ -77,7 +78,7 @@ class EmailsController < AuthenticatedController
 
     @email.destroy
 
-    redirect_to emails_path, notice: 'Destroy !'
+    redirect_to emails_path #, notice: 'Destroy !'
   end
 
   def search

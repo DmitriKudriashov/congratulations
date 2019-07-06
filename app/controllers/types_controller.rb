@@ -43,7 +43,7 @@ class TypesController < AuthenticatedController
   private
 
   def set_types
-    @types = Type.all
+    @types = Type.paginate(page: params[:page]) # .all
   end
 
   def find_type

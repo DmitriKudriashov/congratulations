@@ -5,7 +5,7 @@ class EmailCardsController < AuthenticatedController
   before_action :find_email, only: %i[new create edit update destroy]
 
   def index
-    @email_cards = @email.nil? ? EmailCard.all : EmailCard.where(email_id: params[:email_id])
+    @email_cards = @email.nil? ?  set_email_cards : EmailCard.where(email_id: params[:email_id])
   end
 
   def new
@@ -64,7 +64,7 @@ class EmailCardsController < AuthenticatedController
   end
 
   def set_email_cards
-    @email_cards = EmailCard.all
+    @email_cards = EmailCard.paginate(page: params[:page]) # .all
   end
 
   def find_email_card

@@ -61,7 +61,7 @@ class CompaniesPeopleController < AuthenticatedController
   end
 
   def set_companies_people
-    @companies_people = CompaniesPerson.all
+    @companies_people = CompaniesPerson.paginate(page: params[:page]) # .all
   end
 
   def find_companies_person

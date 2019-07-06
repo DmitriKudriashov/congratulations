@@ -47,7 +47,7 @@ class CompaniesController < AuthenticatedController
   private
 
   def set_companies
-    @companies = Company.all
+    @companies = Company.order(:name).paginate(page: params[:page]) # .all
   end
 
   def find_company

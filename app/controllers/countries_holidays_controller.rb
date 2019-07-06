@@ -60,7 +60,7 @@ class CountriesHolidaysController < AuthenticatedController
   end
 
   def set_countries_holidays
-    @countries_holidays = CountriesHoliday.all
+    @countries_holidays = CountriesHoliday.paginate(page: params[:page]) # .all
   end
 
   def find_countries_holiday

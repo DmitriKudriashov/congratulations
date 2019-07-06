@@ -1,4 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
+
+  self.per_page = 5
+
   self.abstract_class = true
   # scope :holidays_to_date, ->(day, month, year) { where("day = ? and month = ? and year = ?", day, month, year) }
 

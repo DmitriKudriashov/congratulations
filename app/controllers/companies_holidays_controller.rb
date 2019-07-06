@@ -62,7 +62,7 @@ class CompaniesHolidaysController < AuthenticatedController
   end
 
   def set_companies_holidays
-    @companies_holidays = CompaniesHoliday.all
+    @companies_holidays = CompaniesHoliday.paginate(page: params[:page]) # .all
   end
 
   def find_companies_holiday

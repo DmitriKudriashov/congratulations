@@ -1,24 +1,26 @@
-<table class="container">
-   <h3> Holidays </h3>
-   <p>
-     <%= link_to 'New Holiday', new_holiday_path %>
-   </p>
+<h3> Holidays </h3>
+<div class="digg_pagination">
+  <%= will_paginate @holidays, :container => false %>
+</div>
 
-   <% if @holidays.present? %>
-     <table class="table table-bordered">
-       <thead class="thead-light" align="center">
-        <tr>
-          <th > N </th>
-          <th > Holiday </th>
-          <th > Type </th>
-        </tr>
-       </thead>
-          <%= render @holidays %>
-     </table>
-   <% else %>
-     <p>
-       <%= 'Empty list' %>
-     </p>
+<%= link_to 'New Holiday', new_holiday_path %>
+
+<table class="container">
+  <% if @holidays.present? %>
+    <table class="table table-bordered">
+      <thead class="thead-light" align="center">
+       <tr>
+         <th > N </th>
+         <th > Holiday </th>
+         <th > Type </th>
+      </tr>
+     </thead>
+        <%= render @holidays %>
+    </table>
+  <% else %>
+    <p>
+      <%= 'Empty list' %>
+    </p>
   <% end %>
-  </table>
+</table>
 
