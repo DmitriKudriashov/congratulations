@@ -8,8 +8,9 @@ set :rvm_ruby_version, '2.5.3'
 # we use custom branch for deployment instead of 'master'
 set :branch, 'for_relise_0'
 
-# Default deploy_to directory is /var/www/my_app_name
-# set :deploy_to, "/var/www/my_app_name"
+# Default deploy_to directory is /var/www/congratulations
+# We don't use "/var/www/congratulations-#{fetch(:stage)}" for this simple app
+set :deploy_to, "/var/www/congratulations"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
