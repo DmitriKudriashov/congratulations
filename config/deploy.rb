@@ -6,7 +6,7 @@ set :repo_url, 'git@github.com:DmitriKudriashov/congratulations.git'
 set :rvm_ruby_version, '2.5.3'
 
 # we use custom branch for deployment instead of 'master'
-set :branch, 'for_relise_0'
+set :branch, 'capistrano_deployment'
 
 # Default deploy_to directory is /var/www/congratulations
 # We don't use "/var/www/congratulations-#{fetch(:stage)}" for this simple app
