@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HolidaysController < AuthenticatedController
   # before_action :set_holidays, only: %i[index]
   before_action :find_holiday, only: %i[show update destroy]
@@ -22,14 +24,13 @@ class HolidaysController < AuthenticatedController
     end
   end
 
-
   def show; end
 
   def create
     @holiday = Holiday.new(holiday_params)
     if @holiday.save
       # redirect_to holiday_path(@holiday), notice: 'Success!'
-      redirect_to holidays_path #, notice: 'Success!'
+      redirect_to holidays_path # , notice: 'Success!'
     else
       render :new
     end
@@ -48,7 +49,7 @@ class HolidaysController < AuthenticatedController
   private
 
   def set_holidays
-    @holidays = Holiday.paginate(page: params[:page]) #, per_page: 5)
+    @holidays = Holiday.order(:name) #.paginate(page: params[:page]) # , per_page: 5)
   end
 
   def find_holiday
@@ -58,6 +59,7 @@ class HolidaysController < AuthenticatedController
   def set_holiday_companies
     @companies_holidays = find_holiday.companies_holidays
   end
+
   def holiday_params
     params.require(:holiday).permit(:name, :type_id)
   end

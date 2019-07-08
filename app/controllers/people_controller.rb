@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class PeopleController < AuthenticatedController
   before_action :set_people, only: %i[index]
   before_action :find_person, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @person = Person.new
@@ -12,13 +14,12 @@ class PeopleController < AuthenticatedController
 
   def update
     if @person.update(person_params)
-#      redirect_to person_path(@person)
+      #      redirect_to person_path(@person)
       redirect_to people_path
     else
       render :edit
     end
   end
-
 
   def show; end
 
@@ -53,7 +54,7 @@ class PeopleController < AuthenticatedController
   end
 
   def person_params
-    params.require(:person).permit(:name, :email, :country_id, :company_id, :birthday )
+    params.require(:person).permit(:name, :email, :country_id, :company_id, :birthday)
   end
 
   def rescue_with_person_not_found

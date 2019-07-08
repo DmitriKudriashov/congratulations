@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EmailTextsController < AuthenticatedController
   before_action :set_email_texts, only: %i[index]
   before_action :find_email_text, only: %i[show edit update destroy]
@@ -19,7 +21,6 @@ class EmailTextsController < AuthenticatedController
   def edit; end
 
   def update
-
     if @email_text.update(email_text_params)
       redirect_to email_email_texts_path(@email_text.email_id), notice: 'EmailText was successfully updated.'
     else
@@ -39,7 +40,7 @@ class EmailTextsController < AuthenticatedController
   end
 
   def destroy
-    if @email_text.destroy  # надо бы проверить на успешность удаления
+    if @email_text.destroy # надо бы проверить на успешность удаления
       redirect_to email_email_texts_path(@email_text.email_id), notice: 'EmailText was successfully Destroy!'
     end
   end
@@ -75,4 +76,3 @@ class EmailTextsController < AuthenticatedController
     render plain: 'Email-Text record was not found!'
   end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddHolidayToEmailtext < ActiveRecord::Migration[5.2]
   def change
     add_reference :cardtexts, :holiday, foreign_key: true

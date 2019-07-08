@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EmailCardsController < AuthenticatedController
   # before_action :set_email_cards, only: %i[index]
   before_action :find_email_card, only: %i[show edit update destroy]
@@ -5,18 +7,16 @@ class EmailCardsController < AuthenticatedController
   before_action :find_email, only: %i[new create edit update destroy]
 
   def index
-    @email_cards = @email.nil? ?  set_email_cards : EmailCard.where(email_id: params[:email_id])
+    @email_cards = @email.nil? ? set_email_cards : EmailCard.where(email_id: params[:email_id])
   end
 
   def new
     @email_card =  @email.nil? ? EmailCard.new : @email.email_cards.new
   end
 
-
   def edit; end
 
   def update
-
     if @email_card.update(email_card_params)
       redirect_to edit_email_path(@email_card.email_id), notice: 'EmailCard was successfully updated.'
     else
@@ -28,10 +28,10 @@ class EmailCardsController < AuthenticatedController
 
   def create
     # byebug
-    @email_card = EmailCard.new(email_card_params)  # @card.email_cards.new(email_card_params)
+    @email_card = EmailCard.new(email_card_params) # @card.email_cards.new(email_card_params)
 
     if @email_card.save
-      redirect_to edit_email_path(@email_card.email_id), notice: 'Successully created!'  # email_email_cards_path(@email)
+      redirect_to edit_email_path(@email_card.email_id), notice: 'Successully created!' # email_email_cards_path(@email)
     else
       render :new
     end
@@ -39,7 +39,7 @@ class EmailCardsController < AuthenticatedController
 
   def destroy
     if @email_card.destroy
-      redirect_to  edit_email_path(@email_card.email_id), notice: 'EmailCard was successfully Destroy!'
+      redirect_to edit_email_path(@email_card.email_id), notice: 'EmailCard was successfully Destroy!'
       # redirect_to set_path_after_action(@email), notice: 'EmailCard was successfully Destroy!'
     end
   end
@@ -79,4 +79,3 @@ class EmailCardsController < AuthenticatedController
     render plain: 'Email-Card record was not found!'
   end
 end
-

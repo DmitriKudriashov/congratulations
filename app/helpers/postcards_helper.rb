@@ -1,5 +1,6 @@
-module PostcardsHelper
+# frozen_string_literal: true
 
+module PostcardsHelper
   # def postcard_image(postcard)
 
   #   path_postcard_files = "#{Rails.root}/app/assets/images/" #/public/upload/"
@@ -11,6 +12,4 @@ module PostcardsHelper
 
   #   image_tag(fileimage, size: "170x110")
   # end
-
-
 end

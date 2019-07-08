@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Email < ApplicationRecord
   has_many :email_cards, dependent: :restrict_with_error
   has_many :postcards, through: :email_cards
@@ -9,14 +11,12 @@ class Email < ApplicationRecord
   belongs_to :holiday
   belongs_to :person
 
-
   def greetings_text
-    self.cardtexts.first.present? ? self.cardtexts.first.text : "Text not avalable !"
+    cardtexts.first.present? ? cardtexts.first.text : 'Text not avalable !'
   end
 
-  def self.new_emails_to_date(date)
+  def self.new_emails_to_date(_date)
     dh = DatesHoliday.first
     dh.holiday.companies.first.people.first.dob_month
   end
-
 end

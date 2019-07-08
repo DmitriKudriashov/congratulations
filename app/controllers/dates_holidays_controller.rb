@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DatesHolidaysController < AuthenticatedController
   # before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
@@ -7,7 +9,7 @@ class DatesHolidaysController < AuthenticatedController
     find_holiday
     @dates_holidays = @holiday.nil? ? set_dates_holidays : @holiday.dates_holidays
     @dates_holidays = @dates_holidays.order(:month, :day)
-    today = Time.now()
+    today = Time.now
     month = today.month
     day = today.day
     # @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
@@ -31,15 +33,15 @@ class DatesHolidaysController < AuthenticatedController
   def show; end
 
   def redirect_after(notice)
-     if @holiday.nil?
-        redirect_to dates_holidays_path, notice: notice
-      else
-        redirect_to dates_holidays_path, notice: notice
-      end
+    if @holiday.nil?
+      redirect_to dates_holidays_path, notice: notice
+    else
+      redirect_to dates_holidays_path, notice: notice
+     end
   end
 
   def create
-    @dates_holiday = @holiday.nil? ?  DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
+    @dates_holiday = @holiday.nil? ? DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
     if @dates_holiday.save
       redirect_after('Successully created!')
     else
@@ -48,9 +50,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def destroy
-    if @dates_holiday.destroy
-       redirect_after('Date was successfully Destroy!')
-   end
+    redirect_after('Date was successfully Destroy!') if @dates_holiday.destroy
   end
 
   def search

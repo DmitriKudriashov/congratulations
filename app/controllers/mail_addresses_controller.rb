@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class MailAddressesController < AuthenticatedController
   before_action :set_mail_addresses, only: %i[index]
   before_action :find_mail_address, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @mail_address = MailAddress.new
@@ -12,13 +14,12 @@ class MailAddressesController < AuthenticatedController
 
   def update
     if @mail_address.update(mail_address_params)
-     # redirect_to mail_address_path(@mail_address), notice: 'Success!' # for show
+      # redirect_to mail_address_path(@mail_address), notice: 'Success!' # for show
       redirect_to mail_addresses_path, notice: 'Success!' # for list, index
-     else
+    else
       render :edit
     end
   end
-
 
   def show; end
 

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class CompaniesController < AuthenticatedController
   before_action :set_companies, only: %i[index]
   before_action :find_company, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @company = Company.new
@@ -19,7 +21,6 @@ class CompaniesController < AuthenticatedController
     end
   end
 
-
   def show; end
 
   def create
@@ -34,8 +35,8 @@ class CompaniesController < AuthenticatedController
 
   def destroy
     @company.destroy
-  # rescue StandardError => err
-  #   raise err.message
+    # rescue StandardError => err
+    #   raise err.message
     redirect_to companies_path, notice: 'Destroy !'
   end
 

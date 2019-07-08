@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -10,6 +12,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true, format: /.+@.+\..+/i
 
   def admin?
-    self.admin
+    admin
   end
 end

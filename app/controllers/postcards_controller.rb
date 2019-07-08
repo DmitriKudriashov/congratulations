@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class PostcardsController < AuthenticatedController
   before_action :set_postcards, only: %i[index]
   before_action :find_postcard, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @postcard = Postcard.new
@@ -49,7 +51,7 @@ class PostcardsController < AuthenticatedController
   private
 
   def set_postcards
-    @postcards = Postcard.paginate(page: params[:page])  # .all
+    @postcards = Postcard.paginate(page: params[:page]) # .all
   end
 
   def find_postcard

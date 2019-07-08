@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class TypesController < AuthenticatedController
   before_action :set_types, only: %i[index]
   before_action :find_type, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @type = Type.new
@@ -17,7 +19,6 @@ class TypesController < AuthenticatedController
       render :edit
     end
   end
-
 
   def show; end
 
@@ -58,4 +59,3 @@ class TypesController < AuthenticatedController
     render plain: 'Type was not found!'
   end
 end
-

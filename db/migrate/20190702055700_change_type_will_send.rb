@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeTypeWillSend < ActiveRecord::Migration[5.2]
   def self.up
     change_column :emails, :will_send, :date
@@ -8,5 +10,4 @@ class ChangeTypeWillSend < ActiveRecord::Migration[5.2]
     change_column :emails, :will_send, :datetime
     change_column :emails, :sent_date, :date
   end
-
 end

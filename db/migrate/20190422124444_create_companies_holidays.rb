@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCompaniesHolidays < ActiveRecord::Migration[5.2]
   def change
     create_table :companies_holidays do |t|
@@ -8,4 +10,3 @@ class CreateCompaniesHolidays < ActiveRecord::Migration[5.2]
     end
   end
 end
-

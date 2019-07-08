@@ -1,6 +1,6 @@
 <!-- <p> <%#= link_to 'New Date Holiday', new_holiday_dates_holiday_path(@dates_holidays) %> </p> -->
-<p> <%= link_to 'New Date Holiday', new_dates_holiday_path %> </p>
-
+<p> <%= link_to 'New Date Holiday', new_holiday_dates_holiday_path(holiday) %> </p>
+<% @dates_holidays = DatesHoliday.where(holiday_id: @holiday.id) %>
 <% if @dates_holidays.present? %>
   <table class="table table-bordered">
     <thead class="thead-light" align="center">

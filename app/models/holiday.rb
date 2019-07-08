@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Holiday < ApplicationRecord
   has_many :countries_holidays, dependent: :restrict_with_error
   has_many :countries, through: :countries_holidays
@@ -11,5 +13,4 @@ class Holiday < ApplicationRecord
   has_many :cardtexts, dependent: :restrict_with_error
   has_many :postcards, dependent: :restrict_with_error
   has_many :emails, dependent: :restrict_with_error
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EmailsController < AuthenticatedController
   # before_action :set_emails, only: %i[index]
   before_action :find_email, only: %i[show update destroy]
@@ -18,19 +20,18 @@ class EmailsController < AuthenticatedController
   def update
     begin
       @email.update(email_params)
-
     rescue ActiveRecord::RecordNotUnique => e
-      flash[:alert] =   "Emails Already Exist !"
+      flash[:alert] = 'Emails Already Exist !'
       render :edit
       return
     end
     @email.year = @email.will_send.year
-    if already_exists?({holiday_id: @email.holiday_id, person_id: @email.person_id, year: @email.year})
+    if already_exists?(holiday_id: @email.holiday_id, person_id: @email.person_id, year: @email.year)
       @email.save
       flash[:notice] = 'Update SUCCESSFULY !'
       redirect_to emails_path
     else
-      flash[:alert] =   "The Email for this Holiday in #{@email.year} Already Exist !"
+      flash[:alert] = "The Email for this Holiday in #{@email.year} Already Exist !"
       render :edit
     end
   end
@@ -38,12 +39,12 @@ class EmailsController < AuthenticatedController
   def send_e
     find_email
     if @email.checkit == 0
-      flash[:alert] = " This is NOT CHECKED Email yet ! "
+      flash[:alert] = ' This is NOT CHECKED Email yet ! '
     else
       GreetingsMailer.send_message(@email).deliver_now
-      flash[:notice] = " This is Email Sent SUCCESSFULY ! "
+      flash[:notice] = ' This is Email Sent SUCCESSFULY ! '
     end
-      redirect_to emails_path
+    redirect_to emails_path
   end
 
   def show; end
@@ -59,26 +60,25 @@ class EmailsController < AuthenticatedController
     # set_email_fields(@email, email_params) #
     begin
       @email.save
-
     rescue ActiveRecord::RecordNotUnique => e
-      flash[:alert] =   "Emails Already Exist !"
+      flash[:alert] = 'Emails Already Exist !'
       render :new
       return
     end
-      # redirect_to email_path(@email), notice: 'Success!'
-      redirect_to emails_path, notice: 'Crete New Email Successfully!'
+    # redirect_to email_path(@email), notice: 'Success!'
+    redirect_to emails_path, notice: 'Crete New Email Successfully!'
   end
 
   def destroy
     email_texts = EmailText.where(email_id: @email.id)
-    email_texts.each {|t| t.destroy}  if email_texts.present?
+    email_texts.each(&:destroy) if email_texts.present?
 
     email_cards = EmailCard.where(email_id: @email.id)
-    email_cards.each  {|t| t.destroy}  if email_cards.present?
+    email_cards.each(&:destroy) if email_cards.present?
 
     @email.destroy
 
-    redirect_to emails_path #, notice: 'Destroy !'
+    redirect_to emails_path # , notice: 'Destroy !'
   end
 
   def search
@@ -87,8 +87,9 @@ class EmailsController < AuthenticatedController
   end
 
   private
+
   def set_year(date)
-    date.year  #DatesHoliday.where(holiday_id: params[:holiday_id]).order(year: :desc)
+    date.year # DatesHoliday.where(holiday_id: params[:holiday_id]).order(year: :desc)
   end
 
   def set_holiday(date)
@@ -108,7 +109,7 @@ class EmailsController < AuthenticatedController
     # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
     # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
 
-    people_holiday = Person.joins(companies_people: [company: [companies_holidays: :holiday]] ).where("holidays.id = #{holiday.id}").order(:name)
+    people_holiday = Person.joins(companies_people: [company: [companies_holidays: :holiday]]).where("holidays.id = #{holiday.id}").order(:name)
 
     list_people_mails = []
     people_holiday.each do |person|
@@ -125,27 +126,26 @@ class EmailsController < AuthenticatedController
     list_people_mails
   end
 
-  def createemails(for_holiday, cards_no_using_id  )
-
+  def createemails(for_holiday, cards_no_using_id)
     list_people_mails = create_list_people_mails(for_holiday)
     holiday_date = DatesHoliday.where(holiday_id: for_holiday.id).first
     will_send = Date.new(Time.now.year, holiday_date.month, holiday_date.day)
     list_people_mails.each do |data_hash|
-        person = Person.find(data_hash[:person_id])
-        mail_address = MailAddress.find(data_hash[:mail_address_id])
-        year = holiday_date.year == 0 ? Time.now.year : holiday_date.year
-        create_new_email({
-          name: " #{person.name},  #{for_holiday.name}",
-          holiday_id: for_holiday.id,
-          address: person.email,
-          mail_address_id: data_hash[:mail_address_id],
-          will_send: will_send,
-          person_id: person.id,
-          checkit: 0,
-          year: year,
-          message: "Conratulations! Happy: #{for_holiday.name} \n #{add_cardtext(for_holiday)}"
-        },
-        cards_no_using_id)
+      person = Person.find(data_hash[:person_id])
+      mail_address = MailAddress.find(data_hash[:mail_address_id])
+      year = holiday_date.year == 0 ? Time.now.year : holiday_date.year
+      create_new_email({
+                         name: " #{person.name},  #{for_holiday.name}",
+                         holiday_id: for_holiday.id,
+                         address: person.email,
+                         mail_address_id: data_hash[:mail_address_id],
+                         will_send: will_send,
+                         person_id: person.id,
+                         checkit: 0,
+                         year: year,
+                         message: "Conratulations! Happy: #{for_holiday.name} \n #{add_cardtext(for_holiday)}"
+                       },
+                       cards_no_using_id)
     end
   end
 
@@ -174,7 +174,7 @@ class EmailsController < AuthenticatedController
       add_postcard(@email_new, cards_no_using_id) unless cards_no_using_id.nil?
       # add_cardtext(email_new)
       # flash[:notice] = " Created New Emails ! "
-    # else
+      # else
       # flash[:alert] = "Emails Already Exist! "
     end
   end
@@ -193,15 +193,15 @@ class EmailsController < AuthenticatedController
     end
 
     cards_ids = cards_for_holiday.select(:id)
-    only_null =  cards_ids.where('people.id is null')
+    only_null = cards_ids.where('people.id is null')
     unless cards_ids.present?
       flash[:alert] = "Not found FREE Postcards for Holiday: #{holiday.name}  "
 
       return
     end
-    if  only_null.first.nil?
-       flash[:alert] = "Not found NEW Postcards for Holiday: #{holiday.name}  "
-       return
+    if only_null.first.nil?
+      flash[:alert] = "Not found NEW Postcards for Holiday: #{holiday.name}  "
+      return
     end
 
     only_null.order(updated_at: :desc).first.id
@@ -209,24 +209,23 @@ class EmailsController < AuthenticatedController
 
   def add_postcard(email, cards_no_using_id)
     return if cards_no_using_id.nil?
-    begin
-      new_link_email_card = EmailCard.create({
-          email_id: email.id,
-          postcard_id: cards_no_using_id
-        })
-    rescue ActiveRecord::RecordNotUnique => e
 
-      flash[:alert] =   "This postcard: #{Postcard.find(cards_no_using_id).nane} Already Attached  !"
+    begin
+      new_link_email_card = EmailCard.create(
+        email_id: email.id,
+        postcard_id: cards_no_using_id
+      )
+    rescue ActiveRecord::RecordNotUnique => e
+      flash[:alert] = "This postcard: #{Postcard.find(cards_no_using_id).nane} Already Attached  !"
       return
     end
-      # flash[:notice] =   "Successfully Added  Post Card "
+    # flash[:notice] =   "Successfully Added  Post Card "
   end
 
   def add_cardtext(holiday)
     texts = Cardtext.where(holiday_id: holiday.id)
-    unless texts.present?
-      return ""
-    end
+    return '' unless texts.present?
+
     texts.order(updated_at: :desc).first.text
   end
 

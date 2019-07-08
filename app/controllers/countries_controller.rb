@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class CountriesController < AuthenticatedController
   before_action :set_countries, only: %i[index]
   before_action :find_country, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @country = Country.new
@@ -19,7 +21,6 @@ class CountriesController < AuthenticatedController
     end
   end
 
-
   def show; end
 
   def create
@@ -34,8 +35,8 @@ class CountriesController < AuthenticatedController
 
   def destroy
     @country.destroy
-  # rescue StandardError => err
-  #   raise err.message
+    # rescue StandardError => err
+    #   raise err.message
     redirect_to countries_path, notice: 'Destroy !'
   end
 

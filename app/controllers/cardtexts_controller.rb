@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class CardtextsController < AuthenticatedController
   before_action :set_cardtexts, only: %i[index]
   before_action :find_cardtext, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @cardtext = Cardtext.new
