@@ -1,0 +1,59 @@
+<tr>
+  <td >
+    <%= email.id %>
+  </td>
+  <td >
+    <%= email.person.name %>
+  </td>
+  <td >
+    <%= email.name %>
+  </td>
+  <td >
+    <%#= "#{email.person.email} / #{email.mail_address.email}" %>
+    <%= text_area_tag(:text, "#{email.person.email}; \n #{email.mail_address.email}", size: :auto)  %>
+  </td>
+  <td>
+    <%= email.holiday.name if email.holiday_id.present? %>
+  </td>
+  <td>
+    <%= text_area_tag(:text, email.message, size: :auto) if email.message.present? %>
+  </td>
+
+<!-- <td align="center">
+    <%#= check_box_tag email.checkit, "1", "0" , disable: false%>
+    <%#= email.checkit %>
+  </td>
+ -->
+  <td>
+    <% email.postcards.each do |postcard|  %>
+      <%= image_tag postcard.image.url(:small) %>
+    <% end %>
+  </td>
+  <td align="center">
+    <%= email.will_send if email.will_send.present? %>
+  </td>
+  <td align="center">
+    <%= email.sent_date %>
+  </td>
+<!--  <td class="<s>    </s>">-->
+    <%#= link_to 'show', email_path(email) %>
+<!--  </td>-->
+    <%#= link_to 'SEND', send_greeting_  path(email) %>
+    <% if  email.checkit > 0 %>
+  <td class="s_e_d">
+    <%= link_to 'SEND', "/emails/send/#{email.id}" %>
+  </td>
+    <% else %>
+  <td class="checkit">
+    <%= link_to 'CHECK IT !', edit_email_path(email.id), :style=> 'color: red;' %>
+  </td>
+    <% end %>
+  <td class="s_e_d">
+    <%= link_to 'edit', edit_email_path(email.id) %>
+  </td>
+  <td class="s_e_d">
+    <%= link_to 'delete', email_path(email),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>
+

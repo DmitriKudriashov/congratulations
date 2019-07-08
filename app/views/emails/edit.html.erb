@@ -1,0 +1,61 @@
+<h1> Edit Email</h1>
+<%#= "Email Id: #{@email.id}" %>
+<%= render 'form' %>
+<p>
+  <%= link_to 'Back to all Emails', emails_path %>
+</p>
+<br>
+  <%= link_to 'Add New Post Card ', new_email_email_card_path(@email)  %>
+
+<%#= render 'email_cards/header_email_cards_list', email: @email %>
+
+<!-- <ol class="table-bordered">
+  <%#= render @email.postcards if @email_cards.present? %>
+</ol>
+ -->
+
+<div>
+<% if @email_cards.present? %>
+  <table class="table ">
+    <thead class="thead-light" align="center">
+      <tr>
+        <th> Post Card </th>
+        <th> Holiday </th>
+      </tr>
+    </thead>
+
+  <tbody>
+    <% @email_cards.each do |email_card| %>
+    <tr>
+      <td>
+        <%= image_tag email_card.postcard.image.url(:small) %>
+        <%= email_card.postcard.filename %>
+      </td>
+      <td>
+        <%= email_card.postcard.holiday.name %>
+      </td>
+      <td>
+        <%= link_to 'edit', edit_email_card_path(email_card.id) %>
+      </td>
+      <td>
+        <%= link_to 'delete', email_card_path(email_card),
+                    method: :delete, data: { confirm: 'Are you sure' } %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+
+  </table>
+
+<% else %>
+  <p>
+    <%= 'Empty list' %>
+  </p>
+<% end %>
+</div>
+
+
+
+ <%#= render 'email_texts/list_email_texts', email: @email  %>
+
+

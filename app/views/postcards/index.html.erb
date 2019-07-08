@@ -1,0 +1,28 @@
+  <div>
+    <h1> Postcards </h1>
+  <div class="digg_pagination">
+    <%= will_paginate @postcards, :container => false %>
+  </div>
+
+    <p> <%= link_to 'New Postcard', new_postcard_path %> </p>
+
+      <% if @postcards.present? %>
+        <table class="table table-bordered">
+          <thead class="thead-light" align="center">
+            <tr>
+              <th> #</th>
+              <th> Holiday </th>
+              <th> File name </th>
+              <th> Image </th>
+            </tr>
+          </thead>
+          <%= render @postcards %>
+        </table>
+      <% else %>
+        <p>
+          <%= 'Empty list' %>
+        </p>
+      <% end %>
+    <br>
+  </div>
+

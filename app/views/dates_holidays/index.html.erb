@@ -1,22 +1,21 @@
   <div>
     <h1>Dates Holidays</h1>
-
-    <p>
+  <div class="digg_pagination">
+    <%= will_paginate @dates_holidays, :container => false %>
+  </div>
 
       <%#= unless @holiday.nil? do  %>
         <%= link_to 'New Date Holiday', new_dates_holiday_path %>
       <%# end %>
-        </p>
-
       <% if @dates_holidays.present? %>
-        <table>
-          <thead>
+        <table class="table table-bordered">
+          <thead class="thead-light" align="center">
             <tr>
-              <th> N record</th>
-              <th> Day </th>
-              <th> Month </th>
-              <th> Year </th>
+              <th> N </th>
+              <th> Day / Month </th>
               <th> Holiday </th>
+              <th> Companies </th>
+              <th> People </th>
             </tr>
           </thead>
           <%= render @dates_holidays %>

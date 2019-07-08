@@ -1,0 +1,21 @@
+<h2>Show Link  Email -PostCard</h2>
+<p>
+  id: <%= @email_card.id %>
+</p>
+
+<p>
+  Email: <%= @email_card.email.name %>
+</p>
+<p>
+  PostCard: <%= @email_card.postcard.filename %>
+</p>
+
+
+<%= link_to 'Edit Link Email-PostCard ', edit_email_card_path(@email_card) %>
+<br>
+
+<p>
+  <%= link_to 'Back to all Email-PostCard Links', email_email_cards_path(@email_card) %>
+</p>
+
+<br>

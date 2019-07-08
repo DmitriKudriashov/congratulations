@@ -1,16 +1,16 @@
-      <% if @companies_people.present? %>
-        <table>
-          <thead>
-            <tr>
-              <th> N rec</th>
-              <th> Company </th>
-              <th> Person </th>
-            </tr>
-          </thead>
-          <%= render @companies_people %>
-        </table>
-      <% else %>
-        <p>
-          <%= 'Empty list' %>
-        </p>
-      <% end %>
+<% if @companies_people.present? %>
+  <table class="table table-bordered">
+    <thead class="thead-light" align="center">
+      <tr>
+        <th> N rec</th>
+        <th> Company </th>
+        <th> Person </th>
+      </tr>
+    </thead>
+    <%= render @companies_people %>
+  </table>
+<% else %>
+  <p>
+    <%= 'Empty list' %>
+  </p>
+<% end %>

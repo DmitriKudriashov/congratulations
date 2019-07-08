@@ -1,0 +1,18 @@
+<% if @email_cards.present? %>
+  <table class="table table-bordered">
+    <thead class="thead-light" align="center">
+      <tr>
+        <th> # </th>
+        <th> Email </th>
+        <th> PostCard </th>
+      </tr>
+    </thead>
+    <%#= render 'email_cards', email_cards: @email_cards  %>
+    <%= render @email_cards  %>
+  </table>
+<% else %>
+  <p>
+    <%= 'Empty list' %>
+  </p>
+<% end %>
+

@@ -1,0 +1,13 @@
+<%= form_with model: @email_texts, local: true do |form| %>
+  <p>
+    <%= 'Email: ' %>
+    <%= form.collection_select :email_id, Email.all, :id, :name, prompt: 'Select Email' %>
+  </p>
+  <p>
+    <%= 'Text: ' %>
+    <%= form.collection_select :cardtext_id, Cardtext.all, :id, :filename, prompt: 'Select cardtext' %>
+  </p>
+  <br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<br>

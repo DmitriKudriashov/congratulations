@@ -1,3 +1,4 @@
+<%#= byebug %>
 <%= form_with model: @companies_holiday, local: true do |form| %>
   <p>
     <%= 'Company: ' %>
@@ -8,7 +9,7 @@
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
   </p>
   <br>
-  <%# byebug %>
+  <%#= byebug %>
   <p> <%= form.submit %> </p>
 <% end %>
 <br>

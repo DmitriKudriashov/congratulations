@@ -1,28 +1,35 @@
-class CompaniesHolidaysController < ApplicationController
+# frozen_string_literal: true
 
+class CompaniesHolidaysController < AuthenticatedController
   before_action :set_companies_holidays, only: %i[index]
   before_action :find_companies_holiday, only: %i[show edit update destroy]
-  before_action :find_holiday, only: %i[new] #create]
+  before_action :find_holiday, only: %i[new] # create]
   # before_action :find_company, only: %i[new create]
 
   def index; end
 
   def new
-    @companies_holiday =  @holiday.nil? ? CompaniesHoliday.new : @holiday.companies_holidays.new
-    @companies_holiday.holiday_id = 1
-    @companies_holiday.company_id = 1
+    # byebug
+    if @holiday.nil?
+      @companies_holiday = CompaniesHoliday.new
+      @companies_holiday.holiday_id = 1
+      @companies_holiday.company_id = 1
+    else
+      @companies_holiday =  @holiday.companies_holidays.new
+    end
+
   end
 
   def new_company_holiday
-    @companies_holiday =  CompaniesHoliday.new
+    @companies_holiday = CompaniesHoliday.new
   end
 
   def edit; end
 
   def update
-
     if @companies_holiday.update(companies_holiday_params)
-      redirect_to holiday_path(@companies_holiday.holiday), notice: 'CompaniesHoliday was successfully updated.'
+      # redirect_to holiday_companies_holidays_path(@companies_holiday)
+      redirect_to redirect_after, notice: 'Companies-Holiday was successfully updated.'
     else
       render :edit
     end
@@ -30,18 +37,23 @@ class CompaniesHolidaysController < ApplicationController
 
   def show; end
 
+  def redirect_after
+   # @holiday.nil? ? companies_holiday_path :
+    edit_holiday_path(@companies_holiday.holiday_id)
+  end
+
   def create
-    @companies_holiday = CompaniesHoliday.new(companies_holiday_params)#@holiday.companies_holidays.new(companies_holiday_params)
+    @companies_holiday = @holiday.nil? ? CompaniesHoliday.new(companies_holiday_params) : @holiday.companies_holidays.new(companies_holiday_params)
     if @companies_holiday.save
-      redirect_to holiday_companies_holidays_path(@companies_holiday.holiday_id), notice: 'Successully created!'
+      redirect_to redirect_after, notice: 'Successully created!'
     else
       render :new
     end
   end
 
   def destroy
-    if @companies_holiday.destroy  # надо бы проверить на успешность удаления
-      redirect_to holiday_path(@companies_holiday.holiday_id), notice: 'CompaniesHoliday was successfully Destroy!'
+    if @companies_holiday.destroy # надо бы проверить на успешность удаления
+      redirect_to redirect_after, notice: 'CompaniesHoliday was successfully Destroy!'
     end
   end
 
@@ -53,6 +65,7 @@ class CompaniesHolidaysController < ApplicationController
   private
 
   def find_holiday
+    # byebug
     @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].nil?
   end
 
@@ -61,7 +74,7 @@ class CompaniesHolidaysController < ApplicationController
   end
 
   def set_companies_holidays
-    @companies_holidays = CompaniesHoliday.all
+    @companies_holidays = CompaniesHoliday.paginate(page: params[:page]) # .all
   end
 
   def find_companies_holiday

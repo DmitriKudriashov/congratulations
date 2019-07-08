@@ -1,0 +1,36 @@
+<table class="container">
+  <h1> Emails </h1>
+  <div class="digg_pagination">
+    <%= will_paginate @emails, :container => false %>
+  </div>
+  <li class="nav-item active">
+     <%= link_to 'New Email', new_email_path %>
+  </li>
+  <li class="nav-item active">
+  <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
+  </li>
+
+   <% if @emails.present? %>
+     <table class="table table-bordered">
+       <thead class="thead-light" align="center">
+        <tr>
+          <th > N </th>
+          <th > Person </th>
+          <th > Discribe </th>
+          <th > Personal and Company Mail </th>
+          <th > Holiday </th>
+          <th > Message </th>
+          <th > Postcards </th>
+          <th > Will be Send </th>
+          <th > Sent  </th>
+        </tr>
+       </thead>
+          <%= render @emails %>
+     </table>
+   <% else %>
+     <p>
+       <%= 'Empty list' %>
+     </p>
+  <% end %>
+  </table>
+

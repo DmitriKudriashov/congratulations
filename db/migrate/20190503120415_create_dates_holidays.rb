@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDatesHolidays < ActiveRecord::Migration[5.2]
   def change
     create_table :dates_holidays do |t|
@@ -7,6 +9,6 @@ class CreateDatesHolidays < ActiveRecord::Migration[5.2]
       t.references :holiday, foreign_key: true, null: false
       t.timestamps
     end
-    add_index :dates_holidays, [:holiday_id, :day, :month, :year], unique: true
+    add_index :dates_holidays, %i[holiday_id day month year], unique: true
   end
 end

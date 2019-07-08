@@ -1,5 +1,6 @@
-class CompaniesPeopleController < ApplicationController
+# frozen_string_literal: true
 
+class CompaniesPeopleController < AuthenticatedController
   before_action :set_companies_people, only: %i[index]
   before_action :find_companies_person, only: %i[show edit update destroy]
   # before_action :find_person, only: %i[new]
@@ -7,7 +8,7 @@ class CompaniesPeopleController < ApplicationController
   def index; end
 
   def new
-    @companies_person =  @person.nil? ? CompaniesPerson.new : @person.companies_people.new
+    @companies_person = @person.nil? ? CompaniesPerson.new : @person.companies_people.new
     # @companies_person.person_id = 1
     # @companies_person.company_id = 1
   end
@@ -25,7 +26,6 @@ class CompaniesPeopleController < ApplicationController
   def show; end
 
   def create
-
     @companies_person = CompaniesPerson.new(companies_person_params)
     # byebug
 
@@ -49,7 +49,6 @@ class CompaniesPeopleController < ApplicationController
     render plain: result.join("\n")
   end
 
-
   private
 
   def find_person
@@ -61,7 +60,7 @@ class CompaniesPeopleController < ApplicationController
   end
 
   def set_companies_people
-    @companies_people = CompaniesPerson.all
+    @companies_people = CompaniesPerson.paginate(page: params[:page]) # .all
   end
 
   def find_companies_person

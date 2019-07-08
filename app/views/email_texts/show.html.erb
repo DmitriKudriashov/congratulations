@@ -1,0 +1,21 @@
+<h2>Show Link  Email - CardText</h2>
+<p>
+  id: <%= @email_text.id %>
+</p>
+
+<p>
+  Email: <%= @email_text.email.name %>
+</p>
+<p>
+  Text: <%= @email_text.cardtext.filename %>
+</p>
+
+
+<%= link_to 'Edit Link Email-CardText ', edit_email_text_path(@email_text) %>
+<br>
+
+<p>
+  <%= link_to 'Back to all Email-CardText Links', email_email_texts_path(@email_text) %>
+</p>
+
+<br>

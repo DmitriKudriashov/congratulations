@@ -1,8 +1,10 @@
-class CompaniesController < ApplicationController
+# frozen_string_literal: true
+
+class CompaniesController < AuthenticatedController
   before_action :set_companies, only: %i[index]
   before_action :find_company, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @company = Company.new
@@ -19,7 +21,6 @@ class CompaniesController < ApplicationController
     end
   end
 
-
   def show; end
 
   def create
@@ -34,6 +35,8 @@ class CompaniesController < ApplicationController
 
   def destroy
     @company.destroy
+    # rescue StandardError => err
+    #   raise err.message
     redirect_to companies_path, notice: 'Destroy !'
   end
 
@@ -45,7 +48,7 @@ class CompaniesController < ApplicationController
   private
 
   def set_companies
-    @companies = Company.all
+    @companies = Company.order(:name).paginate(page: params[:page]) # .all
   end
 
   def find_company

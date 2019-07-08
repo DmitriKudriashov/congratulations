@@ -1,25 +1,30 @@
-class DatesHolidaysController < ApplicationController
+# frozen_string_literal: true
+
+class DatesHolidaysController < AuthenticatedController
   # before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
   before_action :find_holiday, only: %i[new create]
 
   def index
     find_holiday
-    @dates_holidays = @holiday.nil? ? DatesHoliday.all : @holiday.dates_holidays
+    @dates_holidays = @holiday.nil? ? set_dates_holidays : @holiday.dates_holidays
+    @dates_holidays = @dates_holidays.order(:month, :day)
+    today = Time.now
+    month = today.month
+    day = today.day
+    # @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
+    # @people_dob = People.where("birthday")
   end
 
   def new
-    # byebug
     @dates_holiday = @holiday.nil? ? DatesHoliday.new : @holiday.dates_holidays.new
-
-    # byebug
   end
 
   def edit; end
 
   def update
     if @dates_holiday.update(dates_holiday_params)
-      redirect_to dates_holiday_path(@dates_holiday), notice: 'Date was successfully updated.'
+      redirect_after('Date was successfully updated.!')
     else
       render :edit
     end
@@ -27,29 +32,25 @@ class DatesHolidaysController < ApplicationController
 
   def show; end
 
-  def create
+  def redirect_after(notice)
+    if @holiday.nil?
+      redirect_to dates_holidays_path, notice: notice
+    else
+      redirect_to dates_holidays_path, notice: notice
+     end
+  end
 
-    @dates_holiday = @holiday.nil? ?  DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
+  def create
+    @dates_holiday = @holiday.nil? ? DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
     if @dates_holiday.save
-      if @holiday.nil?
-        redirect_to dates_holidays_path, notice: 'Successully created!'
-      else
-        redirect_to dates_holiday_path(@dates_holiday), notice: 'Successully created!'
-      end
+      redirect_after('Successully created!')
     else
       render :new
     end
   end
 
   def destroy
-    if @dates_holiday.destroy  # надо бы проверить на успешность удаления
-      if @holiday.nil?
-        redirect_to dates_holidays_path, notice: 'Date was successfully Destroy!'
-      else
-        redirect_to holiday_path(@dates_holiday.holiday_id), notice: 'Date was successfully Destroy!'
-      end
-
-    end
+    redirect_after('Date was successfully Destroy!') if @dates_holiday.destroy
   end
 
   def search
@@ -64,7 +65,7 @@ class DatesHolidaysController < ApplicationController
   end
 
   def set_dates_holidays
-    @dates_holidays = DatesHoliday.all
+    @dates_holidays = DatesHoliday.paginate(page: params[:page]) # .all
   end
 
   def find_dates_holiday

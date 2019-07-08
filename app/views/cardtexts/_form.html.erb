@@ -1,0 +1,19 @@
+<%= form_with model: @cardtext, local: true do |form| %>
+
+<p>
+  <%= "Short description" %><br>
+  <%= form.text_field :filename, id: :cardtext_filename, class: 'form-control' %>
+</p>
+<p>
+  <%= 'Holiday: ' %>
+  <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
+</p>
+<p>
+  <%= form.label :text %><br>
+  <%= form.text_area :text, rows: 7, cols: 60, class: 'form-control' %>
+</p>
+
+<br>
+  <p> <%= form.submit %> </p>
+<% end %>
+<br>

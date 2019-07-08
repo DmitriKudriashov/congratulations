@@ -1,0 +1,24 @@
+<h2> Postcard Show </h2>
+<p>
+  id: <%= @postcard.id %>
+</p>
+<p>
+  <%= "Holiday: " %>
+  <%= @postcard.holiday.name %>
+</p>
+
+<p>
+  Filename:
+<br>  <%= @postcard.filename %>
+</p>
+<p>
+  <%= image_tag @postcard.image.url(:medium) %>
+</p>
+
+<%= link_to 'Edit postcard', edit_postcard_path(@postcard) %>
+
+<br>
+
+<p>
+  <%= link_to 'Back to all postcards', postcards_path %>
+</p>

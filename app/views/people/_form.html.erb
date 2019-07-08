@@ -6,6 +6,11 @@
   </p>
 
   <p>
+    <%= 'Birthday: ' %>
+    <%= date_select :person, :birthday, start_year: Time.now.year - 70, end_year: Time.now.year - 18 %>
+  </p>
+
+  <p>
     <%= 'Email: ' %>
     <%= form.text_field :email %>
   </p>

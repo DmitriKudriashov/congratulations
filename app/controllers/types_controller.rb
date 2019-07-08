@@ -1,8 +1,10 @@
-class TypesController < ApplicationController
+# frozen_string_literal: true
+
+class TypesController < AuthenticatedController
   before_action :set_types, only: %i[index]
   before_action :find_type, only: %i[show edit update destroy]
 
-  def index;  end
+  def index; end
 
   def new
     @type = Type.new
@@ -17,7 +19,6 @@ class TypesController < ApplicationController
       render :edit
     end
   end
-
 
   def show; end
 
@@ -43,7 +44,7 @@ class TypesController < ApplicationController
   private
 
   def set_types
-    @types = Type.all
+    @types = Type.paginate(page: params[:page]) # .all
   end
 
   def find_type
@@ -58,4 +59,3 @@ class TypesController < ApplicationController
     render plain: 'Type was not found!'
   end
 end
-
