@@ -72,6 +72,7 @@ group :development do
   gem 'meta_request'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'capistrano', '~> 3.11', require: false
 end
 
 group :test do
