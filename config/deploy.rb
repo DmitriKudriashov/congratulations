@@ -5,8 +5,8 @@ set :application, "congratulations"
 set :repo_url, 'git@github.com:DmitriKudriashov/congratulations.git'
 set :rvm_ruby_version, '2.5.3'
 
-# Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+# we use custom branch for deployment instead of 'master'
+set :branch, 'for_relise_0'
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
