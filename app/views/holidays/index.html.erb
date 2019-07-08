@@ -1,6 +1,6 @@
 <h3> Holidays </h3>
 <div class="digg_pagination">
-  <%#= will_paginate @holidays, :container => false %>
+  <%= will_paginate @holidays, :container => false %>
 </div>
 
 <%= link_to 'New Holiday', new_holiday_path %>
@@ -10,7 +10,7 @@
     <table class="table table-bordered">
       <thead class="thead-light" align="center">
         <tr>
-          <!-- <th > N </th> -->
+          <th > N </th>
 
           <th class="sort-by-title pointer col-md-auto">
             <%= 'Holiday' %>
