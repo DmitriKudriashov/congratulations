@@ -4,7 +4,7 @@ class GreetingsMailer < ApplicationMailer
   def send_message(email)
     @name = email.name
     @address = email.address
-    @greetings_text = email.greetings_text
+    @greetings_text = email.message
     @from = %("STAFF CENTRE" <office@staff-centre.com>)
 
     # attachments = list_attachments(email) # почему-то не сработало ???
@@ -19,7 +19,8 @@ class GreetingsMailer < ApplicationMailer
     mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!'
     email.sent_date = Time.now
     email.save
-  rescue StandardError
+  # rescue StandardError
+
   end
 
   def list_attachments(email)

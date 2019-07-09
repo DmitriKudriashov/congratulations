@@ -33,6 +33,7 @@
     <%= 'Check It: '%>
     <%= form.check_box :checkit %>
   </p>
+    <%= date_field( @email, :sent_date )%>
 
   <p> <%= form.submit %> </p>
 <% end %>

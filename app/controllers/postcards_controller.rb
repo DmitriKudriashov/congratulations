@@ -51,7 +51,7 @@ class PostcardsController < AuthenticatedController
   private
 
   def set_postcards
-    @postcards = Postcard.paginate(page: params[:page]) # .all
+    @postcards = Postcard.order(:holiday_id).paginate(page: params[:page]) # .all
   end
 
   def find_postcard

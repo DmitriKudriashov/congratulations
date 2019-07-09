@@ -41,11 +41,15 @@
     <%#= link_to 'SEND', send_greeting_  path(email) %>
     <% if  email.checkit > 0 %>
   <td class="s_e_d">
-    <%= link_to 'SEND', "/emails/send/#{email.id}" %>
+      <% if email.sent_date.to_i == 0 %>
+        <%= link_to 'SEND', "/emails/send/#{email.id}" %>
+      <% else %>
+        <%= 'DONE' %>
+      <% end %>
   </td>
     <% else %>
   <td class="checkit">
-    <%= link_to 'CHECK IT !', edit_email_path(email.id), :style=> 'color: red;' %>
+      <%= link_to 'CHECK IT !', edit_email_path(email.id), :style=> 'color: red;' %>
   </td>
     <% end %>
   <td class="s_e_d">
