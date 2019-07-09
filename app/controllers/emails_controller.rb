@@ -100,8 +100,8 @@ class EmailsController < AuthenticatedController
     holiday_dates = DatesHoliday.holidays_to_date(d, m, 0).joins(:holiday)
     holiday_dates.each do |holiday_date|
       holiday = Holiday.find(holiday_date.holiday_id)
-      postcard = free_postcard(holiday)
-      createemails(holiday, postcard)
+      # postcard = free_postcard(holiday)
+      createemails(holiday) #, postcard)
     end
   end
 
@@ -126,7 +126,7 @@ class EmailsController < AuthenticatedController
     list_people_mails
   end
 
-  def createemails(for_holiday, cards_no_using_id)
+  def createemails(for_holiday)#, cards_no_using_id)
     list_people_mails = create_list_people_mails(for_holiday)
     holiday_date = DatesHoliday.where(holiday_id: for_holiday.id).first
     will_send = Date.new(Time.now.year, holiday_date.month, holiday_date.day)
@@ -144,8 +144,7 @@ class EmailsController < AuthenticatedController
                          checkit: 0,
                          year: year,
                          message: "Conratulations! Happy: #{for_holiday.name} \n #{add_cardtext(for_holiday)}"
-                       },
-                       cards_no_using_id)
+                       }) #,cards_no_using_id)
     end
   end
 
@@ -165,13 +164,14 @@ class EmailsController < AuthenticatedController
     Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id]).present?
   end
 
-  def create_new_email(opt = {}, cards_no_using_id)
+  def create_new_email(opt = {}) #, cards_no_using_id)
     @email_new = Email.new
     set_email_fields(@email_new, opt)
 
     unless Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id]).present?
       @email_new.save
-      add_postcard(@email_new, cards_no_using_id) unless cards_no_using_id.nil?
+
+      add_postcard(@email_new) #, cards_no_using_id) unless cards_no_using_id.nil?
       # add_cardtext(email_new)
       # flash[:notice] = " Created New Emails ! "
       # else
@@ -179,35 +179,49 @@ class EmailsController < AuthenticatedController
     end
   end
 
-  def free_postcard(holiday)
-    postcards_for_holiday = Postcard.for_holiday_id(holiday.id)
+  def free_postcard(email)
+    holiday = Holiday.find(email.holiday_id)
+    postcards_for_holiday = Postcard.where(holiday_id: email.holiday_id) #for_holiday_id(holiday.id)
     unless postcards_for_holiday.present?
       flash[:alert] = "Not found Postcards for Holiday: #{holiday.name} "
       return
     end
 
-    cards_for_holiday = postcards_for_holiday.left_outer_joins(email_cards: [email: :person])
-    unless cards_for_holiday.present?
-      flash[:alert] = "Not found Postcards for Holiday: #{holiday.name} "
-      return
+    already_using_cards = postcards_for_holiday.joins(email_cards: :email).select_year(Date.today.year)
+    if already_using_cards.present?
+      return already_using_cards.first.id
+    else
+      return  postcards_for_holiday.first.id
     end
 
-    cards_ids = cards_for_holiday.select(:id)
-    only_null = cards_ids.where('people.id is null')
-    unless cards_ids.present?
-      flash[:alert] = "Not found FREE Postcards for Holiday: #{holiday.name}  "
+    # cards_for_holiday = postcards_for_holiday.left_outer_joins(email_cards: [email: :person])
+    # unless cards_for_holiday.present?
+    #   flash[:alert] = "Not found Postcards for Holiday: #{holiday.name} "
+    #   return
+    # end
 
-      return
-    end
-    if only_null.first.nil?
-      flash[:alert] = "Not found NEW Postcards for Holiday: #{holiday.name}  "
-      return
-    end
+    # cards_ids = cards_for_holiday.select(:id)
 
-    only_null.order(updated_at: :desc).first.id
+    # cards_for_holiday.where('people.id = ?', email.person_id)
+
+    # only_null = cards_ids.where('people.id is null')
+    # unless cards_ids.present?
+    #   flash[:alert] = "Not found FREE Postcards for Holiday: #{holiday.name}  "
+
+    #   return
+    # end
+
+    # if only_null.first.nil?
+    #   flash[:alert] = "Not found NEW Postcards for Holiday: #{holiday.name}  "
+    #   return
+
+    # end
+
+    # only_null.order(updated_at: :desc).first.id
   end
 
-  def add_postcard(email, cards_no_using_id)
+  def add_postcard(email) #, cards_no_using_id)
+    cards_no_using_id = free_postcard(email)
     return if cards_no_using_id.nil?
 
     begin
