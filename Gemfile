@@ -72,6 +72,14 @@ group :development do
   gem 'meta_request'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # deploy
+  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano-bundler', '~> 1.2.0'
+  gem 'capistrano-maintenance', '~> 1.0', require: false
+  gem 'capistrano-passenger', '~> 0.0.5'
+  gem 'capistrano-rails', '~> 1.3.0'
+  gem 'capistrano-rvm', '~> 0.1.2'
 end
 
 group :test do
