@@ -13,13 +13,22 @@
   <p>
     <%= "Name This Email: "  %>
     <%= form.text_field :name %>
-    <%#= form.label :address %>
-    <%#= form.text_field :address %>
   </p>
-  <p>
-    <%= 'Company Email Address: ' %>:
-    <%= form.collection_select :mail_address_id, MailAddress.all, :id, :email, prompt: 'Select Mail Address Company' %>
-  </p>
+  <% if @email.sent_date.present? %>
+    <p>
+
+      <%= form.label :address %>
+      <%= form.text_field :address %>
+    </p>
+  <% else %>
+    <p>
+      <%= form.label :address %>
+      <%= form.text_field :address %>
+
+      <%= 'Company Email Address: ' %>
+      <%= form.collection_select :mail_address_id, MailAddress.all, :id, :email, prompt: 'Select Mail Address Company' %>
+    </p>
+  <% end %>
 <!--   <ol class="table-bordered">
     <%#= render @email.cardtexts if @email.cardtexts.present? %>
   </ol

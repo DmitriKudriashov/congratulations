@@ -24,13 +24,14 @@ class GreetingsMailer < ApplicationMailer
 
     mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!'
     email.sent_date = Time.now
+    email.address = @address
     email.save
   rescue StandardError => e
     flash[:alert] = " ERROR SAVE EMAIL ! #{e.message} "
   end
 
   def personal_address(email)
-    email.address.present? ? email.address : nil
+    email.person.email.present? ? email.person.email : nil
   end
 
   def company_mail_address(email)

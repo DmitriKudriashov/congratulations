@@ -9,8 +9,11 @@
     <%= email.name %>
   </td>
   <td >
-    <%#= "#{email.person.email} / #{email.mail_address.email}" %>
+    <% if email.sent_date.present?  %>
+    <%= email.address %>
+    <% else %>
     <%= text_area_tag(:text, "#{email.person.email}; \n #{email.mail_address.email}", size: :auto)  %>
+    <% end %>
   </td>
   <td>
     <%= email.holiday.name if email.holiday_id.present? %>
@@ -41,7 +44,7 @@
     <%#= link_to 'SEND', send_greeting_  path(email) %>
     <% if  email.checkit > 0 %>
   <td class="s_e_d">
-      <% if email.sent_date.to_i == 0 %>
+      <% if email.sent_date.to_i.zero? %>
         <%= link_to 'SEND', "/emails/send/#{email.id}" %>
       <% else %>
         <%= 'DONE' %>
