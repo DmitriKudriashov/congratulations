@@ -17,15 +17,15 @@
   <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
 </p>
 <p>
-  <%= form.label :filename %> <br>
-  <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
-</p>
-<p>
     <%= form.file_field :image %>
     <%#= form.input :image, as: :file !!!  undefined method `input' for #<ActionView::Helpers::FormBuilder:0 ..%>
 
    <%= image_tag @postcard.image.url(:medium) %>
 
+</p>
+<p>
+  <%= form.label :filename %> <br>
+  <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
 </p>
 
   <br>
