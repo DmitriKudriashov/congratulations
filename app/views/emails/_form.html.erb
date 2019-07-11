@@ -8,7 +8,7 @@
     <%= 'FOR HOLIDAY: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
     <%= 'Will be Send: ' %>
-    <%= date_select :email, :will_send, start_year: Time.now.year, end_year: Time.now.year + 1 %>
+    <%= date_field :email, :will_send %>
   </p>
   <p>
     <%= "Name This Email: "  %>
@@ -42,7 +42,8 @@
     <%= 'Check It: '%>
     <%= form.check_box :checkit %>
   </p>
-    <%= date_field( @email, :sent_date )%>
-
+  <p>
+    <%= date_field( :email, :sent_date )%>
+  </p>
   <p> <%= form.submit %> </p>
 <% end %>
