@@ -194,6 +194,7 @@ class EmailsController < AuthenticatedController
 
       add_postcard(@email_new)
       # add_cardtext(email_new)
+
       # flash[:notice] = " Created New Emails ! "
       # else
       # flash[:alert] = "Emails Already Exist! "

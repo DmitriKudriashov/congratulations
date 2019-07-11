@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class AuthenticatedController < ApplicationController
-  before_action :authenticate_user!
-  # before_action :redirect_to_admin # commented ,t.e link TestGuru no redirected to tests for Admin!
+  before_action :my_authenticate_user!
 
-  def redirect_to_admin
-    # redirect_to admin_tests_path if current_user.is_a?(Admin)
+  private
+
+  def my_authenticate_user!
+    # byebug
+    authenticate_user!
   end
 end

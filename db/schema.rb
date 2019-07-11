@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_02_122333) do
+ActiveRecord::Schema.define(version: 2019_07_10_144240) do
 
   create_table "cardtexts", force: :cascade do |t|
     t.string "filename", default: ""
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2019_07_02_122333) do
     t.integer "holiday_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
     t.index ["holiday_id", "day", "month", "year"], name: "index_dates_holidays_on_holiday_id_and_day_and_month_and_year", unique: true
     t.index ["holiday_id"], name: "index_dates_holidays_on_holiday_id"
   end
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(version: 2019_07_02_122333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "type_id"
+    t.integer "calc"
     t.index ["name"], name: "index_holidays_on_name", unique: true
     t.index ["type_id"], name: "index_holidays_on_type_id"
   end
@@ -159,6 +161,7 @@ ActiveRecord::Schema.define(version: 2019_07_02_122333) do
     t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.integer "holiday_id"
+    t.integer "once"
     t.index ["holiday_id"], name: "index_postcards_on_holiday_id"
   end
 

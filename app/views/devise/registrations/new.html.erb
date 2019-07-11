@@ -24,10 +24,12 @@
   <div class="field">
     <%= 'Password confirmation:' %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'confirm-password password-input' %>
-    <%#= octicon 'check', class: 'text-success hide valid' %>
-    <%#= octicon 'alert', class: 'text-danger hide invalid' %>
+<!--
+    <%= octicon 'check', class: 'text-success hide valid' %>
+    <%= octicon 'alert', class: 'text-danger hide invalid' %>
+ -->
   </div>
-
+  <br>
   <div class="actions">
     <%= f.submit 'Submit' %>
   </div>
