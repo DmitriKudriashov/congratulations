@@ -5,9 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
   scope :select_year, ->(y) { where(year: y) }
   scope :birthday, ->(date) { where("cast(strftime('%m', birthday) as int) = ? AND cast(strftime('%d', birthday) as int) = ?", date.month, date.day) }
 
-
   self.abstract_class = true
-  # scope :holidays_to_date, ->(day, month, year) { where("day = ? and month = ? and year = ?", day, month, year) }
 
   def self.first_month
     dh = DatesHoliday.first

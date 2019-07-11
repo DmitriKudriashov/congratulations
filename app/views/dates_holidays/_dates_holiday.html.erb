@@ -5,23 +5,17 @@
   <td  align="center">
     <%= "#{dates_holiday.day} / #{dates_holiday.name_month}" %>
   </td>
-<!--   <td>
-    <%= dates_holiday.month %>
-  </td>
- -->
- <!--   <td>
-    <%= dates_holiday.year %>
-  </td>
- -->
   <td>
     <%= dates_holiday.holiday.name %>
   </td>
 
   <td>
-    <%= text_area_tag(:text, dates_holiday.name_of_company, size: :auto) %>
+    <% @companies = dates_holiday.name_of_company %>
+    <%= text_area_tag(:text, @companies, size: :auto) if @companies.present? %>
   </td>
   <td>
-    <%= text_area_tag(:text, dates_holiday.list_people, size: :auto) %>
+    <% @people = dates_holiday.list_people %>
+    <%= text_area_tag(:text, dates_holiday.list_people, size: :auto) if @people.present? %>
   </td>
 <!--   <td>
     <%#= link_to 'show', dates_holiday_path(dates_holiday) %>
