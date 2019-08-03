@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
 class GreetingsMailer < ApplicationMailer
-  def send_message(email)
+  def send_message(email, user)
     @name = email.name
-    @address = email.address
+    @address = Holiday.find(email.holiday_id).name == 'Birthday' ? personal_address(email) : company_mail_address(email)
+    if @address.nil?
+      flash[:alert] = "Not found email for: #{email.person.name}!!! "
+      return
+    end
+
     @greetings_text = email.message
-    @from = %("STAFF CENTRE" <office@staff-centre.com>)
+    @from = %("STAFF CENTRE" < #{user.email} >)
+    # @from = %("STAFF CENTRE" <office@staff-centre.com>)
 
     # attachments = list_attachments(email) # почему-то не сработало ???
 
@@ -18,9 +24,18 @@ class GreetingsMailer < ApplicationMailer
 
     mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!'
     email.sent_date = Time.now
+    email.address = @address
     email.save
-  # rescue StandardError
+  rescue StandardError => e
+    flash[:alert] = " ERROR SAVE EMAIL ! #{e.message} "
+  end
 
+  def personal_address(email)
+    email.person.email.present? ? email.person.email : nil
+  end
+
+  def company_mail_address(email)
+    email.mail_address_id.to_i.zero? ? personal_address(email) : email.mail_address.email
   end
 
   def list_attachments(email)
