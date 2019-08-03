@@ -24,6 +24,7 @@ class DatesHolidaysController < AuthenticatedController
 
   def update
     if @dates_holiday.update(dates_holiday_params)
+      set_day_month_year
       redirect_after('Date was successfully updated.!')
     else
       render :edit
@@ -42,12 +43,14 @@ class DatesHolidaysController < AuthenticatedController
 
   def create
     @dates_holiday = @holiday.nil? ? DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
+    set_day_month_year
     if @dates_holiday.save
       redirect_after('Successully created!')
     else
       render :new
     end
   end
+
 
   def destroy
     redirect_after('Date was successfully Destroy!') if @dates_holiday.destroy
@@ -59,6 +62,13 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   private
+
+  def set_day_month_year
+    return if @dates_holiday.date.nil?
+    @dates_holiday.day = @dates_holiday.date.day
+    @dates_holiday.month = @dates_holiday.date.month
+    @dates_holiday.year =  @dates_holiday.holiday.calc.to_i.zero? ? 0 : @dates_holiday.date.year
+  end
 
   def find_holiday
     @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].nil?
@@ -73,7 +83,8 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def dates_holiday_params
-    params.require(:dates_holiday).permit(:day, :month, :year, :holiday_id)
+    params.require(:dates_holiday).permit(:day, :month, :year, :holiday_id, :date)
+    # params.require(:dates_holiday).permit(:date, :holiday_id, )
   end
 
   def rescue_with_dates_holiday_not_found
