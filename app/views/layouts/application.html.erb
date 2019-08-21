@@ -41,6 +41,8 @@
         <%= "Hello!   #{current_user.name}  (#{current_user.email}) " %>
         <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure' } %><br>
         <%= render 'navbar/nav' %>
+        <%= render 'layouts/view_day_month' %>
+
       <% else %>
         <p>
           <%= link_to 'Login' , new_user_session_path %>

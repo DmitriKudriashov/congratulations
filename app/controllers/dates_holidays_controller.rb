@@ -9,11 +9,15 @@ class DatesHolidaysController < AuthenticatedController
     find_holiday
     @dates_holidays = @holiday.nil? ? set_dates_holidays : @holiday.dates_holidays
     @dates_holidays = @dates_holidays.order(:month, :day)
+  end
+
+  def after
+    index
     today = Time.now
     month = today.month
     day = today.day
-    # @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
-    # @people_dob = People.where("birthday")
+    byebug
+    @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
   end
 
   def new
@@ -71,7 +75,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def find_holiday
-    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].nil?
+    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].to_i.zero?
   end
 
   def set_dates_holidays

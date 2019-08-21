@@ -44,3 +44,34 @@
 
 .style_blue{font-size: 18px; font-weight: bold; color: blue }
 .style_gray{font-size: 15px; font-weight: bold; color: gray }
+
+.today{font-size: 18px; font-weight: bold; color: red}
+.near_today{font-size: 12px; font-weight: bolder; color: blue}
+.empty{font-size: 12px; font-weight: bold; color: green}
+
+.celebArea {
+    display: block;
+    min-width: 336px;
+}
+
+.dateArea {
+    width: 120px;
+    height: 130px;
+    margin: 0;
+    float: left;
+    background-color: #a70f6a;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.dateArea .month {
+    font-size: 20px;
+    margin-top: -16px;
+    text-transform: uppercase;
+}
+
+.dateArea .numbers {
+    font-size: 72px;
+    padding-top: 10px;
+}

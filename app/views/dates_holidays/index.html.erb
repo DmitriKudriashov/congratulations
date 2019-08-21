@@ -1,33 +1,35 @@
-  <div>
-    <h1>Calendar Holidays</h1>
-  <div class="digg_pagination">
-    <%= will_paginate @dates_holidays, :container => false %>
-  </div>
+<h1>Calendar Holidays</h1>
+<div class="digg_pagination">
+  <%= will_paginate @dates_holidays, :container => false %>
+</div>
 
-      <%#= unless @holiday.nil? do  %>
-        <%= link_to 'New Date Holiday', new_dates_holiday_path %>
-      <%# end %>
-      <% if @dates_holidays.present? %>
-        <table class="table table-bordered">
-          <thead class="thead-light" align="center">
-            <tr>
-              <th> N </th>
-              <th> Day / Month </th>
-              <th> Holiday </th>
-              <th> Companies </th>
-              <th> People </th>
-            </tr>
-          </thead>
-          <%= render @dates_holidays %>
-        </table>
-      <% else %>
-        <p>
-          <%= 'Empty list' %>
-        </p>
-      <% end %>
-    <br>
-  </div>
+    <%#= unless @holiday.nil? do  %>
+      <%= link_to 'New Date Holiday', new_dates_holiday_path %>
+      |
+      <%#= link_to 'View left holidays', dates_holidays_path %>
+      <%= link_to "View left holidays!", controller: "dates_holidays", id: "after", class: "dates_holidays", method: :gets %>
+    <%# end %>
+    <% if @dates_holidays.present? %>
+      <table class="table table-bordered">
+        <thead class="thead-light" align="center">
+          <tr>
+            <th> N </th>
+            <th> Day / Month </th>
+            <th> Holiday </th>
+            <th> Companies </th>
+            <th> People </th>
+          </tr>
+        </thead>
+        <%= render @dates_holidays %>
+      </table>
+    <% else %>
+      <p>
+        <%= 'Empty list' %>
+      </p>
+    <% end %>
   <br>
+</div>
+<br>
 <!-- <p>
   <%#= link_to 'Back to all Holidays', holidays_path %>
 </p>

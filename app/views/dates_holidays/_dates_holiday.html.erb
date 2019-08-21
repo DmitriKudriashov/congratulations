@@ -11,11 +11,11 @@
 
   <td>
     <% @companies = dates_holiday.name_of_company %>
-    <%= text_area_tag(:text, @companies, size: :auto) if @companies.present? %>
+    <%#= text_area_tag(:text, @companies, size: :auto) if @companies.present? %>
+    <%= tag.text(@companies, size: :auto) if @companies.present? %>
   </td>
   <td>
-    <% @people = dates_holiday.list_people %>
-    <%= text_area_tag(:text, dates_holiday.list_people, size: :auto) if @people.present? %>
+    <%= people_list(dates_holiday) %>
   </td>
 <!--   <td>
     <%#= link_to 'show', dates_holiday_path(dates_holiday) %>
