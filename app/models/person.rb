@@ -8,6 +8,9 @@ class Person < ApplicationRecord
   scope :selectmonth, ->(m) { where("cast(strftime('%m', birthday) as int) = ?", m) }
   scope :birthday_men, ->(date) { where('birthday = ?', date) }
   scope :selectid, ->(id) { where(id: id) }
+  scope :birthdays_to_date,
+        ->(day, month) { where("cast(strftime('%m', birthday) as int) = ? and cast(strftime('%d', birthday) as int) = ? ", month, day) }
+
 
   def birthday_form
     birthday.nil? ? 'dd-mm-yyyy' : birthday.strftime('%d-%m-%Y')

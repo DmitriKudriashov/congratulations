@@ -1,0 +1,18 @@
+<div>
+  <table class="table">
+    <tr>
+      <div class="celebArea">
+        <div class="dateArea">
+            <div class="numbers">
+              <%= Date.today.day %><br>
+            </div>
+            <div class="month">
+              <%=  Date.today.strftime("%B") %>
+            </div>
+      </div>
+  <tr>
+     <%= render 'layouts/birthdays' %>
+  </tr>
+  </table>
+</div>
+

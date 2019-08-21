@@ -111,10 +111,13 @@ class EmailsController < AuthenticatedController
     list_people_mails = []
     people_birthdays = Person.birthday(date)
     people_birthdays.each do |person|
-      # byebug
       list_people_mails = loop_by_mail_addreses(person, list_people_mails)
     end
+    return unless people_birthdays.present?
+
     holiday = Holiday.where(name: 'Birthday').first
+    DatesHoliday.create_date_holiday(date, holiday)
+
     createemails(holiday, list_people_mails)
   end
 
@@ -146,6 +149,7 @@ class EmailsController < AuthenticatedController
 
   def createemails(for_holiday, list_people_mails)
     holiday_date = DatesHoliday.where(holiday_id: for_holiday.id).first
+    return if holiday_date.nil?
     month = holiday_date.month
     day = holiday_date.day
     year = Time.now.year #holiday_date.year == 0 ? Time.now.year : holiday_date.year
