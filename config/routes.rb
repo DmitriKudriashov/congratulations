@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   get '/emails/create_emails', to: 'emails#create_emails', except: :show
 
+  # get '/dates_holidays/after', to: 'dates_holidays', only: :after
+
   resources :postcards, only: %i[index new create]
   resources :cardtexts, only: %i[index new create]
 

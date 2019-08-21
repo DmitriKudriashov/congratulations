@@ -6,7 +6,8 @@
     <%#= unless @holiday.nil? do  %>
       <%= link_to 'New Date Holiday', new_dates_holiday_path %>
       |
-      <%= link_to 'View left holidays', new_dates_holiday_path %>
+      <%#= link_to 'View left holidays', dates_holidays_path %>
+      <%= link_to "View left holidays!", controller: "dates_holidays", id: "after", class: "dates_holidays", method: :gets %>
     <%# end %>
     <% if @dates_holidays.present? %>
       <table class="table table-bordered">

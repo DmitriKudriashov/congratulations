@@ -16,6 +16,7 @@ class DatesHolidaysController < AuthenticatedController
     today = Time.now
     month = today.month
     day = today.day
+    byebug
     @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
   end
 
@@ -74,7 +75,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def find_holiday
-    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].nil?
+    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].to_i.zero?
   end
 
   def set_dates_holidays
