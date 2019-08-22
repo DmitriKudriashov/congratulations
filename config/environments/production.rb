@@ -112,8 +112,8 @@ Rails.application.configure do
     address:              'mail.pronov.net',
     port:                 587,
     domain:               'staff-centre.com',
-    user_name:            Rails.application.credentials.mailer.user_name,
-    password:             Rails.application.credentials.mailer.password,
+    user_name:            Rails.application.credentials.mailer[:user_name],
+    password:             Rails.application.credentials.mailer[:password],
     authentication:       'plain',
     openssl_verify_mode:  'none',
     enable_starttls_auto: true
