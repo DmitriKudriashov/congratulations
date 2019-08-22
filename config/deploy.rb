@@ -7,7 +7,7 @@ set :rvm_ruby_version, '2.5.3'
 set :rails_env, 'production'
 
 # we use custom branch for deployment instead of 'master'
-set :branch, 'capistrano_deployment'
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 # Default deploy_to directory is /var/www/congratulations
 # We don't use "/var/www/congratulations-#{fetch(:stage)}" for this simple app
