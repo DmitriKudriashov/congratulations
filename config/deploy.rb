@@ -80,5 +80,15 @@ namespace :deploy do
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
+
+  desc 'Create simlinks'
+  task :create_symlinks do
+    on roles(:app) do
+      info "Creating credentials key simlink: config/master.key -> shared/master.key"
+      execute "ln -s #{deploy_to}/shared/master.key #{release_path}/config/master.key"
+    end
+  end
+
+  before :compile_assets, :create_symlinks
   after :publishing, :restart
 end
