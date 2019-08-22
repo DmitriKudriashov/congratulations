@@ -26,6 +26,8 @@ set :deploy_to, "/var/www/congratulations"
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
 
+append :linked_files, 'config/master.key'
+
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
@@ -81,14 +83,5 @@ namespace :deploy do
     end
   end
 
-  desc 'Create simlinks'
-  task :create_symlinks do
-    on roles(:app) do
-      info "Creating credentials key simlink: config/master.key -> shared/master.key"
-      execute "ln -s #{deploy_to}/shared/master.key #{release_path}/config/master.key"
-    end
-  end
-
-  before :compile_assets, :create_symlinks
   after :publishing, :restart
 end
