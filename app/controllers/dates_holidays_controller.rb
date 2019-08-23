@@ -9,14 +9,13 @@ class DatesHolidaysController < AuthenticatedController
     find_holiday
     @dates_holidays = @holiday.nil? ? set_dates_holidays : @holiday.dates_holidays
     @dates_holidays = @dates_holidays.order(:month, :day)
+    view_left if params[:logsign].to_i ==  1
   end
 
-  def after
-    index
+  def view_left
     today = Time.now
     month = today.month
     day = today.day
-    byebug
     @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
   end
 
