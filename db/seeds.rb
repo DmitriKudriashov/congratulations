@@ -8,9 +8,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+def table_present?(name)
+  ActiveRecord::Base.connection.table_exists? name
+end
+
+
 # 1) Types
+
 types = Type.create([
-                    {name: 'Public'}, {name: 'Church'}, {name: 'Professional'}
+                    {name: 'Public'}, {name: 'Church'}, {name: 'Professional'}, {name: 'Private'}
                     ])
 types = Type.all
 # 2) Countries
@@ -38,7 +44,8 @@ holidays = Holiday.create([{name: "Holiday 1", type_id: types[0].id },
                             {name: "Holiday 3", type_id: types[1].id },
                             {name: "Holiday 4", type_id: types[1].id },
                             {name: "Holiday 5", type_id: types[2].id },
-                            {name: "Holiday 6", type_id: types[2].id }
+                            {name: "Holiday 6", type_id: types[2].id },
+                            {name: "Birthday", type_id: types[3].id }
                           ])
 holidays = Holiday.all
 
