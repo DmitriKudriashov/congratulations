@@ -218,33 +218,8 @@ class EmailsController < AuthenticatedController
     if already_using_cards.present?
       return already_using_cards.first.id #select_year(Date.today.year).first.id
     else
-      return  postcards_for_holiday.first.id
+      return postcards_for_holiday.first.id
     end
-
-    # cards_for_holiday = postcards_for_holiday.left_outer_joins(email_cards: [email: :person])
-    # unless cards_for_holiday.present?
-    #   flash[:alert] = "Not found Postcards for Holiday: #{holiday.name} "
-    #   return
-    # end
-
-    # cards_ids = cards_for_holiday.select(:id)
-
-    # cards_for_holiday.where('people.id = ?', email.person_id)
-
-    # only_null = cards_ids.where('people.id is null')
-    # unless cards_ids.present?
-    #   flash[:alert] = "Not found FREE Postcards for Holiday: #{holiday.name}  "
-
-    #   return
-    # end
-
-    # if only_null.first.nil?
-    #   flash[:alert] = "Not found NEW Postcards for Holiday: #{holiday.name}  "
-    #   return
-
-    # end
-
-    # only_null.order(updated_at: :desc).first.id
   end
 
   def add_postcard(email)

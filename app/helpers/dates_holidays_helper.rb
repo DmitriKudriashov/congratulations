@@ -26,7 +26,9 @@ module DatesHolidaysHelper
   end
 
   def list_element(dates_holiday)
-    dates_holiday.present? ? "#{dates_holiday.holiday.name} / \n" : ''
+    name_holiday = dates_holiday.holiday.name
+    return "" if name_holiday.eql?("Birthday")
+    dates_holiday.present? ? "#{name_holiday} / \n" : ''
   end
 
   def list_links(list)

@@ -43,7 +43,9 @@
     <%= form.check_box :checkit %>
   </p>
   <p>
-    <%= date_field( :email, :sent_date )%>
+    Will be sent:
+    <%= date_field( :email, :will_send )%>
+    <%#= date_field( :email, :sent_date )%>
   </p>
   <p> <%= form.submit %> </p>
 <% end %>
