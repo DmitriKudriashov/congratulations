@@ -45,7 +45,10 @@
   <p>
     Will be sent:
     <%= date_field( :email, :will_send )%>
-    <%#= date_field( :email, :sent_date )%>
+    <% unless @email.sent_date.nil?  %>
+    Sent:
+    <%= date_field( :email, :sent_date ) %>
+    <% end %>
   </p>
   <p> <%= form.submit %> </p>
 <% end %>
