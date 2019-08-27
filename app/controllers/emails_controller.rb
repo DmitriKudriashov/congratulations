@@ -38,7 +38,7 @@ class EmailsController < AuthenticatedController
 
   def send_e
     find_email
-    if @email.checkit == 0
+    if @email.checkit.to_i.eql?(0)
       flash[:alert] = ' This is NOT CHECKED Email yet ! '
     else
       GreetingsMailer.send_message(@email, current_user).deliver_now

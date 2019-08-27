@@ -28,10 +28,10 @@ module DatesHolidaysHelper
 
   def tag_birthday(n)
     list = birthday_today(n)
-    if list == '-'
+    if list.eql?('-')
       tag.a("#{list}", {class: "empty"})
     else
-      opt = n == 0 ? {class: "today", size: :auto} : {class: "near_today", size: :auto}
+      opt = n.eql?(0) ? {class: "today", size: :auto} : {class: "near_today", size: :auto}
       # list_links(list)
       tag.text("#{list}", opt )
     end
@@ -41,6 +41,15 @@ module DatesHolidaysHelper
     people = dates_holiday.list_people
     text_area_tag(:text, people, size: :auto) if people.present?
     # tag.text( people, size: :auto) if people.present?
+  end
+
+  def view_holidays(log_sign)
+    if log_sign.to_i.eql?(0)
+      link_to 'View Left out holidays', dates_holidays_path, logsign: log_sign.to_i
+    else
+      link_to "View All holidays", controller: "dates_holidays", id: "index", class: "dates_holidays",
+        method: :gets, logsign: log_sign.to_i
+    end
   end
 
 end

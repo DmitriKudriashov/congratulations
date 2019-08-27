@@ -55,7 +55,7 @@ class DatesHoliday < ApplicationRecord
     list = ''
     holiday = self.holiday
     if holiday.present?
-      if holiday.name == "Birthday"
+      if holiday.name.eql?("Birthday")
         list = list_birthdays(day, month, list)
       else
         list = list_people_companies(holiday, list)
@@ -148,12 +148,12 @@ class DatesHoliday < ApplicationRecord
       month = 4
     end
 # Если d = 29 и e = 6, то вместо 26 апреля будет 19 апреля
-    if d == 29 && e == 6
+    if d.eql?(29) && e.eql?(6)
       day = 19
       month = 4
     end
 #Если d = 28, e = 6 и (11M + 11) mod 30 < 19, то вместо 25 апреля будет 18 апрел
-    if d == 28 && e == 6 && (11*m + 11 ) % 30 < 19
+    if d.eql?(28) && e.eql?(6) && (11*m + 11 ) % 30 < 19
       day = 18
       month = 4
     end
