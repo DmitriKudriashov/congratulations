@@ -11,6 +11,24 @@ module DatesHolidaysHelper
     list
   end
 
+  def list_holidays(day, month)
+    list = holidays_all(day, month, 0)
+    list += holidays_all(day, month, Date.today.year)
+  end
+
+  def holidays_all(day, month, year)
+    list = ''
+    dhs = DatesHoliday.holidays_to_date(day, month, year )
+    dhs.map do  |dh|
+      list += list_element(dh)
+    end
+    list
+  end
+
+  def list_element(dates_holiday)
+    dates_holiday.present? ? "#{dates_holiday.holiday.name} / \n" : ''
+  end
+
   def list_links(list)
     links = []
     list.split('/').each do |person|
@@ -26,6 +44,14 @@ module DatesHolidaysHelper
     list.empty? ? '-' : list
   end
 
+  def holidays_today(n)
+    date = Date.today + n
+    day = date.day
+    month = date.month
+    list = list_holidays(day, month)
+    list.empty? ? '-' : list
+  end
+
   def tag_birthday(n)
     list = birthday_today(n)
     if list.eql?('-')
@@ -36,6 +62,17 @@ module DatesHolidaysHelper
       tag.text("#{list}", opt )
     end
   end
+
+  def tag_holiday(n)
+    list = holidays_today(n)
+    if list.eql?('-')
+      tag.a("#{list}", {class: "empty"})
+    else
+      opt = n.eql?(0) ? {class: "today", size: :auto} : {class: "near_today", size: :auto}
+      tag.text("#{list}", opt )
+    end
+  end
+
 
   def people_list(dates_holiday)
     people = dates_holiday.list_people

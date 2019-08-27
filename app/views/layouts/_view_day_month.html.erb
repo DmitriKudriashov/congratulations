@@ -1,18 +1,25 @@
 <div>
   <table class="table">
     <tr>
-      <div class="celebArea">
-        <div class="dateArea">
+      <td>
+        <div class="celebArea">
+          <div class="dateArea">
             <div class="numbers">
-              <%= Date.today.day %><br>
+              <%= Date.today.day %>
             </div>
             <div class="month">
               <%=  Date.today.strftime("%B") %>
             </div>
-      </div>
-  <tr>
-     <%= render 'layouts/birthdays' %>
-  </tr>
+          </div>
+        </div>
+      </td>
+
+      <td>
+        <%= render 'layouts/birthdays' %>
+      </td>
+      <td>
+        <%= render 'layouts/holidays' %>
+      </td>
+    </tr>
   </table>
 </div>
-

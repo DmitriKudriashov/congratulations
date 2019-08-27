@@ -28,7 +28,11 @@ class DatesHolidaysController < AuthenticatedController
   def update
     if @dates_holiday.update(dates_holiday_params)
       set_day_month_year
-      redirect_after('Date was successfully updated.!')
+      if @dates_holiday.save
+        redirect_after('Date was successfully updated.!')
+      else
+        render :edit
+      end
     else
       render :edit
     end
@@ -68,6 +72,7 @@ class DatesHolidaysController < AuthenticatedController
 
   def set_day_month_year
     return if @dates_holiday.date.nil?
+
     @dates_holiday.day = @dates_holiday.date.day
     @dates_holiday.month = @dates_holiday.date.month
     @dates_holiday.year =  @dates_holiday.holiday.calc.to_i.zero? ? 0 : @dates_holiday.date.year
@@ -86,7 +91,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def dates_holiday_params
-    params.require(:dates_holiday).permit(:day, :month, :year, :holiday_id, :date)
+    params.require(:dates_holiday).permit(:holiday_id, :date)
     # params.require(:dates_holiday).permit(:date, :holiday_id, )
   end
 
