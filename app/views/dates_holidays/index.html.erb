@@ -5,12 +5,13 @@
 
     <%#= unless @holiday.nil? do  %>
       <%= link_to 'New Date Holiday', new_dates_holiday_path %>
-    <%# end %>
-    <% if @dates_holidays.present? %>
-      |
+            |
       <%= view_holidays(1) %>
       |
       <%= view_holidays(0) %>
+
+    <%# end %>
+    <% if @dates_holidays.present? %>
       <table class="table table-bordered">
         <thead class="thead-light" align="center">
           <tr>
@@ -30,8 +31,12 @@
     <% end %>
   <br>
 </div>
-<br>
+<!-- <br> -->
+
 <!-- <p>
   <%#= link_to 'Back to all Holidays', holidays_path %>
 </p>
  -->
+<div class="digg_pagination">
+  <%= will_paginate @dates_holidays, :container => false %>
+</div>
