@@ -1,22 +1,7 @@
 <%= form_with model: [@holiday, @dates_holiday], local: true do |form| %>
-
-   <%= date_field :dates_holiday, :date %>
-
-
-<!--   <p>
-    <%= 'Day: ' %>
-    <%= form.text_field :day %>
-  </p>
-
   <p>
-    <%= 'Month: ' %>
-    <%= form.text_field :month %>
+   Date: <%= date_field :dates_holiday, :date %>
   </p>
-  <p>
-    <%= 'Year: ' %>
-    <%= form.text_field :year %>
-  </p>
- -->
   <p>
     <%= 'Holiday: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>

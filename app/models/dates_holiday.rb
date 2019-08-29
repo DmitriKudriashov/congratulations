@@ -7,22 +7,6 @@ class DatesHoliday < ApplicationRecord
                 'August', 'September', 'October', 'November', 'December'].freeze
   scope :holidays_to_date, ->(day, month, year) { where(day: day, month: month, year: year) }
 
-  def list_companies
-    holiday.companies
-  end
-
-  def self.company_name(holiday_id)
-    holiday = Holiday.where('id = ?', holiday_id).first
-
-    return '---' if holiday.nil?
-
-    holiday.name
-  end
-
-  def self.list_to_day(day, month)
-    holidays_to_date(day, month, 0)
-  end
-
   def name_month
     MONTHNAMES[month]
   end

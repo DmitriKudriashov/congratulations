@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 class DatesHolidaysController < AuthenticatedController
-  # before_action :set_dates_holidays, only: %i[index]
   before_action :find_dates_holiday, only: %i[show edit update destroy]
-  before_action :find_holiday, only: %i[new create]
+  before_action :find_holiday, only: %i[new create index]
 
   def index
-    find_holiday
     @dates_holidays = @holiday.nil? ? set_dates_holidays : @holiday.dates_holidays
     @dates_holidays = @dates_holidays.order(:month, :day)
-    view_left if params[:logsign].to_i.eql?(0)
+    view_left unless params[:logsign].present?
   end
 
   def view_left
@@ -26,13 +24,9 @@ class DatesHolidaysController < AuthenticatedController
   def edit; end
 
   def update
+    render :edit unless dates_holiday_params[:date].present?
     if @dates_holiday.update(dates_holiday_params)
-      set_day_month_year
-      if @dates_holiday.save
-        redirect_after('Date was successfully updated.!')
-      else
-        render :edit
-      end
+      redirect_after('Date was successfully updated.!')
     else
       render :edit
     end
@@ -50,14 +44,13 @@ class DatesHolidaysController < AuthenticatedController
 
   def create
     @dates_holiday = @holiday.nil? ? DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
-    set_day_month_year
+    render :new unless dates_holiday_params[:date].present?
     if @dates_holiday.save
       redirect_after('Successully created!')
     else
       render :new
     end
   end
-
 
   def destroy
     redirect_after('Date was successfully Destroy!') if @dates_holiday.destroy
@@ -70,20 +63,12 @@ class DatesHolidaysController < AuthenticatedController
 
   private
 
-  def set_day_month_year
-    return if @dates_holiday.date.nil?
-
-    @dates_holiday.day = @dates_holiday.date.day
-    @dates_holiday.month = @dates_holiday.date.month
-    @dates_holiday.year =  @dates_holiday.holiday.calc.to_i.zero? ? 0 : @dates_holiday.date.year
-  end
-
   def find_holiday
-    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].to_i.zero?
+    @holiday = Holiday.find(params[:holiday_id]) if params[:holiday_id].present?
   end
 
   def set_dates_holidays
-    @dates_holidays = DatesHoliday.paginate(page: params[:page]) # .all
+    @dates_holidays = DatesHoliday.paginate(page: params[:page])
   end
 
   def find_dates_holiday
@@ -91,8 +76,11 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def dates_holiday_params
-    params.require(:dates_holiday).permit(:holiday_id, :date)
-    # params.require(:dates_holiday).permit(:date, :holiday_id, )
+    params[:dates_holiday][:day] = params[:dates_holiday][:date].to_date.day
+    params[:dates_holiday][:month] = params[:dates_holiday][:date].to_date.month
+    holiday = Holiday.find(params[:dates_holiday][:holiday_id])
+    params[:dates_holiday][:year] = holiday.calc.present? ? params[:dates_holiday][:date].to_date.year : 0
+    params.require(:dates_holiday).permit(:holiday_id, :date, :day, :month, :year)
   end
 
   def rescue_with_dates_holiday_not_found
