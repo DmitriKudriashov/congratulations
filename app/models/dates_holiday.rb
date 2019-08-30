@@ -3,24 +3,35 @@
 class DatesHoliday < ApplicationRecord
   belongs_to :holiday
 
+  validates :date, presence: true
+
   MONTHNAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
                 'August', 'September', 'October', 'November', 'December'].freeze
   scope :holidays_to_date, ->(day, month, year) { where(day: day, month: month, year: year) }
+  scope :holiday_to_date, ->(holiday_id, day, month, year) { holidays_to_date(day, month, year).where(holiday_id: holiday_id)}
+  validates_uniqueness_of :holiday_id, scope: [:day, :month, :year],  message: 'is not available'
 
-  def list_companies
-    holiday.companies
+  def save
+    set_day_month_year
+    super if self.valid?
   end
 
-  def self.company_name(holiday_id)
-    holiday = Holiday.where('id = ?', holiday_id).first
-
-    return '---' if holiday.nil?
-
-    holiday.name
+  def set_day_month_year
+    self.day = 0
+    self.month = 0
+    if self.date.present?
+      self.day = self.date.day
+      self.month = self.date.month
+      self.year = self.holiday.calc.present? ? self.date.year : 0
+    end
   end
 
-  def self.list_to_day(day, month)
-    holidays_to_date(day, month, 0)
+  def update(params)
+    date = params[:date].to_date
+    self.day = date.day
+    self.month = date.month
+    self.year = self.holiday.calc.present? ? date.year : 0
+    super(params) if self.valid?
   end
 
   def name_month
@@ -55,7 +66,7 @@ class DatesHoliday < ApplicationRecord
     list = ''
     holiday = self.holiday
     if holiday.present?
-      if holiday.name == "Birthday"
+      if holiday.name.eql?("Birthday")
         list = list_birthdays(day, month, list)
       else
         list = list_people_companies(holiday, list)
@@ -148,12 +159,12 @@ class DatesHoliday < ApplicationRecord
       month = 4
     end
 # Если d = 29 и e = 6, то вместо 26 апреля будет 19 апреля
-    if d == 29 && e == 6
+    if d.eql?(29) && e.eql?(6)
       day = 19
       month = 4
     end
 #Если d = 28, e = 6 и (11M + 11) mod 30 < 19, то вместо 25 апреля будет 18 апрел
-    if d == 28 && e == 6 && (11*m + 11 ) % 30 < 19
+    if d.eql?(28) && e.eql?(6) && (11*m + 11 ) % 30 < 19
       day = 18
       month = 4
     end
@@ -210,9 +221,4 @@ class DatesHoliday < ApplicationRecord
     # puts "2) day: #{day}, month: #{month}"
     [day, month]
   end
-
-
-
-
-
 end

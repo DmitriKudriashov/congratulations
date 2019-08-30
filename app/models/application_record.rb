@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationRecord < ActiveRecord::Base
-  self.per_page = 5
+  $PER_PAGE = 7
+  self.per_page = $PER_PAGE
   scope :select_year, ->(y) { where(year: y) }
   scope :birthday, ->(date) { where("cast(strftime('%m', birthday) as int) = ? AND cast(strftime('%d', birthday) as int) = ?", date.month, date.day) }
 

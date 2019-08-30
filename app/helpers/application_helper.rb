@@ -5,7 +5,7 @@ module ApplicationHelper
 
   def flash_messages
     flash.map do |key, message|
-      key = key == 'alert' ? 'danger' : 'info'
+      key = key.eql?('alert') ? 'danger' : 'info'
       content_tag :div, message, class: "alert alert-#{key}"
     end
          .join("\n").html_safe

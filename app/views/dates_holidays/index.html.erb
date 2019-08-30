@@ -5,10 +5,11 @@
 
     <%#= unless @holiday.nil? do  %>
       <%= link_to 'New Date Holiday', new_dates_holiday_path %>
+            |
+      <%= view_holidays(1) %>
       |
-      <%= link_to 'View All holidays', dates_holidays_path,  logsign: 0  %>
-      |
-      <%= link_to "View left holidays", controller: "dates_holidays", id: "index", class: "dates_holidays", method: :gets, logsign: 1 %>
+      <%= view_holidays(0) %>
+
     <%# end %>
     <% if @dates_holidays.present? %>
       <table class="table table-bordered">
@@ -30,7 +31,8 @@
     <% end %>
   <br>
 </div>
-<br>
+<!-- <br> -->
+
 <!-- <p>
   <%#= link_to 'Back to all Holidays', holidays_path %>
 </p>
