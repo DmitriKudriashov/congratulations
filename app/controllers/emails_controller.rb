@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class EmailsController < AuthenticatedController
-  # before_action :set_emails, only: %i[index]
   before_action :find_email, only: %i[show update destroy]
   before_action :set_email_cards, only: %i[show edit]
   before_action :set_email_texts, only: %i[show edit]
 
   def index
     year = Time.now.year
-    @emails = Email.where(year: year).order(updated_at: :desc).paginate(page: params[:page]) # set_emails
+    @emails = Email.where(year: year).order(updated_at: :desc).paginate(page: params[:page])
   end
 
   def new
@@ -57,7 +56,6 @@ class EmailsController < AuthenticatedController
   def create
     @email = Email.create(email_params)
     @email.year = @email.will_send.year
-    # set_email_fields(@email, email_params) #
     begin
       @email.save
     rescue ActiveRecord::RecordNotUnique => e
@@ -65,7 +63,6 @@ class EmailsController < AuthenticatedController
       render :new
       return
     end
-    # redirect_to email_path(@email), notice: 'Success!'
     redirect_to emails_path, notice: 'Crete New Email Successfully!'
   end
 

@@ -24,30 +24,23 @@ class DatesHolidaysController < AuthenticatedController
   def edit; end
 
   def update
-    render :edit unless dates_holiday_params[:date].present?
-    if @dates_holiday.update(dates_holiday_params)
-      redirect_after('Date was successfully updated.!')
-    else
+    if already_exists?
+      error_message
       render :edit
+    else
+      @dates_holiday.update(dates_holiday_params)
+      redirect_after('Date was successfully updated.!')
     end
   end
 
   def show; end
 
-  def redirect_after(notice)
-    if @holiday.nil?
-      redirect_to dates_holidays_path, notice: notice
-    else
-      redirect_to dates_holidays_path, notice: notice
-     end
-  end
-
   def create
     @dates_holiday = @holiday.nil? ? DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
-    render :new unless dates_holiday_params[:date].present?
     if @dates_holiday.save
       redirect_after('Successully created!')
     else
+      error_message
       render :new
     end
   end
@@ -63,8 +56,33 @@ class DatesHolidaysController < AuthenticatedController
 
   private
 
+  def set_date_year_new_holiday
+    @date = dates_holiday_params[:date].to_date
+    @new_holiday = Holiday.find(dates_holiday_params[:holiday_id])
+    @year = @new_holiday.calc.present? ? @date.year : 0
+  end
+
+  def already_exists?
+    set_date_year_new_holiday
+    date_holiday_existing = DatesHoliday.holiday_to_date(@new_holiday.id, @date.day, @date.month, @year).first
+    date_holiday_existing.present? ? check_exists_id_with_current_id(date_holiday_existing) : false
+  end
+
+  def check_exists_id_with_current_id(date_holiday_existing)
+    date_holiday_existing.id.eql?(@dates_holiday.id) ? false : true
+  end
+
+  def error_message
+    set_date_year_new_holiday
+    flash[:alert] = "On this date ( #{@date.day} / #{@date.strftime("%B")} ) this is holiday: #{ @new_holiday.name} -> Already Exist !"
+  end
+
+  def redirect_after(notice)
+    redirect_to dates_holidays_path, notice: notice
+  end
+
   def find_holiday
-    @holiday = Holiday.find(params[:holiday_id]) if params[:holiday_id].present?
+    @holiday = Holiday.find(params[:holiday_id]) unless params[:holiday_id].to_i.eql?(0)
   end
 
   def set_dates_holidays
@@ -76,10 +94,6 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def dates_holiday_params
-    params[:dates_holiday][:day] = params[:dates_holiday][:date].to_date.day
-    params[:dates_holiday][:month] = params[:dates_holiday][:date].to_date.month
-    holiday = Holiday.find(params[:dates_holiday][:holiday_id])
-    params[:dates_holiday][:year] = holiday.calc.present? ? params[:dates_holiday][:date].to_date.year : 0
     params.require(:dates_holiday).permit(:holiday_id, :date, :day, :month, :year)
   end
 

@@ -3,9 +3,36 @@
 class DatesHoliday < ApplicationRecord
   belongs_to :holiday
 
+  validates :date, presence: true
+
   MONTHNAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
                 'August', 'September', 'October', 'November', 'December'].freeze
   scope :holidays_to_date, ->(day, month, year) { where(day: day, month: month, year: year) }
+  scope :holiday_to_date, ->(holiday_id, day, month, year) { holidays_to_date(day, month, year).where(holiday_id: holiday_id)}
+  validates_uniqueness_of :holiday_id, scope: [:day, :month, :year],  message: 'is not available'
+
+  def save
+    set_day_month_year
+    super if self.valid?
+  end
+
+  def set_day_month_year
+    self.day = 0
+    self.month = 0
+    if self.date.present?
+      self.day = self.date.day
+      self.month = self.date.month
+      self.year = self.holiday.calc.present? ? self.date.year : 0
+    end
+  end
+
+  def update(params)
+    date = params[:date].to_date
+    self.day = date.day
+    self.month = date.month
+    self.year = self.holiday.calc.present? ? date.year : 0
+    super(params) if self.valid?
+  end
 
   def name_month
     MONTHNAMES[month]
@@ -194,9 +221,4 @@ class DatesHoliday < ApplicationRecord
     # puts "2) day: #{day}, month: #{month}"
     [day, month]
   end
-
-
-
-
-
 end

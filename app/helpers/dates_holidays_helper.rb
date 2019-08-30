@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+  # frozen_string_literal: true
 
 module DatesHolidaysHelper
   def list_dates_holiday; end
@@ -18,8 +18,7 @@ module DatesHolidaysHelper
 
   def holidays_all(day, month, year)
     list = ''
-    dhs = DatesHoliday.holidays_to_date(day, month, year )
-    dhs.map do  |dh|
+    DatesHoliday.holidays_to_date(day, month, year).map do  |dh|
       list += list_element(dh)
     end
     list
@@ -29,13 +28,6 @@ module DatesHolidaysHelper
     name_holiday = dates_holiday.holiday.name
     return "" if name_holiday.eql?("Birthday")
     dates_holiday.present? ? "#{name_holiday} / \n" : ''
-  end
-
-  def list_links(list)
-    links = []
-    list.split('/').each do |person|
-      links << "link_to person, person"
-    end
   end
 
   def birthday_today(n)
@@ -90,5 +82,4 @@ module DatesHolidaysHelper
         method: :gets, logsign: log_sign.to_i
     end
   end
-
 end
