@@ -10,5 +10,4 @@ module ApplicationHelper
     end
          .join("\n").html_safe
   end
-
 end

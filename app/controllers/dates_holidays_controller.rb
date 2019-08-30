@@ -14,7 +14,7 @@ class DatesHolidaysController < AuthenticatedController
     today = Time.now
     month = today.month
     day = today.day
-    @dates_holidays = @dates_holidays.where("month > ? or (month = ? and day >= ?)", month, month, day)
+    @dates_holidays = @dates_holidays.where('month > ? or (month = ? and day >= ?)', month, month, day)
   end
 
   def new
@@ -74,7 +74,7 @@ class DatesHolidaysController < AuthenticatedController
 
   def error_message
     set_date_year_new_holiday
-    flash[:alert] = "On this date ( #{@date.day} / #{@date.strftime("%B")} ) this is holiday: #{ @new_holiday.name} -> Already Exist !"
+    flash[:alert] = "On this date ( #{@date.day} / #{@date.strftime('%B')} ) this is holiday: #{@new_holiday.name} -> Already Exist !"
   end
 
   def redirect_after(notice)

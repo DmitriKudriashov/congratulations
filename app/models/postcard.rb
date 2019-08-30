@@ -14,5 +14,4 @@ class Postcard < ApplicationRecord
   belongs_to :holiday
 
   scope :for_holiday_id, ->(id) { where(holiday_id: id) }
-
 end

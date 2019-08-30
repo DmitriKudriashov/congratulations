@@ -1,11 +1,11 @@
-  # frozen_string_literal: true
+# frozen_string_literal: true
 
 module DatesHolidaysHelper
   def list_dates_holiday; end
 
   def list_birthdays(day, month)
     list = ''
-    Person.birthdays_to_date(day, month).map do  |person|
+    Person.birthdays_to_date(day, month).map do |person|
       list += person.present? ? "#{person.name} / \n" : ''
     end
     list
@@ -18,7 +18,7 @@ module DatesHolidaysHelper
 
   def holidays_all(day, month, year)
     list = ''
-    DatesHoliday.holidays_to_date(day, month, year).map do  |dh|
+    DatesHoliday.holidays_to_date(day, month, year).map do |dh|
       list += list_element(dh)
     end
     list
@@ -26,7 +26,8 @@ module DatesHolidaysHelper
 
   def list_element(dates_holiday)
     name_holiday = dates_holiday.holiday.name
-    return "" if name_holiday.eql?("Birthday")
+    return '' if name_holiday.eql?('Birthday')
+
     dates_holiday.present? ? "#{name_holiday} / \n" : ''
   end
 
@@ -49,24 +50,23 @@ module DatesHolidaysHelper
   def tag_birthday(n)
     list = birthday_today(n)
     if list.eql?('-')
-      tag.a("#{list}", {class: "empty"})
+      tag.a(list.to_s, class: 'empty')
     else
-      opt = n.eql?(0) ? {class: "today", size: :auto} : {class: "near_today", size: :auto}
+      opt = n.eql?(0) ? { class: 'today', size: :auto } : { class: 'near_today', size: :auto }
       # list_links(list)
-      tag.text("#{list}", opt )
+      tag.text(list.to_s, opt)
     end
   end
 
   def tag_holiday(n)
     list = holidays_today(n)
     if list.eql?('-')
-      tag.a("#{list}", {class: "empty"})
+      tag.a(list.to_s, class: 'empty')
     else
-      opt = n.eql?(0) ? {class: "today", size: :auto} : {class: "near_today", size: :auto}
-      tag.text("#{list}", opt )
+      opt = n.eql?(0) ? { class: 'today', size: :auto } : { class: 'near_today', size: :auto }
+      tag.text(list.to_s, opt)
     end
   end
-
 
   def people_list(dates_holiday)
     people = dates_holiday.list_people
@@ -78,8 +78,8 @@ module DatesHolidaysHelper
     if log_sign.to_i.eql?(0)
       link_to 'View Left out holidays', dates_holidays_path, logsign: log_sign.to_i
     else
-      link_to "View All holidays", controller: "dates_holidays", id: "index", class: "dates_holidays",
-        method: :gets, logsign: log_sign.to_i
+      link_to 'View All holidays', controller: 'dates_holidays', id: 'index', class: 'dates_holidays',
+                                   method: :gets, logsign: log_sign.to_i
     end
   end
 end

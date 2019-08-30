@@ -8,21 +8,21 @@ class DatesHoliday < ApplicationRecord
   MONTHNAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
                 'August', 'September', 'October', 'November', 'December'].freeze
   scope :holidays_to_date, ->(day, month, year) { where(day: day, month: month, year: year) }
-  scope :holiday_to_date, ->(holiday_id, day, month, year) { holidays_to_date(day, month, year).where(holiday_id: holiday_id)}
-  validates_uniqueness_of :holiday_id, scope: [:day, :month, :year],  message: 'is not available'
+  scope :holiday_to_date, ->(holiday_id, day, month, year) { holidays_to_date(day, month, year).where(holiday_id: holiday_id) }
+  validates_uniqueness_of :holiday_id, scope: %i[day month year], message: 'is not available'
 
   def save
     set_day_month_year
-    super if self.valid?
+    super if valid?
   end
 
   def set_day_month_year
     self.day = 0
     self.month = 0
-    if self.date.present?
-      self.day = self.date.day
-      self.month = self.date.month
-      self.year = self.holiday.calc.present? ? self.date.year : 0
+    if date.present?
+      self.day = date.day
+      self.month = date.month
+      self.year = holiday.calc.present? ? date.year : 0
     end
   end
 
@@ -30,8 +30,8 @@ class DatesHoliday < ApplicationRecord
     date = params[:date].to_date
     self.day = date.day
     self.month = date.month
-    self.year = self.holiday.calc.present? ? date.year : 0
-    super(params) if self.valid?
+    self.year = holiday.calc.present? ? date.year : 0
+    super(params) if valid?
   end
 
   def name_month
@@ -41,13 +41,13 @@ class DatesHoliday < ApplicationRecord
   def self.create_date_holiday(date, holiday)
     year = holiday.calc.nil? ? 0 : date.year
 
-    self.find_or_create_by(
+    find_or_create_by(
       day: date.day,
       month: date.month,
       year: year,
       holiday_id: holiday.id,
       date: date
-      )
+    )
   end
 
   def name_of_company
@@ -66,11 +66,11 @@ class DatesHoliday < ApplicationRecord
     list = ''
     holiday = self.holiday
     if holiday.present?
-      if holiday.name.eql?("Birthday")
-        list = list_birthdays(day, month, list)
-      else
-        list = list_people_companies(holiday, list)
-      end
+      list = if holiday.name.eql?('Birthday')
+               list_birthdays(day, month, list)
+             else
+               list_people_companies(holiday, list)
+             end
     end
     list
   end
@@ -86,8 +86,9 @@ class DatesHoliday < ApplicationRecord
     holiday_companies = holiday.companies_holidays.where('holiday_id = ?', holiday_id)
     holiday_companies.map do |holiday_company|
       next unless holiday_company.present?
-        people = holiday_company.company.people
-        list = people.present? ? list_people_names(people, list) : list
+
+      people = holiday_company.company.people
+      list = people.present? ? list_people_names(people, list) : list
     end
     list
   end
@@ -135,7 +136,7 @@ class DatesHoliday < ApplicationRecord
     m = (15 - pp + k - q) % 30
     # puts "m = #{m}"
 
-    n =  (4 + k - q) % 7
+    n = (4 + k - q) % 7
     # puts "n = #{n}"
 
     d = (19 * a + m) % 7
@@ -144,7 +145,7 @@ class DatesHoliday < ApplicationRecord
     e = (2 * b + 4 * c + 6 * d + n) % 7
     # puts "e = #{e}"
 
-  # Дата Пасхи по новому стилю: 22 + d + e марта или d + e − 9 апреля
+    # Дата Пасхи по новому стилю: 22 + d + e марта или d + e − 9 апреля
     d1 = 22 + e + d
     # puts "d1 = #{d1}"
 
@@ -158,13 +159,13 @@ class DatesHoliday < ApplicationRecord
       day = d2
       month = 4
     end
-# Если d = 29 и e = 6, то вместо 26 апреля будет 19 апреля
+    # Если d = 29 и e = 6, то вместо 26 апреля будет 19 апреля
     if d.eql?(29) && e.eql?(6)
       day = 19
       month = 4
     end
-#Если d = 28, e = 6 и (11M + 11) mod 30 < 19, то вместо 25 апреля будет 18 апрел
-    if d.eql?(28) && e.eql?(6) && (11*m + 11 ) % 30 < 19
+    # Если d = 28, e = 6 и (11M + 11) mod 30 < 19, то вместо 25 апреля будет 18 апрел
+    if d.eql?(28) && e.eql?(6) && (11 * m + 11) % 30 < 19
       day = 18
       month = 4
     end
@@ -172,34 +173,33 @@ class DatesHoliday < ApplicationRecord
   end
 
   def self.pasha_prav(y)
+    # Для определения даты Православной пасхи по старому стилю необходимо:
 
-# Для определения даты Православной пасхи по старому стилю необходимо:
-
-# Разделить номер года на 19 и определить остаток от деления a.
+    # Разделить номер года на 19 и определить остаток от деления a.
     a = y % 19
     # puts "a = #{a}"
 
-# Разделить номер года на 4 и определить остаток от деления b.
+    # Разделить номер года на 4 и определить остаток от деления b.
     b = y % 4
     # puts "b = #{b}"
 
-# Разделить номер года на 7 и определить остаток от деления c.
+    # Разделить номер года на 7 и определить остаток от деления c.
     c = y % 7
     # puts "c = #{c}"
 
-# Разделить сумму 19a + 15 на 30 и определить остаток d.
-    d = (19 * a +15) % 30
+    # Разделить сумму 19a + 15 на 30 и определить остаток d.
+    d = (19 * a + 15) % 30
     # puts "d = #{d}"
 
-# Разделить сумму 2b + 4c + 6d + 6 на 7 и определить остаток e.
-    e = (2*b + 4*c + 6*d + 6) % 7
+    # Разделить сумму 2b + 4c + 6d + 6 на 7 и определить остаток e.
+    e = (2 * b + 4 * c + 6 * d + 6) % 7
     # puts "e = #{e}"
 
-# Определить сумму f = d + e.
+    # Определить сумму f = d + e.
     f = d + e
     # puts "f = #{f}"
 
-# (по старому стилю) Если f ≤ 9, то Пасха будет праздноваться 22 + f марта; если f > 9, то Пасха будет праздноваться f — 9 апреля.
+    # (по старому стилю) Если f ≤ 9, то Пасха будет праздноваться 22 + f марта; если f > 9, то Пасха будет праздноваться f — 9 апреля.
     # if f <= 9
     #   day = 22 + f
     #   month = 3
@@ -209,8 +209,7 @@ class DatesHoliday < ApplicationRecord
     # end
     # # puts "1) day: #{day}, month: #{month}"
 
-
-# (по новому стилю) Если f ≤ 26, то Пасха будет праздноваться 4 + f апреля; если f > 26, то Пасха будет праздноваться f — 26 мая.
+    # (по новому стилю) Если f ≤ 26, то Пасха будет праздноваться 4 + f апреля; если f > 26, то Пасха будет праздноваться f — 26 мая.
     if f <= 26
       day = 4 + f
       month = 4

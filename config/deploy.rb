@@ -1,7 +1,9 @@
-# config valid for current version and patch releases of Capistrano
-lock "~> 3.11.0"
+# frozen_string_literal: true
 
-set :application, "congratulations"
+# config valid for current version and patch releases of Capistrano
+lock '~> 3.11.0'
+
+set :application, 'congratulations'
 set :repo_url, 'git@github.com:DmitriKudriashov/congratulations.git'
 set :rvm_ruby_version, '2.5.3'
 set :rails_env, 'production'
@@ -11,7 +13,7 @@ set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 # Default deploy_to directory is /var/www/congratulations
 # We don't use "/var/www/congratulations-#{fetch(:stage)}" for this simple app
-set :deploy_to, "/var/www/congratulations"
+set :deploy_to, '/var/www/congratulations'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -29,7 +31,7 @@ set :deploy_to, "/var/www/congratulations"
 append :linked_files, 'config/master.key'
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -54,7 +56,7 @@ set :migration_servers, -> { primary(fetch(:migration_role)) }
 set :conditionally_migrate, true
 
 # Defaults to [:web]
-set :assets_roles, [:web, :app]
+set :assets_roles, %i[web app]
 
 # Defaults to 'assets'
 # This should match config.assets.prefix in your rails config/application.rb
@@ -68,7 +70,7 @@ set :assets_manifests, ['app/assets/config/manifest.js']
 set :rails_assets_groups, :assets
 
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
-set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
+set :normalize_asset_timestamps, %w[public/images public/javascripts public/stylesheets]
 
 # Defaults to nil (no asset cleanup is performed)
 # If you use Rails 4+ and you'd like to clean up old assets after each deploy,
