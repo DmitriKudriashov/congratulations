@@ -206,6 +206,7 @@ GEM
     msgpack (1.2.9-x86-mingw32)
     multi_json (1.13.1)
     multipart-post (2.1.1)
+    mysql2 (0.3.15)
     nested_form (0.3.2)
     net-scp (2.0.0)
       net-ssh (>= 2.6.5, < 6.0.0)
@@ -421,6 +422,7 @@ DEPENDENCIES
   letter_opener
   listen (>= 3.0.5, < 3.2)
   meta_request
+  mysql2 (~> 0.3.15)
   octicons_helper
   octokit (~> 4.0)
   paperclip
