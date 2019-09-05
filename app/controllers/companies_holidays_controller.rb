@@ -9,15 +9,13 @@ class CompaniesHolidaysController < AuthenticatedController
   def index; end
 
   def new
-    # byebug
     if @holiday.nil?
       @companies_holiday = CompaniesHoliday.new
       @companies_holiday.holiday_id = 1
       @companies_holiday.company_id = 1
     else
-      @companies_holiday =  @holiday.companies_holidays.new
+      @companies_holiday = @holiday.companies_holidays.new
     end
-
   end
 
   def new_company_holiday
@@ -28,7 +26,6 @@ class CompaniesHolidaysController < AuthenticatedController
 
   def update
     if @companies_holiday.update(companies_holiday_params)
-      # redirect_to holiday_companies_holidays_path(@companies_holiday)
       redirect_to redirect_after, notice: 'Companies-Holiday was successfully updated.'
     else
       render :edit
@@ -38,7 +35,6 @@ class CompaniesHolidaysController < AuthenticatedController
   def show; end
 
   def redirect_after
-   # @holiday.nil? ? companies_holiday_path :
     edit_holiday_path(@companies_holiday.holiday_id)
   end
 

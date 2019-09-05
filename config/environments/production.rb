@@ -109,13 +109,13 @@ Rails.application.configure do
   # Mailer
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'mail.pronov.net',
-    port:                 587,
-    domain:               'staff-centre.com',
-    user_name:            Rails.application.credentials.mailer[:user_name],
-    password:             Rails.application.credentials.mailer[:password],
-    authentication:       'plain',
-    openssl_verify_mode:  'none',
+    address: 'mail.pronov.net',
+    port: 587,
+    domain: 'staff-centre.com',
+    user_name: Rails.application.credentials.mailer[:user_name],
+    password: Rails.application.credentials.mailer[:password],
+    authentication: 'plain',
+    openssl_verify_mode: 'none',
     enable_starttls_auto: true
   }
 

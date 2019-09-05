@@ -126,7 +126,7 @@ class EmailsController < AuthenticatedController
 
     list_people_mails = []
     people_holiday.each do |person|
-        list_people_mails = loop_by_mail_addreses(person, list_people_mails)
+      list_people_mails = loop_by_mail_addreses(person, list_people_mails)
     end
     list_people_mails
   end
@@ -147,26 +147,27 @@ class EmailsController < AuthenticatedController
   def createemails(for_holiday, list_people_mails)
     holiday_date = DatesHoliday.where(holiday_id: for_holiday.id).first
     return if holiday_date.nil?
+
     month = holiday_date.month
     day = holiday_date.day
-    year = Time.now.year #holiday_date.year == 0 ? Time.now.year : holiday_date.year
+    year = Time.now.year # holiday_date.year == 0 ? Time.now.year : holiday_date.year
     will_send = Date.new(year, month, day)
 
     list_people_mails.each do |data_hash|
       person = Person.find(data_hash[:person_id])
       # mail_address = MailAddress.find(data_hash[:mail_address_id])
 
-      create_new_email({
-                         name: " #{person.name},  #{for_holiday.name}",
-                         holiday_id: for_holiday.id,
-                         address: person.email,
-                         mail_address_id: data_hash[:mail_address_id],
-                         will_send: will_send,
-                         person_id: person.id,
-                         checkit: 0,
-                         year: will_send.year,
-                         message: "Conratulations! Happy: #{for_holiday.name} \n #{add_cardtext(for_holiday)}"
-                       })
+      create_new_email(
+        name: " #{person.name},  #{for_holiday.name}",
+        holiday_id: for_holiday.id,
+        address: person.email,
+        mail_address_id: data_hash[:mail_address_id],
+        will_send: will_send,
+        person_id: person.id,
+        checkit: 0,
+        year: will_send.year,
+        message: "Conratulations! Happy: #{for_holiday.name} \n #{add_cardtext(for_holiday)}"
+      )
     end
   end
 
@@ -210,10 +211,10 @@ class EmailsController < AuthenticatedController
       return
     end
 
-    already_using_cards = postcards_for_holiday.joins(email_cards: :email).where(emails: {year: Date.today.year})
+    already_using_cards = postcards_for_holiday.joins(email_cards: :email).where(emails: { year: Date.today.year })
 
     if already_using_cards.present?
-      return already_using_cards.first.id #select_year(Date.today.year).first.id
+      return already_using_cards.first.id # select_year(Date.today.year).first.id
     else
       return postcards_for_holiday.first.id
     end

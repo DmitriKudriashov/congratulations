@@ -10,30 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_10_144240) do
+ActiveRecord::Schema.define(version: 2019_09_05_080600) do
 
-  create_table "cardtexts", force: :cascade do |t|
-    t.string "filename", default: ""
-    t.text "text", default: ""
+  create_table "cardtexts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "filename"
+    t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "holiday_id"
+    t.bigint "holiday_id"
     t.index ["filename"], name: "index_cardtexts_on_filename", unique: true
     t.index ["holiday_id"], name: "index_cardtexts_on_holiday_id"
   end
 
-  create_table "companies", force: :cascade do |t|
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: ""
-    t.integer "country_id", null: false
+    t.bigint "country_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["country_id"], name: "index_companies_on_country_id"
     t.index ["name"], name: "index_companies_on_name", unique: true
   end
 
-  create_table "companies_holidays", force: :cascade do |t|
-    t.integer "company_id", null: false
-    t.integer "holiday_id", null: false
+  create_table "companies_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.bigint "holiday_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id", "holiday_id"], name: "index_companies_holidays_on_company_id_and_holiday_id", unique: true
@@ -41,17 +41,17 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["holiday_id"], name: "index_companies_holidays_on_holiday_id"
   end
 
-  create_table "companies_people", force: :cascade do |t|
-    t.integer "person_id", null: false
+  create_table "companies_people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "company_id"
+    t.bigint "company_id"
     t.index ["company_id", "person_id"], name: "index_companies_people_on_company_id_and_person_id", unique: true
     t.index ["company_id"], name: "index_companies_people_on_company_id"
     t.index ["person_id"], name: "index_companies_people_on_person_id"
   end
 
-  create_table "countries", force: :cascade do |t|
+  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: ""
     t.string "code", default: ""
     t.datetime "created_at", null: false
@@ -60,9 +60,9 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
-  create_table "countries_holidays", force: :cascade do |t|
-    t.integer "country_id", null: false
-    t.integer "holiday_id", null: false
+  create_table "countries_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "country_id", null: false
+    t.bigint "holiday_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["country_id", "holiday_id"], name: "index_countries_holidays_on_country_id_and_holiday_id", unique: true
@@ -70,11 +70,11 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["holiday_id"], name: "index_countries_holidays_on_holiday_id"
   end
 
-  create_table "dates_holidays", force: :cascade do |t|
+  create_table "dates_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "day", default: 1, null: false
     t.integer "month", default: 1, null: false
     t.integer "year", default: 0, null: false
-    t.integer "holiday_id", default: 0, null: false
+    t.bigint "holiday_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date"
@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["holiday_id"], name: "index_dates_holidays_on_holiday_id"
   end
 
-  create_table "email_cards", force: :cascade do |t|
-    t.integer "email_id", null: false
-    t.integer "postcard_id", null: false
+  create_table "email_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "email_id", null: false
+    t.bigint "postcard_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email_id", "postcard_id"], name: "index_email_cards_on_email_id_and_postcard_id", unique: true
@@ -92,9 +92,9 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["postcard_id"], name: "index_email_cards_on_postcard_id"
   end
 
-  create_table "email_texts", force: :cascade do |t|
-    t.integer "email_id", null: false
-    t.integer "cardtext_id", null: false
+  create_table "email_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "email_id", null: false
+    t.bigint "cardtext_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cardtext_id"], name: "index_email_texts_on_cardtext_id"
@@ -102,18 +102,18 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["email_id"], name: "index_email_texts_on_email_id"
   end
 
-  create_table "emails", force: :cascade do |t|
+  create_table "emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: ""
     t.string "address", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "mail_address_id"
+    t.bigint "mail_address_id"
     t.integer "checkit"
     t.datetime "sent_date"
     t.date "will_send"
     t.text "message"
-    t.integer "holiday_id"
-    t.integer "person_id"
+    t.bigint "holiday_id"
+    t.bigint "person_id"
     t.integer "year", default: 0
     t.index ["address"], name: "index_emails_on_address"
     t.index ["holiday_id", "person_id", "year"], name: "index_emails_on_holiday_id_and_person_id_and_year", unique: true
@@ -122,26 +122,26 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["person_id"], name: "index_emails_on_person_id"
   end
 
-  create_table "holidays", force: :cascade do |t|
+  create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "type_id"
+    t.bigint "type_id"
     t.integer "calc"
     t.index ["name"], name: "index_holidays_on_name", unique: true
     t.index ["type_id"], name: "index_holidays_on_type_id"
   end
 
-  create_table "mail_addresses", force: :cascade do |t|
+  create_table "mail_addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: ""
-    t.integer "companies_person_id", null: false
+    t.bigint "companies_person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["companies_person_id"], name: "index_mail_addresses_on_companies_person_id"
     t.index ["email"], name: "index_mail_addresses_on_email"
   end
 
-  create_table "people", force: :cascade do |t|
+  create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: ""
     t.string "email", default: ""
     t.datetime "created_at", null: false
@@ -151,28 +151,28 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["name"], name: "index_people_on_name", unique: true
   end
 
-  create_table "postcards", force: :cascade do |t|
+  create_table "postcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "filename", default: ""
-    t.binary "image", limit: 16777216
+    t.binary "image", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
     t.bigint "image_file_size"
     t.datetime "image_updated_at"
-    t.integer "holiday_id"
+    t.bigint "holiday_id"
     t.integer "once"
     t.index ["holiday_id"], name: "index_postcards_on_holiday_id"
   end
 
-  create_table "types", force: :cascade do |t|
+  create_table "types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_types_on_name"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -196,4 +196,23 @@ ActiveRecord::Schema.define(version: 2019_07_10_144240) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cardtexts", "holidays"
+  add_foreign_key "companies", "countries"
+  add_foreign_key "companies_holidays", "companies"
+  add_foreign_key "companies_holidays", "holidays"
+  add_foreign_key "companies_people", "companies"
+  add_foreign_key "companies_people", "people"
+  add_foreign_key "countries_holidays", "countries"
+  add_foreign_key "countries_holidays", "holidays"
+  add_foreign_key "dates_holidays", "holidays"
+  add_foreign_key "email_cards", "emails"
+  add_foreign_key "email_cards", "postcards"
+  add_foreign_key "email_texts", "cardtexts"
+  add_foreign_key "email_texts", "emails"
+  add_foreign_key "emails", "holidays"
+  add_foreign_key "emails", "mail_addresses"
+  add_foreign_key "emails", "people"
+  add_foreign_key "holidays", "types"
+  add_foreign_key "mail_addresses", "companies_people"
+  add_foreign_key "postcards", "holidays"
 end

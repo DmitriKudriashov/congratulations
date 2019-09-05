@@ -11,9 +11,8 @@ class Email < ApplicationRecord
   belongs_to :holiday
   belongs_to :person
 
-
   def greetings_text
-    self.message
+    message
     # cardtexts.first.present? ? cardtexts.first.text : 'Text not avalable !'
   end
 
