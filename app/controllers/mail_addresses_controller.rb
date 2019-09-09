@@ -14,8 +14,7 @@ class MailAddressesController < AuthenticatedController
 
   def update
     if @mail_address.update(mail_address_params)
-      # redirect_to mail_address_path(@mail_address), notice: 'Success!' # for show
-      redirect_to mail_addresses_path, notice: 'Success!' # for list, index
+      redirect_to mail_addresses_path, notice: 'Success!'
     else
       render :edit
     end
@@ -26,8 +25,7 @@ class MailAddressesController < AuthenticatedController
   def create
     @mail_address = MailAddress.new(mail_address_params)
     if @mail_address.save
-      # redirect_to mail_address_path(@mail_address), notice: 'Success!' # for show
-      redirect_to mail_addresses_path, notice: 'Success!' # for list, index
+      redirect_to mail_addresses_path, notice: 'Success!'
     else
       render :new
     end
@@ -46,7 +44,7 @@ class MailAddressesController < AuthenticatedController
   private
 
   def set_mail_addresses
-    @mail_addresses = MailAddress.paginate(page: params[:page]) # .all
+    @mail_addresses = MailAddress.order(:companies_person_id,updated_at: :desc).paginate(page: params[:page])
   end
 
   def find_mail_address
