@@ -21,12 +21,6 @@
   <td>
     <%= text_area_tag(:text, email.message, size: :auto) if email.message.present? %>
   </td>
-
-<!-- <td align="center">
-    <%#= check_box_tag email.checkit, "1", "0" , disable: false%>
-    <%#= email.checkit %>
-  </td>
- -->
   <td>
     <% email.postcards.each do |postcard|  %>
       <%= image_tag postcard.image.url(:small) %>
@@ -38,10 +32,6 @@
   <td align="center">
     <%= email.sent_date %>
   </td>
-<!--  <td class="<s>    </s>">-->
-    <%#= link_to 'show', email_path(email) %>
-<!--  </td>-->
-    <%#= link_to 'SEND', send_greeting_  path(email) %>
     <% if  email.checkit > 0 %>
   <td class="s_e_d">
       <% if email.sent_date.to_i.zero? %>
