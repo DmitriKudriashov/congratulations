@@ -3,11 +3,12 @@
   <div class="digg_pagination">
     <%= will_paginate @emails, :container => false %>
   </div>
-  <li class="nav-item active">
-     <%= link_to 'New Email', new_email_path %>
+  <!-- <li class="nav-item active">
+     <%#= link_to 'New Email', new_email_path %>
   </li>
+   -->
   <li class="nav-item active">
-  <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
+    <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
   </li>
 
    <% if @emails.present? %>

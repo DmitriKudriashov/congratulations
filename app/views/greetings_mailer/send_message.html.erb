@@ -2,6 +2,9 @@
 Hi, <%= @name %><br>
 </h1>
 <h2><%= @greetings_text %></h2>
-<%#= image_tag :attachments['Postcard'] %>
+<% @files.each do |file| %>
+<%= image_tag attachments[file].url %>
+<br>
+<% end %>
 
 
