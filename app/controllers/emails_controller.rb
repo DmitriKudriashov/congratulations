@@ -162,7 +162,7 @@ class EmailsController < AuthenticatedController
         person_id: person.id,
         checkit: 0,
         year: will_send.year,
-        message: "Congratulations! Happy: #{for_holiday.name} \n #{add_cardtext(for_holiday)}"
+        message: "#{add_cardtext(for_holiday)}"
       )
     end
   end
