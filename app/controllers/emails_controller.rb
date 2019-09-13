@@ -40,7 +40,9 @@ class EmailsController < AuthenticatedController
     if @email.checkit.to_i.eql?(0)
       flash[:alert] = ' This is NOT CHECKED Email yet ! '
     else
-      GreetingsMailer.send_message(@email, current_user).deliver_now
+      new_mail = GreetingsMailer.send_message(@email, current_user)
+      # byebug
+      new_mail.deliver_now
       flash[:notice] = ' This is Email Sent SUCCESSFULY ! '
     end
     redirect_to emails_path
@@ -143,7 +145,7 @@ class EmailsController < AuthenticatedController
   end
 
   def createemails(for_holiday, list_people_mails)
-    holiday_date = DatesHoliday.where(holiday_id: for_holiday.id).first
+    holiday_date = DatesHoliday.where(holiday_id: for_holiday.id).last
     return if holiday_date.nil?
 
     month = holiday_date.month

@@ -16,12 +16,14 @@ class GreetingsMailer < ApplicationMailer
     email.postcards.each do |postcard|
       file_with_picture = postcard.image.path
       if File.exist?(file_with_picture)
-        attachments.inline[postcard.filename] = File.read(file_with_picture)
+        attachments[postcard.filename] = File.read(file_with_picture)
+        attachments[postcard.filename].mime_type = 'image/jpeg' #'image/gif'
         @files << postcard.filename
       end
     end
+    # byebug
 
-    mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!', content_type: "text/html"
+    mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!' #, content_type: "text/html"
     email.sent_date = Time.now
     email.address = @address
     email.save
