@@ -32,12 +32,37 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+          # 13092019  config.action_mailer.delivery_method = :letter_opener
+          # 13092019  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+#  <--------------------------------------- from production >
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+
+  # Mailer
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'mail.pronov.net',
+    port: 587,
+    domain: 'staff-centre.com',
+    user_name: Rails.application.credentials.mailer[:user_name],
+    password: Rails.application.credentials.mailer[:password],
+    authentication: 'plain',
+    openssl_verify_mode: 'none',
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.default_url_options = {
+    host: ENV['HOST'] || 'http://greetings.staff-centre.com'
+  }
+# ----------------------------------------------------------------</from production >
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
