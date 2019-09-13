@@ -9,12 +9,13 @@
     <%= image_tag @email_card.postcard.image.url(:small) %>
     <%= @email_card.postcard.filename %>
   </td>
-
-
-<!--   <td>
+<!--
+  <td>
     <%#= link_to 'show', email_@email_card_path(@email_cards) %>
   </td>
- -->  <td>
+ -->
+
+  <td>
     <%= link_to 'edit', edit_email_card_path(@email_card.id) %>
   </td>
   <td>
