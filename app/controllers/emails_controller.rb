@@ -40,10 +40,18 @@ class EmailsController < AuthenticatedController
     if @email.checkit.to_i.eql?(0)
       flash[:alert] = ' This is NOT CHECKED Email yet ! '
     else
-      new_mail = GreetingsMailer.send_message(@email, current_user)
-      # byebug
-      new_mail.deliver_now
-      flash[:notice] = ' This is Email Sent SUCCESSFULY ! '
+      begin
+        new_mail = GreetingsMailer.send_message(@email, current_user)
+        new_mail.deliver_now
+      rescue StandardError => e
+       flash[:alert] = " ERROR SEND EMAIL ! #{e.message} "
+       return
+      else
+        @email.sent_date = Time.now
+        @email.address = new_mail[:to]
+        @email.save
+        flash[:notice] = ' This is Email Sent SUCCESSFULY ! '
+      end
     end
     redirect_to emails_path
   end

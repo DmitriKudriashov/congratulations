@@ -16,19 +16,16 @@ class GreetingsMailer < ApplicationMailer
     email.postcards.each do |postcard|
       file_with_picture = postcard.image.path
       if File.exist?(file_with_picture)
-        attachments[postcard.filename] = File.read(file_with_picture)
-        # attachments[postcard.filename].mime_type = 'image/jpeg' #'image/gif'
+        ext = get_image_extension(file_with_picture)
+        attachments.inline[postcard.filename] = {
+                                          mime_type: "image/#{ext}" ,
+                                          content: File.read(file_with_picture)
+                                          }
         @files << postcard.filename
       end
     end
-    # byebug
 
-    mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!' #, content_type: "text/html"
-    email.sent_date = Time.now
-    email.address = @address
-    email.save
-  # rescue StandardError => e
-  #   flash[:alert] = " ERROR SAVE EMAIL ! #{e.message} "
+    mail from: @from, to: @address, subject: 'CONGRATULATIONS !!!'
   end
 
   def personal_address(email)
@@ -39,9 +36,29 @@ class GreetingsMailer < ApplicationMailer
     email.mail_address_id.to_i.zero? ? personal_address(email) : email.mail_address.email
   end
 
+  private
+
+  def get_image_extension(local_file_path)
+    png = 'x89PNG' # Regexp.new("\x89PNG".force_encoding("binary"))
+    jpg = 'xFF\xD8\xFF\xE0\x00\x10JFIF'  # Regexp.new("\xff\xd8\xff\xe0\x00\x10JFIF".force_encoding("binary"))
+    jpg2 = 'xFF\xD8\xFF\xE1(.*){2}Exif' # Regexp.new("\xff\xd8\xff\xe1(.*){2}Exif".force_encoding("binary"))
+    case IO.read(local_file_path, 10)
+    when /^GIF8/
+      'gif'
+    when "/^#{png}/"
+      'png'
+    when  "/^#{jpg}"
+    when "/^#{jpg2}"
+      'jpeg'
+    else
+      mime_type = `file #{local_file_path} --mime-type`.gsub("\n", '') # Works on linux and mac
+    raise UnprocessableEntity, "unknown file type" if !mime_type
+      mime_type.split(':')[1].split('/')[1].gsub('x-', '').gsub(/jpeg/, 'jpg').gsub(/text/, 'txt').gsub(/x-/, '')
+    end
+  end
+
   def list_attachments(email)
     atts = {}
-
     email.postcards.each do |postcard|
       file_with_picture = postcard.image.path
       if File.exist?(file_with_picture)
