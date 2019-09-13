@@ -17,7 +17,7 @@ class GreetingsMailer < ApplicationMailer
       file_with_picture = postcard.image.path
       if File.exist?(file_with_picture)
         attachments[postcard.filename] = File.read(file_with_picture)
-        attachments[postcard.filename].mime_type = 'image/jpeg' #'image/gif'
+        # attachments[postcard.filename].mime_type = 'image/jpeg' #'image/gif'
         @files << postcard.filename
       end
     end

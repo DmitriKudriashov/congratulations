@@ -7,8 +7,6 @@
   <p>
     <%= 'FOR HOLIDAY: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
-    <%= 'Will be Send: ' %>
-    <%= date_field :email, :will_send %>
   </p>
   <p>
     <%= "Name This Email: "  %>
