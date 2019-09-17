@@ -1,28 +1,29 @@
 <%= form_with model: @email, local: true do |form| %>
   <p>
     <!-- Email Id: <%#= "#{@email.id}" %><br> -->
-    <h4 style="color: red"><%= "to:  #{Person.where(id: @email.person_id).first.name}" %></h4>
+    <a style="color: red; font-size: 20px"><%= "to:  #{Person.where(id: @email.person_id).first.name}" %></a>
     <%#= form.collection_select :person_id, Person.all, :id, :name, prompt: 'Select person' %>
-  </p>
-  <p>
-    <%= 'FOR HOLIDAY: ' %>
+    <a style="margin: 10%"><%= 'HOLIDAY: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
+    </a>
   </p>
   <p>
     <%= 'Description: '  %>
     <%= form.text_field :name, size: 60 %>
-
     <% if @email.sent_date.present? %>
+      <a style="margin: 10%">
         <%= form.label :address %>
         <%= form.text_field :address, size: 40 %>
+      </a>
     <% else %>
       <p>
         <%= form.label :address %>
         <%= form.text_field :address, size: 40%>
-
-        <%= 'Company Email Address: ' %>
-        <%= form.collection_select :mail_address_id, MailAddress.joins(:companies_person).where('companies_people.person_id =  ?', @email.person_id), :id,
-         :email, prompt: 'Select Mail Address Company', size: 60%>
+        <a style="margin: 10%">
+          <%= 'Company Email Address: ' %>
+          <%= form.collection_select :mail_address_id, MailAddress.joins(:companies_person).where('companies_people.person_id =  ?', @email.person_id), :id,
+              :email, prompt: 'Select Mail Address Company', size: 60%>
+        </a>
       </p>
     <% end %>
     <p>
@@ -30,16 +31,17 @@
       <%= form.text_area :message, rows: 2, cols: 60, class: 'form-control' %>
     </p>
     <p>
-      <%= 'Check It: '%>
-      <%= form.check_box :checkit %>
-    </p>
-  <p>
     Will be sent:
     <%= date_field( :email, :will_send )%>
     <% unless @email.sent_date.nil?  %>
-    Sent:
-    <%= date_field( :email, :sent_date ) %>
+    <a style="margin: 5%;">Sent:
+      <%= date_field( :email, :sent_date ) %>
+    </a>
     <% end %>
   </p>
-  <p> <%= form.submit %> </p>
+  <p>
+    <%= 'Check It: '%>
+    <%= form.check_box :checkit %>
+    <a style="margin: 22%;"><%= form.submit %></a>
+  </p>
 <% end %>
