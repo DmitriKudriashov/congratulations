@@ -85,7 +85,7 @@ class EmailsController < AuthenticatedController
 
     @email.destroy
 
-    redirect_to emails_path # , notice: 'Destroy !'
+    redirect_to emails_path
   end
 
   def search
@@ -165,7 +165,7 @@ class EmailsController < AuthenticatedController
       person = Person.find(data_hash[:person_id])
       create_new_email(
         name: " #{person.name},  #{for_holiday.name}",
-        subject: subject,  #{}"#{add_cardtext(for_holiday)}.upcase",
+        subject: subject,
         holiday_id: for_holiday.id,
         address: person.email,
         mail_address_id: data_hash[:mail_address_id],

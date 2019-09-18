@@ -25,7 +25,7 @@ class GreetingsMailer < ApplicationMailer
       end
     end
 
-    mail from: @from, to: @address, subject: email.subject #'CONGRATULATIONS !!!'
+    mail from: @from, to: @address, subject: email.subject
   end
 
   def personal_address(email)

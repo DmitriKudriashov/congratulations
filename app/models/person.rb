@@ -13,11 +13,7 @@ class Person < ApplicationRecord
 
   self.per_page = 20
 
-  def birthday_form
-    birthday.nil? ? 'dd-mm-yyyy' : birthday.strftime('%d-%m-%Y')
-  end
-
-  def birthday_index
+  def birthday_format
     birthday.nil? ? '' : birthday.strftime('%d-%m-%Y')
   end
 
