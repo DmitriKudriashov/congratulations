@@ -160,11 +160,12 @@ class EmailsController < AuthenticatedController
     day = holiday_date.day
     year = Time.now.year
     will_send = Date.new(year, month, day)
-
+    subject = "CONGRATULATIONS with #{for_holiday.name.upcase}!"
     list_people_mails.each do |data_hash|
       person = Person.find(data_hash[:person_id])
       create_new_email(
         name: " #{person.name},  #{for_holiday.name}",
+        subject: subject,  #{}"#{add_cardtext(for_holiday)}.upcase",
         holiday_id: for_holiday.id,
         address: person.email,
         mail_address_id: data_hash[:mail_address_id],
@@ -187,6 +188,7 @@ class EmailsController < AuthenticatedController
     email.message = opt[:message]
     email.person_id = opt[:person_id]
     email.year = opt[:will_send].year
+    email.subject = opt[:subject]
   end
 
   def already_exists?(opt = {})
@@ -260,7 +262,7 @@ class EmailsController < AuthenticatedController
   end
 
   def email_params
-    params.require(:email).permit(:name, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message, :person_id, :year)
+    params.require(:email).permit(:name, :subject, :address, :mail_address_id, :sent_date, :checkit, :holiday_id, :will_send, :message, :person_id, :year)
   end
 
   def rescue_with_email_not_found
