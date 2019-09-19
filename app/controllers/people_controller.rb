@@ -14,7 +14,6 @@ class PeopleController < AuthenticatedController
 
   def update
     if @person.update(person_params)
-      #      redirect_to person_path(@person)
       redirect_to people_path
     else
       render :edit
@@ -26,7 +25,6 @@ class PeopleController < AuthenticatedController
   def create
     @person = Person.new(person_params)
     if @person.save
-      # redirect_to person_path(@person), notice: 'Success!'
       redirect_to people_path, notice: 'Success!'
     else
       render :new
@@ -46,7 +44,7 @@ class PeopleController < AuthenticatedController
   private
 
   def set_people
-    @people = Person.paginate(page: params[:page]) # .all
+    @people = Person.order(:name).paginate(page: params[:page]) # .all
   end
 
   def find_person

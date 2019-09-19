@@ -1,8 +1,5 @@
 <tr>
-  <td>
-    <%= dates_holiday.id %>
-  </td>
-  <td  align="center">
+ <td  align="center">
     <%= "#{dates_holiday.day} / #{dates_holiday.name_month}" %>
   </td>
   <td>
@@ -18,6 +15,9 @@
     <%= people_list(dates_holiday) %>
   </td>
   <td>
+    <%= dates_holiday.id %>
+  </td>
+   <td>
     <%= link_to 'edit', edit_dates_holiday_path(dates_holiday) %>
   </td>
   <td>

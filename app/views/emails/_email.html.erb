@@ -1,18 +1,22 @@
 <tr>
-  <td >
-    <%= email.id %>
+<!--   <td >
+    <%#= email.id %>
   </td>
-  <td >
+ -->  <td >
     <%= email.person.name %>
   </td>
   <td >
     <%= email.name %>
   </td>
   <td >
+    <%= email.subject %>
+    <%#= text_area_tag(:text, email.subject, size: :auto)  %>
+  </td>
+  <td >
     <% if email.sent_date.present?  %>
     <%= email.address %>
     <% else %>
-    <%= text_area_tag(:text, "#{email.person.email}; \n #{email.mail_address.email}", size: :auto)  %>
+    <%= text_area_tag(:text, "#{email.address}; \n #{email.mail_address.email}", size: :auto)  %>
     <% end %>
   </td>
   <td>

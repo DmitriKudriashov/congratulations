@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_080600) do
+ActiveRecord::Schema.define(version: 2019_09_17_115305) do
 
   create_table "cardtexts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "filename"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2019_09_05_080600) do
     t.bigint "holiday_id"
     t.bigint "person_id"
     t.integer "year", default: 0
+    t.string "subject", default: ""
     t.index ["address"], name: "index_emails_on_address"
     t.index ["holiday_id", "person_id", "year"], name: "index_emails_on_holiday_id_and_person_id_and_year", unique: true
     t.index ["holiday_id"], name: "index_emails_on_holiday_id"

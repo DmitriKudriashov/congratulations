@@ -82,4 +82,11 @@ module DatesHolidaysHelper
                                    method: :gets, logsign: log_sign.to_i
     end
   end
+  def full_calendar
+    view_holidays(1)
+  end
+  def left_out_holidays
+     view_holidays(0)
+  end
+
 end
