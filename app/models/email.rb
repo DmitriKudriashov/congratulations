@@ -10,6 +10,7 @@ class Email < ApplicationRecord
   belongs_to :mail_address
   belongs_to :holiday
   belongs_to :person
+  attr_reader :error_sent
 
   def greetings_text
     message
@@ -20,4 +21,19 @@ class Email < ApplicationRecord
     dh = DatesHoliday.first
     dh.holiday.companies.first.people.first.dob_month
   end
+
+  def send_now(current_user)
+    @error_sent = nil
+    begin
+      new_mail = GreetingsMailer.send_message(self, current_user)
+      new_mail.deliver_now
+    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
+      return @error_sent
+    else
+      self.sent_date = Time.now
+      self.address = new_mail[:to]
+      self.save
+    end
+  end
+
 end
