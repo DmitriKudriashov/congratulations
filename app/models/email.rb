@@ -2,7 +2,7 @@
 
 class Email < ApplicationRecord
   has_many :email_cards, dependent: :restrict_with_error
-  has_many :postcards, through: :email_cards
+   has_many :postcards, through: :email_cards
 
   has_many :email_texts, dependent: :restrict_with_error
   has_many :cardtexts, through: :email_texts
@@ -11,6 +11,8 @@ class Email < ApplicationRecord
   belongs_to :holiday
   belongs_to :person
   attr_reader :error_sent
+
+  scope :emails_for_send, -> (date){ where(will_send: date, checkit: 1, sent_date: nil )}
 
   def greetings_text
     message
@@ -35,5 +37,4 @@ class Email < ApplicationRecord
       self.save
     end
   end
-
 end
