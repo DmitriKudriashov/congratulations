@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class GreetingsMailer < ApplicationMailer
+
   def send_message(email, user)
     @name = email.name
     @address = Holiday.find(email.holiday_id).name == 'Birthday' ? personal_address(email) : company_mail_address(email)
@@ -11,7 +12,6 @@ class GreetingsMailer < ApplicationMailer
 
     @greetings_text = email.message
     @from = %("STAFF CENTRE" < #{user.email} >)
-    # attachments = list_attachments(email) # почему-то не сработало ???
     @files = []
     email.postcards.each do |postcard|
       file_with_picture = postcard.image.path
