@@ -48,9 +48,8 @@ class CompaniesHolidaysController < AuthenticatedController
   end
 
   def destroy
-    if @companies_holiday.destroy # надо бы проверить на успешность удаления
-      redirect_to redirect_after, notice: 'CompaniesHoliday was successfully Destroy!'
-    end
+    destroy_common(@companies_holiday)
+    redirect_to redirect_after
   end
 
   def search

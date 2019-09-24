@@ -32,8 +32,8 @@ class MailAddressesController < AuthenticatedController
   end
 
   def destroy
-    @mail_address.destroy
-    redirect_to mail_addresses_path, notice: 'Destroy !'
+    destroy_common(@mail_address)
+    redirect_to mail_addresses_path
   end
 
   def search

@@ -34,10 +34,8 @@ class CountriesController < AuthenticatedController
   end
 
   def destroy
-    @country.destroy
-    # rescue StandardError => err
-    #   raise err.message
-    redirect_to countries_path, notice: 'Destroy !'
+    destroy_common(@country)
+    redirect_to countries_path
   end
 
   def search

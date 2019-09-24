@@ -34,8 +34,8 @@ class CardtextsController < AuthenticatedController
   end
 
   def destroy
-    @cardtext.destroy
-    redirect_to cardtexts_path, notice: 'Destroy !'
+    destroy_common(@cardtext)
+    redirect_to cardtexts_path
   end
 
   def search

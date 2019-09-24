@@ -32,8 +32,8 @@ class PeopleController < AuthenticatedController
   end
 
   def destroy
-    @person.destroy
-    redirect_to people_path, notice: 'Destroy !'
+    destroy_common(@person)
+    redirect_to people_path
   end
 
   def search

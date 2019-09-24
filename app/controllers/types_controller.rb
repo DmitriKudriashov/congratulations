@@ -32,8 +32,8 @@ class TypesController < AuthenticatedController
   end
 
   def destroy
-    @type.destroy
-    redirect_to types_path, notice: 'Destroy !'
+    destroy_common(@type)
+    redirect_to types_path
   end
 
   def search

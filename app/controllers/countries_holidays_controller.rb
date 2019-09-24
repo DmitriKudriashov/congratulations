@@ -40,9 +40,8 @@ class CountriesHolidaysController < AuthenticatedController
   end
 
   def destroy
-    if @countries_holiday.destroy # надо бы проверить на успешность удаления
-      redirect_to holiday_path(@countries_holiday.holiday_id), notice: 'CountriesHoliday was successfully Destroy!'
-    end
+    destroy_common(@countries_holiday)
+    redirect_to holiday_path(@countries_holiday.holiday_id)
   end
 
   def search
