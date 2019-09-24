@@ -12,6 +12,10 @@ class Email < ApplicationRecord
   belongs_to :person
   attr_reader :error_sent
 
+  self.per_page = self.all.count/5
+  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
+
+
   scope :emails_for_send, -> (date){ where(will_send: date, checkit: 1, sent_date: nil )}
 
   def greetings_text

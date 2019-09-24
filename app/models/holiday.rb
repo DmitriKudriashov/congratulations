@@ -13,4 +13,8 @@ class Holiday < ApplicationRecord
   has_many :cardtexts, dependent: :restrict_with_error
   has_many :postcards, dependent: :restrict_with_error
   has_many :emails, dependent: :restrict_with_error
+
+  self.per_page = self.all.count/5
+  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
+
 end

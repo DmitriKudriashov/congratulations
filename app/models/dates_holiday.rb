@@ -5,6 +5,10 @@ class DatesHoliday < ApplicationRecord
 
   validates :date, presence: true
 
+  self.per_page = self.all.count/5
+  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
+
+
   MONTHNAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
                 'August', 'September', 'October', 'November', 'December'].freeze
   scope :holidays_to_date, ->(day, month, year) { where(day: day, month: month, year: year) }
