@@ -144,7 +144,7 @@ class EmailsController < AuthenticatedController
   end
 
   def create_new_mail_adress(person, companies_person)
-     MailAddress.create([{email: person.email, companies_person_id: companies_person.id}])
+     MailAddress.create([{email: person.email, companies_person_id: companies_person.id}]).first
   end
 
   def hash_for_mail(person, mail_address, companies_person)

@@ -6,7 +6,7 @@ module DatesHolidaysHelper
   def list_birthdays(day, month)
     list = ''
     Person.birthdays_to_date(day, month).map do |person|
-      list += person.present? ? "#{person.name} / \n" : ''
+      list += person.present? ? "#{modify_name(person.name)} / \n" : ''
     end
     list
   end
