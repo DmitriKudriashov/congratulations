@@ -8,8 +8,7 @@
     <%= render 'header_companies_holidays_list' %>
   <br>
 </div>
+<div class="digg_pagination">
+  <%= will_paginate @companies_holidays, :container => false %>
+</div>
 <br>
-<!-- <p>
-  <%#= link_to 'Back to all Holidays', holidays_path %>
-</p>
- -->

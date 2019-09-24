@@ -1,10 +1,13 @@
   <div>
     <h1>Links: Email - PostCards</h1>
-  <div class="digg_pagination">
-    <%= will_paginate @email_cards, :container => false %>
-  </div>
+    <div class="digg_pagination">
+      <%= will_paginate @email_cards, :container => false %>
+    </div>
 
-   <%= render 'header_email_cards_list' %>
+    <%= render 'header_email_cards_list' %>
+    <div class="digg_pagination">
+      <%= will_paginate @email_cards, :container => false %>
+    </div>
     <br>
 
   </div>
