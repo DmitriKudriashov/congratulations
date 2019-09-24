@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
     if object.destroy
       flash[:notice] = "Record #{object.id} of #{object.model_name.name} was successfully Destroy!"
     else
-      flash[:alert] = "Error destroy: #{object.model_name.name},  record:  #{object.id}."
+      err = object.errors.messages[:base].first
+      flash[:alert] = "Error destroy: #{object.model_name.name},  record:  #{object.id}. #{err}!"
     end
     # begin
     #   object.destroy!
