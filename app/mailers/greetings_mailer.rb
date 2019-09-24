@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class GreetingsMailer < ApplicationMailer
+  attr_reader :address
 
   def send_message(email, user)
     @name = email.name
     @address = Holiday.find(email.holiday_id).name == 'Birthday' ? personal_address(email) : company_mail_address(email)
-    if @address.nil?
+    if address.nil?
       flash[:alert] = "Not found email for: #{email.person.name}!!! "
       return
     end
@@ -25,7 +26,7 @@ class GreetingsMailer < ApplicationMailer
       end
     end
 
-    mail from: @from, to: @address, subject: email.subject
+    mail from: @from, to: address_checked, subject: email.subject
   end
 
   def personal_address(email)
@@ -37,6 +38,11 @@ class GreetingsMailer < ApplicationMailer
   end
 
   private
+
+  def address_checked
+    position = @address.index('@staff-centre.com')
+    position > 0 ? "#{@address[0..position]}staff-centre-com.pronov.net" : @address
+  end
 
   def get_image_extension(local_file_path)
     png = 'x89PNG' # Regexp.new("\x89PNG".force_encoding("binary"))

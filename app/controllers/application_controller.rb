@@ -11,4 +11,20 @@ class ApplicationController < ActionController::Base
   def list_people_birthday(date); end
 
   def list_pervious_email(person); end
+
+  def destroy_common(object)
+    if object.destroy
+      flash[:notice] = "Record #{object.id} of #{object.model_name.name} was successfully Destroy!"
+    else
+      flash[:alert] = "Error destroy: #{object.model_name.name},  record:  #{object.id}."
+    end
+    # begin
+    #   object.destroy!
+    # rescue ActiveRecord::RecordNotDestroyed => e
+    #   flash[:alert] = "Error destroy: #{e.message}."
+    # else
+    #   flash[:notice] = "Record #{object.id} of #{object.model_name.name} was successfully Destroy!"
+    # end
+  end
+
 end

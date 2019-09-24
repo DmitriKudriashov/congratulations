@@ -11,7 +11,8 @@ class Person < ApplicationRecord
   scope :birthdays_to_date,
         ->(day, month) { where("month(birthday) = ? and day(birthday) = ? ", month, day) }
 
-  self.per_page = 20
+  self.per_page = self.all.count/5
+  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
 
   def birthday_format
     birthday.nil? ? '' : birthday.strftime('%d-%m-%Y')

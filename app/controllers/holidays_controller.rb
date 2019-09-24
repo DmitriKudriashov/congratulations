@@ -37,8 +37,8 @@ class HolidaysController < AuthenticatedController
   end
 
   def destroy
-    @holiday.destroy
-    redirect_to holidays_path, notice: 'Destroy !'
+    destroy_common(@holiday)
+    redirect_to holidays_path
   end
 
   def search

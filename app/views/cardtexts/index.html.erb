@@ -23,6 +23,10 @@
           <%= 'Empty list' %>
         </p>
       <% end %>
+    <div class="digg_pagination">
+      <%= will_paginate @cardtexts, :container => false %>
+    </div>
+
     <br>
   </div>
 

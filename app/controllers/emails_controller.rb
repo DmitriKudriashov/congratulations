@@ -77,8 +77,7 @@ class EmailsController < AuthenticatedController
     email_cards = EmailCard.where(email_id: @email.id)
     email_cards.each(&:destroy) if email_cards.present?
 
-    @email.destroy
-
+    destroy_common(@email)
     redirect_to emails_path
   end
 
@@ -107,8 +106,10 @@ class EmailsController < AuthenticatedController
     list_people_mails = []
     people_birthdays = Person.birthday(date)
     people_birthdays.each do |person|
-      list_people_mails = loop_by_mail_addreses(person, list_people_mails)
+      list_people_mails = loop_by_mail_addresses(person, list_people_mails)
+      # byebug
     end
+
     return unless people_birthdays.present?
 
     holiday = Holiday.where(name: 'Birthday').first
@@ -127,23 +128,31 @@ class EmailsController < AuthenticatedController
 
     list_people_mails = []
     people_holiday.each do |person|
-      list_people_mails = loop_by_mail_addreses(person, list_people_mails)
+      list_people_mails = loop_by_mail_addresses(person, list_people_mails)
+    end
+    # byebug
+    list_people_mails
+  end
+
+  def loop_by_mail_addresses(person, list_people_mails)
+    person.companies_people.each do |companies_person|
+      mail_address = MailAddress.where(companies_person_id: companies_person.id).order(updated_at: :desc).first
+      mail_address = create_new_mail_adress(person, companies_person) unless mail_address.present?
+      list_people_mails << hash_for_mail(person, mail_address, companies_person)
     end
     list_people_mails
   end
 
-  def loop_by_mail_addreses(person, list_people_mails)
-    person.companies_people.each do |companies_person|
-      mail_address = MailAddress.where(companies_person_id: companies_person.id).order(updated_at: :desc).first
-      if mail_address.present?
-        data_hash = {}
-        data_hash[:person_id] = person.id
-        data_hash[:mail_address_id] = mail_address.id
-        data_hash[:companies_id] = companies_person.company_id
-        list_people_mails << data_hash
-      end
-    end
-    list_people_mails
+  def create_new_mail_adress(person, companies_person)
+     MailAddress.create([{email: person.email, companies_person_id: companies_person.id}])
+  end
+
+  def hash_for_mail(person, mail_address, companies_person)
+    data_hash = {}
+    data_hash[:person_id] = person.id
+    data_hash[:mail_address_id] = mail_address.id
+    data_hash[:companies_id] = companies_person.company_id
+    data_hash
   end
 
   def createemails(for_holiday, list_people_mails)

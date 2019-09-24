@@ -38,10 +38,8 @@ class EmailCardsController < AuthenticatedController
   end
 
   def destroy
-    if @email_card.destroy
-      redirect_to edit_email_path(@email_card.email_id), notice: 'EmailCard was successfully Destroy!'
-      # redirect_to set_path_after_action(@email), notice: 'EmailCard was successfully Destroy!'
-    end
+    destroy_common(@email_card)
+    redirect_to edit_email_path(@email_card.email_id)
   end
 
   def search

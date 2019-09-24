@@ -34,10 +34,8 @@ class CompaniesController < AuthenticatedController
   end
 
   def destroy
-    @company.destroy
-    # rescue StandardError => err
-    #   raise err.message
-    redirect_to companies_path, notice: 'Destroy !'
+    destroy_common(@company)
+    redirect_to companies_path
   end
 
   def search

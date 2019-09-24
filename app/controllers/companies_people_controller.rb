@@ -27,8 +27,6 @@ class CompaniesPeopleController < AuthenticatedController
 
   def create
     @companies_person = CompaniesPerson.new(companies_person_params)
-    # byebug
-
     if @companies_person.save
       # redirect_to companies_person_path(@companies_person.person_id), notice: 'Successully created!'
       redirect_to companies_people_path, notice: 'Successully created!'
@@ -38,10 +36,8 @@ class CompaniesPeopleController < AuthenticatedController
   end
 
   def destroy
-    if @companies_person.destroy
-      # redirect_to person_path(@companies_person.person_id), notice: 'CompaniesPerson was successfully Destroy!'
-      redirect_to companies_people_path, notice: 'CompaniesPerson was successfully Destroy!'
-    end
+    destroy_common(@companies_person)
+    redirect_to companies_people_path
   end
 
   def search
@@ -60,7 +56,7 @@ class CompaniesPeopleController < AuthenticatedController
   end
 
   def set_companies_people
-    @companies_people = CompaniesPerson.paginate(page: params[:page]) # .all
+    @companies_people = CompaniesPerson.joins(:company, :person).order('companies.name',"people.name").paginate(page: params[:page]) # .all
   end
 
   def find_companies_person

@@ -12,6 +12,9 @@ class Postcard < ApplicationRecord
   has_many :emails, through: :email_cards
 
   belongs_to :holiday
+  self.per_page = self.all.count/5
+  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
+
 
   scope :for_holiday_id, ->(id) { where(holiday_id: id) }
 end

@@ -1,26 +1,29 @@
-  <div>
-    <h1> People </h1>
-    <div class="digg_pagination">
-       <%= will_paginate @people, :container => false %>
-    </div>
-    <%= link_to 'New Person', new_person_path %>
-    <% if @people.present? %>
-      <table class="table table-bordered">
-        <thead class="thead-light" align="center">
-          <tr>
-            <th> Name </th>
-            <th> Birthday </th>
-            <th> Email </th>
-            <th> N rec</th>
-          </tr>
-        </thead>
-        <%= render @people %>
-      </table>
-    <% else %>
-      <p>
-        <%= 'Empty list' %>
-      </p>
-    <% end %>
-    <br>
+<div>
+  <h1> People </h1>
+  <div class="digg_pagination">
+     <%= will_paginate @people, :container => false %>
   </div>
+  <%= link_to 'New Person', new_person_path %>
+  <% if @people.present? %>
+    <table class="table table-bordered">
+      <thead class="thead-light" align="center">
+        <tr>
+          <th> Name </th>
+          <th> Birthday </th>
+          <th> Email </th>
+          <th> N rec</th>
+        </tr>
+      </thead>
+      <%= render @people %>
+    </table>
+  <% else %>
+    <p>
+      <%= 'Empty list' %>
+    </p>
+  <% end %>
+  <br>
+  <div class="digg_pagination">
+     <%= will_paginate @people, :container => false %>
+  </div>
+</div>
 

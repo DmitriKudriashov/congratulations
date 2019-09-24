@@ -39,8 +39,8 @@ class PostcardsController < AuthenticatedController
   end
 
   def destroy
-    @postcard.destroy
-    redirect_to postcards_path, notice: 'Destroy !'
+    destroy_common(@postcard)
+    redirect_to postcards_path
   end
 
   def search

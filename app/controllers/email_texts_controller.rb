@@ -40,9 +40,8 @@ class EmailTextsController < AuthenticatedController
   end
 
   def destroy
-    if @email_text.destroy # надо бы проверить на успешность удаления
-      redirect_to email_email_texts_path(@email_text.email_id), notice: 'EmailText was successfully Destroy!'
-    end
+    destroy_common(@email_text)
+    redirect_to email_email_texts_path(@email_text.email_id)
   end
 
   def search
