@@ -68,12 +68,6 @@ module DatesHolidaysHelper
     end
   end
 
-  def people_list(dates_holiday)
-    people = dates_holiday.list_people
-    text_area_tag(:text, people, size: :auto) if people.present?
-    # tag.text( people, size: :auto) if people.present?
-  end
-
   def view_holidays(log_sign)
     if log_sign.to_i.eql?(0)
       link_to 'View Left out holidays', dates_holidays_path, logsign: log_sign.to_i
@@ -89,4 +83,46 @@ module DatesHolidaysHelper
      view_holidays(0)
   end
 
+#----- 250919 kds add from dates_holiday.rb
+  def people_list(dates_holiday)
+    people = list_people(dates_holiday)
+    text_area_tag(:text, people, size: :auto) if people.present?
+    # tag.text( people, size: :auto) if people.present?
+  end
+
+  def list_people(dates_holiday)
+    list = ''
+    holiday = dates_holiday.holiday
+    if holiday.present?
+      list = if holiday.name.eql?('Birthday')
+               list_people_birthdays(dates_holiday.day, dates_holiday.month, list)
+             else
+               list_people_companies(holiday, list)
+             end
+    end
+    list
+  end
+
+  def list_people_birthdays(day, month, list)
+    people = Person.birthdays_to_date(day, month)
+    list = people.present? ? list_people_names(people, list) : list
+  end
+
+  def list_people_names(people, list)
+    people.map do |person|
+      list += person.present? ? "#{modify_name(person.name)}; \n" : ''
+    end
+    list
+  end
+
+  def list_people_companies(holiday, list)
+    holiday_companies = holiday.companies_holidays.where('holiday_id = ?', holiday.id)
+    holiday_companies.map do |holiday_company|
+      next unless holiday_company.present?
+
+      people = holiday_company.company.people
+      list = people.present? ? list_people_names(people, list) : list
+    end
+    list
+  end
 end
