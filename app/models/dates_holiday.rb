@@ -66,43 +66,6 @@ class DatesHoliday < ApplicationRecord
     list
   end
 
-  def list_people
-    list = ''
-    holiday = self.holiday
-    if holiday.present?
-      list = if holiday.name.eql?('Birthday')
-               list_birthdays(day, month, list)
-             else
-               list_people_companies(holiday, list)
-             end
-    end
-    list
-  end
-
-  def list_people_names(people, list)
-    people.map do |person|
-      list += person.present? ? "#{person.name}; \n" : ''
-    end
-    list
-  end
-
-  def list_people_companies(holiday, list)
-    holiday_companies = holiday.companies_holidays.where('holiday_id = ?', holiday_id)
-    holiday_companies.map do |holiday_company|
-      next unless holiday_company.present?
-
-      people = holiday_company.company.people
-      list = people.present? ? list_people_names(people, list) : list
-    end
-    list
-  end
-
-  def list_birthdays(day, month, list)
-    people = Person.birthdays_to_date(day, month)
-
-    list = people.present? ? list_people_names(people, list) : list
-  end
-
   def self.easter(year)
     c = year / 100 # k = целая часть (год/100)
     n = year - 19 * (year / 19) # a = год mod 19

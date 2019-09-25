@@ -10,4 +10,12 @@ module ApplicationHelper
     end
          .join("\n").html_safe
   end
+
+  def modify_name(name)
+    arr_name = name.split(' ')
+    new_name ||= arr_name[0].to_s
+    new_name = new_name + ' ' + arr_name[1][0] + '.' if arr_name[1].present?
+    new_name = new_name + ' ' + arr_name[2][0] + '.' if arr_name[2].present?
+    new_name
+  end
 end
