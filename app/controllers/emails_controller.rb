@@ -40,8 +40,10 @@ class EmailsController < AuthenticatedController
     if @email.checkit.to_i.eql?(0)
       flash[:alert] = ' This is NOT CHECKED Email yet ! '
     else
-      @email.send_now(current_user)
-      if @email.error_sent.present?
+      retvalue = @email.send_now(current_user)
+      if retvalue.nil?
+        flash[:alert] = "Don't sended message to: #{@email.address}! "
+      elsif @email.error_sent.present?
         flash[:alert] = " ERROR SEND EMAIL ! #{@email.error_sent.message} "
       else
         flash[:notice] = ' This is Email Sent SUCCESSFULY ! '

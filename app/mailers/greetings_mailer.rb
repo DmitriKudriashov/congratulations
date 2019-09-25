@@ -25,8 +25,10 @@ class GreetingsMailer < ApplicationMailer
         @files << postcard.filename
       end
     end
-
-    mail from: @from, to: address_checked, subject: email.subject
+    new_address = address_checked
+    if new_address.present?
+      mail from: @from, to: new_address, subject: email.subject
+    end
   end
 
   def personal_address(email)
@@ -40,6 +42,7 @@ class GreetingsMailer < ApplicationMailer
   private
 
   def address_checked
+    return nil if @address.index('@').to_i.eql?(0)
     position = @address.index('@staff-centre.com').to_i
     position > 0 ? "#{@address[0..position]}staff-centre-com.pronov.net" : @address
   end

@@ -30,15 +30,16 @@ class Email < ApplicationRecord
 
   def send_now(current_user)
     @error_sent = nil
-    begin
       new_mail = GreetingsMailer.send_message(self, current_user)
-      new_mail.deliver_now
-    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
-      return @error_sent
-    else
-      self.sent_date = Time.now
-      self.address = new_mail[:to]
-      self.save
-    end
+      return if new_mail[:to].nil?
+      begin
+        new_mail.deliver_now
+      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
+        return @error_sent
+      else
+        self.sent_date = Time.now
+        self.address = new_mail[:to]
+        self.save
+      end
   end
 end
