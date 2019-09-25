@@ -40,7 +40,7 @@ class GreetingsMailer < ApplicationMailer
   private
 
   def address_checked
-    position = @address.index('@staff-centre.com')
+    position = @address.index('@staff-centre.com').to_i
     position > 0 ? "#{@address[0..position]}staff-centre-com.pronov.net" : @address
   end
 
