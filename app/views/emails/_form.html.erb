@@ -1,7 +1,7 @@
 <%= form_with model: @email, local: true do |form| %>
   <p>
     <!-- Email Id: <%#= "#{@email.id}" %><br> -->
-    <a style="color: red; font-size: 20px"><%= "to:  #{Person.where(id: @email.person_id).first.name}" %></a>
+    <a style="color: red; font-size: 20px"><%= "to:  #{@email.person.name}" %></a>
     <%#= form.collection_select :person_id, Person.all, :id, :name, prompt: 'Select person' %>
     <a style="margin: 10%"><%= 'HOLIDAY: ' %>
     <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
