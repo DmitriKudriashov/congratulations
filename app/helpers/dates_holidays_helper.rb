@@ -76,14 +76,16 @@ module DatesHolidaysHelper
                                    method: :gets, logsign: log_sign.to_i
     end
   end
+
   def full_calendar
     view_holidays(1)
   end
+
   def left_out_holidays
-     view_holidays(0)
+    view_holidays(0)
   end
 
-#----- 250919 kds add from dates_holiday.rb
+  #----- 250919 kds add from dates_holiday.rb
   def people_list(dates_holiday)
     people = list_people(dates_holiday)
     text_area_tag(:text, people, size: :auto) if people.present?

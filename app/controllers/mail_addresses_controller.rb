@@ -44,7 +44,7 @@ class MailAddressesController < AuthenticatedController
   private
 
   def set_mail_addresses
-    @mail_addresses = MailAddress.order(:companies_person_id,updated_at: :desc).paginate(page: params[:page])
+    @mail_addresses = MailAddress.order(:companies_person_id, updated_at: :desc).paginate(page: params[:page])
   end
 
   def find_mail_address

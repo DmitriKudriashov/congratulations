@@ -36,15 +36,14 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-          # 13092019  config.action_mailer.delivery_method = :letter_opener
-          # 13092019  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-#  <--------------------------------------- from production >
+  # 13092019  config.action_mailer.delivery_method = :letter_opener
+  # 13092019  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  #  <--------------------------------------- from production >
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
-
 
   # Mailer
   config.action_mailer.delivery_method = :smtp
@@ -62,7 +61,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: ENV['HOST'] || 'http://greetings.staff-centre.com'
   }
-# ----------------------------------------------------------------</from production >
+  # ----------------------------------------------------------------</from production >
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

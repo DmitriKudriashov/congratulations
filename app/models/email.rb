@@ -12,11 +12,10 @@ class Email < ApplicationRecord
   belongs_to :person
   attr_reader :error_sent
 
-  self.per_page = self.all.count/5
-  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
+  self.per_page = all.count / 5
+  self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
 
-
-  scope :emails_for_send, -> (date){ where(will_send: date, checkit: 1, sent_date: nil )}
+  scope :emails_for_send, ->(date) { where(will_send: date, checkit: 1, sent_date: nil) }
 
   def greetings_text
     message
@@ -30,16 +29,16 @@ class Email < ApplicationRecord
 
   def send_now(current_user)
     @error_sent = nil
-      new_mail = GreetingsMailer.send_message(self, current_user)
-      # return if new_mail[:to].nil?
-      begin
-        new_mail.deliver_now!
-      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
-        return @error_sent
-      else
-        self.sent_date = Time.now
-        self.address = new_mail[:to]
-        self.save
-      end
+    new_mail = GreetingsMailer.send_message(self, current_user)
+    # return if new_mail[:to].nil?
+    begin
+      new_mail.deliver_now!
+    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+      return @error_sent
+    else
+      self.sent_date = Time.now
+      self.address = new_mail[:to]
+      save
+    end
   end
 end

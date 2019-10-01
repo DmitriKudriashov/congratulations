@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-
   def list_holidays_to_date(day, month)
     Holiday.where(day: day, month: month)
   end
@@ -27,5 +26,4 @@ class ApplicationController < ActionController::Base
     #   flash[:notice] = "Record #{object.id} of #{object.model_name.name} was successfully Destroy!"
     # end
   end
-
 end

@@ -1,12 +1,14 @@
-require File.expand_path('../../../config/environment', __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path('../../config/environment', __dir__)
 
 namespace :mails do
-    desc 'Send emails with congratulations'
-    task :send do
-      current_user = User.first
-      date = Date.today
-      Email.emails_for_send(date).each do |email|
-        email.send_now(current_user)
-      end
+  desc 'Send emails with congratulations'
+  task :send do
+    current_user = User.first
+    date = Date.today
+    Email.emails_for_send(date).each do |email|
+      email.send_now(current_user)
     end
+  end
 end

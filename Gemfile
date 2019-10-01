@@ -8,8 +8,8 @@ ruby '2.5.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 gem 'mysql2', '>= 0.4.4'
+gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -83,6 +83,10 @@ group :development do
   gem 'capistrano-rvm', '~> 0.1.2'
 end
 
+group :production do
+  gem 'execjs'
+end
+
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
@@ -93,8 +97,8 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'i18n-tasks'
+gem 'nokogiri', '>= 1.10.4' # security patch
 gem 'pry'
 gem 'pry-byebug'
 gem 'pry-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem "nokogiri", '>= 1.10.4' # security patch

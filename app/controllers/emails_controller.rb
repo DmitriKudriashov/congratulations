@@ -125,8 +125,8 @@ class EmailsController < AuthenticatedController
     # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
 
     people_holiday =  Person.joins(companies_people: [company: [companies_holidays: :holiday]])
-      .left_outer_joins(companies_people: [company: [country: [countries_holidays: :holiday]]])
-      .where("holidays.id = #{holiday.id}").order(:name).uniq
+                            .left_outer_joins(companies_people: [company: [country: [countries_holidays: :holiday]]])
+                            .where("holidays.id = #{holiday.id}").order(:name).uniq
 
     list_people_mails = []
     people_holiday.each do |person|
@@ -146,7 +146,7 @@ class EmailsController < AuthenticatedController
   end
 
   def create_new_mail_adress(person, companies_person)
-     MailAddress.create([{email: person.email, companies_person_id: companies_person.id}]).first
+    MailAddress.create([{ email: person.email, companies_person_id: companies_person.id }]).first
   end
 
   def hash_for_mail(person, mail_address, companies_person)
@@ -165,11 +165,11 @@ class EmailsController < AuthenticatedController
     day = holiday_date.day
     year = Time.now.year
     will_send = Date.new(year, month, day)
-    subject = for_holiday.name.upcase == 'BIRTHDAY' ? "HAPPY BIRTHDAY!" : "#{for_holiday.name.upcase} GREETINGS!"
+    subject = for_holiday.name.upcase == 'BIRTHDAY' ? 'HAPPY BIRTHDAY!' : "#{for_holiday.name.upcase} GREETINGS!"
     list_people_mails.each do |data_hash|
       person = Person.find(data_hash[:person_id])
       create_new_email(
-        name: " #{person.name}",    #,  #{for_holiday.name}",
+        name: " #{person.name}", # ,  #{for_holiday.name}",
         subject: subject,
         holiday_id: for_holiday.id,
         address: person.email,
@@ -178,7 +178,7 @@ class EmailsController < AuthenticatedController
         person_id: person.id,
         checkit: 0,
         year: will_send.year,
-        message: "#{add_cardtext(for_holiday)}"
+        message: add_cardtext(for_holiday).to_s
       )
     end
   end

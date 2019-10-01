@@ -5,9 +5,8 @@ class DatesHoliday < ApplicationRecord
 
   validates :date, presence: true
 
-  self.per_page = self.all.count/5
-  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
-
+  self.per_page = all.count / 5
+  self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
 
   MONTHNAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
                 'August', 'September', 'October', 'November', 'December'].freeze
