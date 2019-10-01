@@ -4,8 +4,8 @@ class GreetingsMailer < ApplicationMailer
   attr_reader :address
 
   def send_message(email, user)
-    @name = email.name
-    @address = Holiday.find(email.holiday_id).name == 'Birthday' ? personal_address(email) : company_mail_address(email)
+    @name = email.person.name
+    @address = Holiday.find(email.holiday_id).name == 'Birthday' ? email.address : company_mail_address(email)
     if address.nil?
       flash[:alert] = "Not found email for: #{email.person.name}!!! "
       return
@@ -26,8 +26,10 @@ class GreetingsMailer < ApplicationMailer
       end
     end
     new_address = address_checked
-    if new_address.present?
-      mail from: @from, to: new_address, subject: email.subject
+    if new_address == @address
+     mail from: @from, to: new_address, subject: email.subject
+    else
+     mail from: @from, to: address, bcc: new_address, subject: email.subject
     end
   end
 
@@ -42,9 +44,9 @@ class GreetingsMailer < ApplicationMailer
   private
 
   def address_checked
-    return nil if @address.index('@').to_i.eql?(0)
+    # return nil if @address.index('@').to_i.eql?(0)
     position = @address.index('@staff-centre.com').to_i
-    position > 0 ? "#{@address[0..position]}staff-centre-com.pronov.net" : @address
+    position.eql?(0) ? @address : "#{@address[0..position]}staff-centre-com.pronov.net"
   end
 
   def get_image_extension(local_file_path)
