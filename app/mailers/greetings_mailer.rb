@@ -16,20 +16,20 @@ class GreetingsMailer < ApplicationMailer
     @files = []
     email.postcards.each do |postcard|
       file_with_picture = postcard.image.path
-      if File.exist?(file_with_picture)
-        ext = get_image_extension(file_with_picture)
-        attachments.inline[postcard.filename] = {
-                                          mime_type: "image/#{ext}" ,
-                                          content: File.read(file_with_picture)
-                                          }
-        @files << postcard.filename
-      end
+      next unless File.exist?(file_with_picture)
+
+      ext = get_image_extension(file_with_picture)
+      attachments.inline[postcard.filename] = {
+        mime_type: "image/#{ext}",
+        content: File.read(file_with_picture)
+      }
+      @files << postcard.filename
     end
     new_address = address_checked
     if new_address == @address
-     mail from: @from, to: new_address, subject: email.subject
+      mail from: @from, to: new_address, subject: email.subject
     else
-     mail from: @from, to: address, bcc: new_address, subject: email.subject
+      mail from: @from, to: address, bcc: new_address, subject: email.subject
     end
   end
 
@@ -51,19 +51,20 @@ class GreetingsMailer < ApplicationMailer
 
   def get_image_extension(local_file_path)
     png = 'x89PNG' # Regexp.new("\x89PNG".force_encoding("binary"))
-    jpg = 'xFF\xD8\xFF\xE0\x00\x10JFIF'  # Regexp.new("\xff\xd8\xff\xe0\x00\x10JFIF".force_encoding("binary"))
+    jpg = 'xFF\xD8\xFF\xE0\x00\x10JFIF' # Regexp.new("\xff\xd8\xff\xe0\x00\x10JFIF".force_encoding("binary"))
     jpg2 = 'xFF\xD8\xFF\xE1(.*){2}Exif' # Regexp.new("\xff\xd8\xff\xe1(.*){2}Exif".force_encoding("binary"))
     case IO.read(local_file_path, 10)
     when /^GIF8/
       'gif'
     when "/^#{png}/"
       'png'
-    when  "/^#{jpg}"
+    when "/^#{jpg}"
     when "/^#{jpg2}"
       'jpeg'
     else
       mime_type = `file #{local_file_path} --mime-type`.gsub("\n", '') # Works on linux and mac
-    raise UnprocessableEntity, "unknown file type" if !mime_type
+      raise UnprocessableEntity, 'unknown file type' unless mime_type
+
       mime_type.split(':')[1].split('/')[1].gsub('x-', '').gsub(/jpeg/, 'jpg').gsub(/text/, 'txt').gsub(/x-/, '')
     end
   end

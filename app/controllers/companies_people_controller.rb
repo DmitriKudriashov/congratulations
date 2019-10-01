@@ -56,7 +56,7 @@ class CompaniesPeopleController < AuthenticatedController
   end
 
   def set_companies_people
-    @companies_people = CompaniesPerson.joins(:company, :person).order('companies.name',"people.name").paginate(page: params[:page]) # .all
+    @companies_people = CompaniesPerson.joins(:company, :person).order('companies.name', 'people.name').paginate(page: params[:page]) # .all
   end
 
   def find_companies_person

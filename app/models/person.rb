@@ -5,14 +5,14 @@ class Person < ApplicationRecord
   has_many :companies, through: :companies_people
   has_many :emails, dependent: :restrict_with_error
 
-  scope :selectmonth, ->(m) { where("month(birthday) = ?", m) }
+  scope :selectmonth, ->(m) { where('month(birthday) = ?', m) }
   scope :birthday_men, ->(date) { where('birthday = ?', date) }
   scope :selectid, ->(id) { where(id: id) }
   scope :birthdays_to_date,
-        ->(day, month) { where("month(birthday) = ? and day(birthday) = ? ", month, day) }
+        ->(day, month) { where('month(birthday) = ? and day(birthday) = ? ', month, day) }
 
-  self.per_page = self.all.count/5
-  self.per_page = self.per_page > $PER_PAGE ? self.per_page : $PER_PAGE
+  self.per_page = all.count / 5
+  self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
 
   def birthday_format
     birthday.nil? ? '' : birthday.strftime('%d-%m-%Y')

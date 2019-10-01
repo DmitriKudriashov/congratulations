@@ -376,6 +376,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise (~> 4.0)
   dotenv-rails
+  execjs
   i18n-tasks
   jbuilder (~> 2.5)
   jquery-rails
