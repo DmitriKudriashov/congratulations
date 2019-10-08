@@ -7,20 +7,50 @@
 
 <table class="container">
   <% if @holidays.present? %>
-    <table class="table table-bordered">
+    <table name="tab-sorted" class="table table-bordered">
       <thead class="thead-light" align="center">
         <tr>
-          <th class="hide"> N </th>
-
-          <th class="sort-by-title pointer col-md-auto">
+          <!-- <th> N </th> -->
+          <th name="column1" class="sort-by-title pointer col-md-auto">
             <%= 'Holiday' %>
-            <%#= octicon 'arrow-up', class: 'text-success hide' %>
-            <%#= octicon 'arrow-down' , class: 'text-success hide' %>
+            <%= octicon 'arrow-up', class: 'text-success hide' %>
+            <%= octicon 'arrow-down' , class: 'text-success hide' %>
           </th>
-          <th > Type </th>
+          <th name="column2" class="pointer col-md-auto">
+            <%= 'Type' %>
+            <%= octicon 'arrow-up', class: 'text-success hide' %>
+            <%= octicon 'arrow-down' , class: 'text-success hide' %>
+          </th>
         </tr>
       </thead>
-        <%= render @holidays %>
+        <%#= render @holidays %>
+      <tbody class="sort-body">
+       <% @holidays.each do |holiday| %>
+        <tr>
+       <!--    <td >
+            <%#= holiday.id %>
+          </td>
+        -->
+          <td>
+            <%= holiday.name %>
+          </td>
+          <td >
+            <%= holiday.type.name %>
+          </td>
+        <!--  <td class="s_e_d">-->
+            <%#= link_to 'show', holiday_path(holiday) %>
+        <!--  </td>-->
+          <td class="s_e_d">
+            <%= link_to 'edit', edit_holiday_path(holiday.id) %>
+          </td>
+          <td class="s_e_d">
+            <%= link_to 'delete', holiday_path(holiday),
+                        method: :delete, data: { confirm: 'Are you sure' } %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+
     </table>
   <% else %>
     <p>
