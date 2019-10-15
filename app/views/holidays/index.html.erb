@@ -7,7 +7,7 @@
 
 <table class="container">
   <% if @holidays.present? %>
-    <table name="tab-sorted" class="table table-bordered">
+    <table class="tab-sorted table table-bordered">
       <thead class="thead-light" align="center">
         <tr>
           <!-- <th> N </th> -->
@@ -23,34 +23,7 @@
           </th>
         </tr>
       </thead>
-        <%#= render @holidays %>
-      <tbody class="sort-body">
-       <% @holidays.each do |holiday| %>
-        <tr>
-       <!--    <td >
-            <%#= holiday.id %>
-          </td>
-        -->
-          <td>
-            <%= holiday.name %>
-          </td>
-          <td >
-            <%= holiday.type.name %>
-          </td>
-        <!--  <td class="s_e_d">-->
-            <%#= link_to 'show', holiday_path(holiday) %>
-        <!--  </td>-->
-          <td class="s_e_d">
-            <%= link_to 'edit', edit_holiday_path(holiday.id) %>
-          </td>
-          <td class="s_e_d">
-            <%= link_to 'delete', holiday_path(holiday),
-                        method: :delete, data: { confirm: 'Are you sure' } %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-
+      <%= render @holidays  %>
     </table>
   <% else %>
     <p>
