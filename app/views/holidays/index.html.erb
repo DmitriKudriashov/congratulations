@@ -23,7 +23,7 @@
           </th>
         </tr>
       </thead>
-      <%= render @holidays  %>
+      <%= render @holidays, tbody: {class: "body-sort"}  %>
     </table>
   <% else %>
     <p>
