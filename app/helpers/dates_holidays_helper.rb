@@ -77,6 +77,10 @@ module DatesHolidaysHelper
     end
   end
 
+  def create_holidays_weekly
+
+  end
+
   def full_calendar
     view_holidays(1)
   end
