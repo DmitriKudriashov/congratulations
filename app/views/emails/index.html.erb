@@ -18,7 +18,8 @@
     <%#= date_field_tag "new_date" , "#{my_date.to_date}", class: 'to_date_input' %>
    <%= select_date(my_date, prefix: 'new_date') %>
     <!-- <p id="date"> </p> -->
-    <button type="submit" onclick="GetDateTo()"> Create </button>
+    <button id="button-date-to" type="submit" > Create </button>
+    <!-- <button type="submit" onclick="GetDateTo()"> Create </button> -->
     <%#= link_to 'CREATE EMAILS for Week', "/emails/create_emails_weekly" %>
   <!-- </form> -->
   </a>
@@ -54,39 +55,6 @@
   <%= will_paginate @emails, :container => false %>
 </div>
 
-<script type="text/javascript">
-  function GetDateTo(){
-    var tag_a = document.getElementById('to-date-input')
-    // console.log(tag_a)
-
-    var tags_select = tag_a.getElementsByTagName('select')
-        // console.log(tags_select)
-
-    var tags_select_lengh = tags_select.length
-        // console.log(tags_select_lengh)
-
-    var indx;
-    var date_parts = [];
-    for (indx = 0; indx < tags_select_lengh; indx++) {
-      var options = tags_select[indx].getElementsByTagName('option')
-          // console.log(options)
-
-      date_parts.push(findSelectedValue(options))
-          // console.log(date_parts)
-
-    }
-
-
-    var date_to = date_parts[0] + '/' + date_parts[1] + '/' + date_parts[2]
-    console.log(date_to)
-    return date_to
-   }
-
-  function findSelectedValue(options) {
-    for (var m = 0; m < options.length; m++) {
-      if (options[m].selected) {
-        return options[m].value
-      }
-    }
-  }
+<!-- <script type="text/javascript">
 </script>
+ -->
