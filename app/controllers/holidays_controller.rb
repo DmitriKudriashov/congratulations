@@ -61,7 +61,7 @@ class HolidaysController < AuthenticatedController
   end
 
   def holiday_params
-    params.require(:holiday).permit(:name, :type_id)
+    params.require(:holiday).permit(:name, :type_id, :calc)
   end
 
   def rescue_with_holiday_not_found

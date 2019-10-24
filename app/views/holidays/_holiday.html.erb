@@ -10,6 +10,9 @@
   <td >
     <%= holiday.type.name %>
   </td>
+  <td>
+    <%= holiday.calc.present? ? "YES" : '' %>
+  </td>
 <!--  <td class="s_e_d">-->
     <%#= link_to 'show', holiday_path(holiday) %>
 <!--  </td>-->

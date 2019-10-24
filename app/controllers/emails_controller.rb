@@ -169,7 +169,7 @@ class EmailsController < AuthenticatedController
     list_people_mails.each do |data_hash|
       person = Person.find(data_hash[:person_id])
       create_new_email(
-        name: " #{person.name}", # ,  #{for_holiday.name}",
+        name: " #{person.name}",
         subject: subject,
         holiday_id: for_holiday.id,
         address: person.email,

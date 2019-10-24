@@ -9,6 +9,10 @@
     <%= form.collection_select :type_id, Type.all, :id, :name,
         { prompt: "Type select", id: "holiday_type_id" } %>
   </p>
+  <p>
+    <%= 'Calculated:' %>
+    <%= form.check_box :calc %>
+  </p>
   <p> <%= form.submit %> </p>
 <% end %>
 <script>

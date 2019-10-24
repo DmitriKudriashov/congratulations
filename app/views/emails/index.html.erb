@@ -10,21 +10,21 @@
 <li class="nav-item active">
   <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
 </li>
-<li class="nav-item active">
+<!-- <li class="nav-item active">
   <a style="color: navy">  Emails to date: </a>
-  <% my_date = Time.now + 6.days %>
+  <%# my_date = Time.now + 6.days %>
   <a id="to-date-input" >
-  <!-- <form> -->
+ -->  <!-- 1<form> -->
     <%#= date_field_tag "new_date" , "#{my_date.to_date}", class: 'to_date_input' %>
-   <%= select_date(my_date, prefix: 'new_date') %>
+   <%#= select_date(my_date, prefix: 'new_date') %>
     <!-- <p id="date"> </p> -->
-    <button id="button-date-to" type="submit" > Create </button>
-    <!-- <button type="submit" onclick="GetDateTo()"> Create </button> -->
+<!--     <button id="button-date-to" type="submit" > Create </button>
+ -->    <!-- 1<button type="submit" onclick="GetDateTo()"> Create </button> -->
     <%#= link_to 'CREATE EMAILS for Week', "/emails/create_emails_weekly" %>
-  <!-- </form> -->
-  </a>
+  <!-- 1</form> -->
+<!--   </a>
 </li>
-
+ -->
 <table class="container">
   <% if @emails.present? %>
     <table class="table table-bordered">
