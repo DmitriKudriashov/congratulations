@@ -4,7 +4,6 @@ class ApplicationRecord < ActiveRecord::Base
   $PER_PAGE = 12
   self.per_page = $PER_PAGE
   scope :select_year, ->(y) { where(year: y) }
-  scope :birthday, ->(date) { where('month(birthday) = ? AND day(birthday) = ?', date.month, date.day) }
 
   self.abstract_class = true
 

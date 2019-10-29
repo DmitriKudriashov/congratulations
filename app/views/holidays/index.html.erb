@@ -7,20 +7,26 @@
 
 <table class="container">
   <% if @holidays.present? %>
-    <table class="table table-bordered">
+    <table class="tab-sorted table table-bordered">
       <thead class="thead-light" align="center">
         <tr>
-          <th class="hide"> N </th>
-
-          <th class="sort-by-title pointer col-md-auto">
+          <!-- <th> N </th> -->
+          <th name="column1" class="sort-by-title pointer col-md-auto">
             <%= 'Holiday' %>
-            <%#= octicon 'arrow-up', class: 'text-success hide' %>
-            <%#= octicon 'arrow-down' , class: 'text-success hide' %>
+            <%= octicon 'arrow-up', class: 'text-success hide' %>
+            <%= octicon 'arrow-down' , class: 'text-success hide' %>
           </th>
-          <th > Type </th>
+          <th name="column2" class="pointer col-md-auto">
+            <%= 'Type' %>
+            <%= octicon 'arrow-up', class: 'text-success hide' %>
+            <%= octicon 'arrow-down' , class: 'text-success hide' %>
+          </th>
+          <th>
+            <%= 'Calculated' %>
+          </th>
         </tr>
       </thead>
-        <%= render @holidays %>
+      <%= render @holidays %>
     </table>
   <% else %>
     <p>

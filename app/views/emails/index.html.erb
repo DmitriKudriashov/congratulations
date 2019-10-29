@@ -1,4 +1,5 @@
 <h1> Emails </h1>
+
 <div class="digg_pagination">
   <%= will_paginate @emails, :container => false %>
 </div>
@@ -6,11 +7,34 @@
    <%#= link_to 'New Email', new_email_path %>
 </li>
  -->
-<li class="nav-item active">
-  <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
+<!--  <li>
+   <%#= delete_all_unchecked %>
+ </li>
+ -->
+ <li class="nav-item active">
+  <a style="background: navy; color: aqua;" ><%= link_to " CREATE EMAILS for 30 days: " , "/emails/create_emails" %></a>
+  <a style="background: navy; color: white;"><%= "#{Date.today}" %></a>
+  to:
+  <a style="background: navy; color: white;"><%= " #{Date.today + 30} " %></a>
 </li>
+
+<!-- <li class="nav-item active">
+  <a style="color: navy">  Emails to date: </a>
+  <%# my_date = Time.now + 6.days %>
+  <a id="to-date-input" >
+ -->  <!-- 1<form> -->
+    <%#= date_field_tag "new_date" , "#{my_date.to_date}", class: 'to_date_input' %>
+   <%#= select_date(my_date, prefix: 'new_date') %>
+    <!-- <p id="date"> </p> -->
+<!--     <button id="button-date-to" type="submit" > Create </button>
+ -->    <!-- 1<button type="submit" onclick="GetDateTo()"> Create </button> -->
+    <%#= link_to 'CREATE EMAILS for Week', "/emails/create_emails_weekly" %>
+  <!-- 1</form> -->
+<!--   </a>
+</li>
+ -->
 <table class="container">
-   <% if @emails.present? %>
+  <% if @emails.present? %>
     <table class="table table-bordered">
       <thead class="thead-light" align="center">
         <tr>
@@ -24,17 +48,22 @@
           <th > Postcards </th>
           <th > Will be Send </th>
           <th > Sent  </th>
+          <th > YEAR  </th>
         </tr>
       </thead>
       <%= render @emails %>
     </table>
-   <% else %>
-     <p>
-       <%= 'Empty list' %>
-     </p>
+  <% else %>
+    <p>
+      <%= 'Empty list' %>
+    </p>
   <% end %>
 </table>
+
 <div class="digg_pagination">
   <%= will_paginate @emails, :container => false %>
 </div>
 
+<!-- <script type="text/javascript">
+</script>
+ -->

@@ -85,11 +85,9 @@ module DatesHolidaysHelper
     view_holidays(0)
   end
 
-  #----- 250919 kds add from dates_holiday.rb
   def people_list(dates_holiday)
     people = list_people(dates_holiday)
     text_area_tag(:text, people, size: :auto) if people.present?
-    # tag.text( people, size: :auto) if people.present?
   end
 
   def list_people(dates_holiday)

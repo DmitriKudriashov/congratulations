@@ -14,6 +14,4 @@ class Postcard < ApplicationRecord
   belongs_to :holiday
   self.per_page = all.count / 5
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
-
-  scope :for_holiday_id, ->(id) { where(holiday_id: id) }
 end

@@ -1,12 +1,17 @@
 <tr>
+<!--
   <td >
-    <%= holiday.id %>
+    <%#= holiday.id %>
   </td>
-  <td >
+ -->
+  <td>
     <%= holiday.name %>
   </td>
   <td >
     <%= holiday.type.name %>
+  </td>
+  <td>
+    <%= holiday.calc.present? ? "YES" : '' %>
   </td>
 <!--  <td class="s_e_d">-->
     <%#= link_to 'show', holiday_path(holiday) %>
@@ -19,4 +24,3 @@
                 method: :delete, data: { confirm: 'Are you sure' } %>
   </td>
 </tr>
-

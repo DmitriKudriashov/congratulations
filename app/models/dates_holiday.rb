@@ -10,8 +10,21 @@ class DatesHoliday < ApplicationRecord
 
   MONTHNAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
                 'August', 'September', 'October', 'November', 'December'].freeze
+
+  FOR_30_DAYS_SAME_YEARS = '((day >= ? and month = ?) or month > ? ) and ((day <= ? and month = ?) or month < ? )'.freeze
+
+  FOR_30_DAYS_DIFFERENT_YEARS = '((day <= ? and month = ?) or month < ? ) or ((day >= ? and month = ?) or month > ? )'.freeze
+
+  scope :holidays_in_period, -> (from_date, to_date){ where(
+      "(#{FOR_30_DAYS_SAME_YEARS} AND ? = ?) OR ((#{FOR_30_DAYS_DIFFERENT_YEARS}) AND ? < ? )",
+      from_date.day, from_date.month, from_date.month, to_date.day, to_date.month, to_date.month, from_date.year, to_date.year,
+      to_date.day, to_date.month, to_date.month, from_date.day, from_date.month, from_date.month,from_date.year, to_date.year
+    )
+  }
+
   scope :holidays_to_date, ->(day, month, year) { where(day: day, month: month, year: year) }
   scope :holiday_to_date, ->(holiday_id, day, month, year) { holidays_to_date(day, month, year).where(holiday_id: holiday_id) }
+
   validates_uniqueness_of :holiday_id, scope: %i[day month year], message: 'is not available'
 
   def save

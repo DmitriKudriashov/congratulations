@@ -14,7 +14,7 @@ class DatesHolidaysController < AuthenticatedController
     today = Time.now
     month = today.month
     day = today.day
-    @dates_holidays = @dates_holidays.where('month > ? or (month = ? and day >= ?)', month, month, day)
+    @dates_holidays = @dates_holidays.where('(month > ? or (month = ? and day >= ?) ) or (? > 9 and month = 1 ) ', month, month, day, month)
   end
 
   def new
