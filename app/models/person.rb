@@ -24,7 +24,6 @@ class Person < ApplicationRecord
     )
   }
 
-
   self.per_page = all.count / 5
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
 

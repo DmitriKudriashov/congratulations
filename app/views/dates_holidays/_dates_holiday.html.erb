@@ -1,6 +1,7 @@
 <tr>
- <td  align="center">
-    <%= "#{dates_holiday.day} / #{dates_holiday.name_month}" %>
+  <td  align="center">
+    <% day_month = "#{dates_holiday.day} / #{dates_holiday.name_month}" %>
+    <%= dates_holiday.year == 0 ? day_month : "#{day_month}/#{dates_holiday.year}"%>
   </td>
   <td>
     <%= dates_holiday.holiday.name %>

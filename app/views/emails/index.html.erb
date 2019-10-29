@@ -7,9 +7,17 @@
    <%#= link_to 'New Email', new_email_path %>
 </li>
  -->
-<li class="nav-item active">
-  <%= link_to 'CREATE EMAILS for TODAY', "/emails/create_emails" %>
+<!--  <li>
+   <%#= delete_all_unchecked %>
+ </li>
+ -->
+ <li class="nav-item active">
+  <a style="background: navy; color: aqua;" ><%= link_to " CREATE EMAILS for 30 days: " , "/emails/create_emails" %></a>
+  <a style="background: navy; color: white;"><%= "#{Date.today}" %></a>
+  to:
+  <a style="background: navy; color: white;"><%= " #{Date.today + 30} " %></a>
 </li>
+
 <!-- <li class="nav-item active">
   <a style="color: navy">  Emails to date: </a>
   <%# my_date = Time.now + 6.days %>
@@ -40,6 +48,7 @@
           <th > Postcards </th>
           <th > Will be Send </th>
           <th > Sent  </th>
+          <th > YEAR  </th>
         </tr>
       </thead>
       <%= render @emails %>
