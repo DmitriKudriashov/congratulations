@@ -84,6 +84,7 @@ group :development do
 end
 
 group :production do
+  gem 'mini_racer', platforms: :ruby
   gem 'execjs'
 end
 
