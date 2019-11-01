@@ -26,7 +26,7 @@ module DatesHolidaysHelper
 
   def list_element(dates_holiday)
     name_holiday = dates_holiday.holiday.name
-    return '' if name_holiday.eql?('Birthday')
+    return '' if name_holiday.upcase.eql?('BIRTHDAY')
 
     dates_holiday.present? ? "#{name_holiday} / \n" : ''
   end
@@ -94,7 +94,7 @@ module DatesHolidaysHelper
     list = ''
     holiday = dates_holiday.holiday
     if holiday.present?
-      list = if holiday.name.eql?('Birthday')
+      list = if holiday.name.upcase.eql?('BIRTHDAY')
                list_people_birthdays(dates_holiday.day, dates_holiday.month, list)
              else
                list_people_companies(holiday, list)

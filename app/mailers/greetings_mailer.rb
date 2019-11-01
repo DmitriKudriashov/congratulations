@@ -5,7 +5,7 @@ class GreetingsMailer < ApplicationMailer
 
   def send_message(email, user)
     @name = email.person.name
-    @address = Holiday.find(email.holiday_id).name == 'Birthday' ? email.address : company_mail_address(email)
+    @address = Holiday.find(email.holiday_id).name.upcase == 'BIRTHDAY' ? email.address : company_mail_address(email)
     if address.nil?
       flash[:alert] = "Not found email for: #{email.person.name}!!! "
       return
