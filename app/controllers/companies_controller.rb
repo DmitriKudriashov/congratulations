@@ -27,7 +27,7 @@ class CompaniesController < AuthenticatedController
     @company = Company.new(company_params)
     if @company.save
       # redirect_to company_path(@company), notice: 'Success!'
-      redirect_to companies_path, notice: 'Success!'
+      redirect_to companies_path, notice: 'Create new Company Successfully!'
     else
       render :new
     end
@@ -35,7 +35,7 @@ class CompaniesController < AuthenticatedController
 
   def destroy
     destroy_common(@company)
-    redirect_to companies_path
+    redirect_to companies_path, notice: 'Destroy Successfully!'
   end
 
   def search

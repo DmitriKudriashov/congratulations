@@ -27,8 +27,6 @@ class EmailsController < AuthenticatedController
         render :edit
         return
       end
-  # if email_params[:will_send].to_date.year == email_previous.year and email_params[:holiday_id].to_i == email_previous.holiday_id # and email_params[:person_id].to_i == @email.person_id
-  # if email_previous.year == @email.year and email_previous.holiday_id == @email.holiday_id and email_previous.person_id == @email.person_id
       @email.year = @email.will_send.year
       @email.save
       flash[:notice] = 'Update SUCCESSFULY !'
@@ -43,6 +41,8 @@ class EmailsController < AuthenticatedController
     find_email
     if @email.checkit.to_i.eql?(0)
       flash[:alert] = ' This is NOT CHECKED Email yet ! '
+    elsif @email.will_send > Date.today
+      flash[:alert] = " Will be send #{@email.will_send} ! "
     else
       retvalue = @email.send_now(current_user)
       if retvalue.nil?
@@ -63,7 +63,6 @@ class EmailsController < AuthenticatedController
     date_to = date_from + 30
 
     # dates_holidays = DatesHoliday.holidays_in_period(date_from, date_to)
-    # dates_holidays.
     (date_from..date_to).each do |will_send_date|
       set_holiday(will_send_date)
     end

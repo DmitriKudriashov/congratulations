@@ -28,9 +28,9 @@ class Email < ApplicationRecord
   end
 
   def send_now(current_user)
+    return if self.will_send > Date.today
     @error_sent = nil
     new_mail = GreetingsMailer.send_message(self, current_user)
-    # return if new_mail[:to].nil?
     begin
       new_mail.deliver_now!
     rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
