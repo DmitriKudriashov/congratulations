@@ -35,7 +35,7 @@ class CompaniesHolidaysController < AuthenticatedController
   def show; end
 
   def redirect_after
-    edit_holiday_path(@companies_holiday.holiday_id)
+    companies_holidays_path #edit_holiday_path(@companies_holiday.holiday_id)
   end
 
   def create
@@ -49,6 +49,7 @@ class CompaniesHolidaysController < AuthenticatedController
 
   def destroy
     destroy_common(@companies_holiday)
+    # byebug
     redirect_to redirect_after
   end
 
