@@ -11,7 +11,7 @@
     <%= holiday.type.name %>
   </td>
   <td>
-    <%= holiday.calc.present? ? "YES" : '' %>
+    <%= holiday.calc == 1 ? "YES" : '' %>
   </td>
 <!--  <td class="s_e_d">-->
     <%#= link_to 'show', holiday_path(holiday) %>

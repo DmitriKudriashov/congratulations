@@ -26,16 +26,11 @@ class PostcardsController < AuthenticatedController
   def create
     @postcard = Postcard.new(postcard_params)
     if @postcard.save
-      # redirect_to postcard_path(@postcard), notice: 'Success!'
+      # binding.pry
       redirect_to postcards_path
     else
       render :new
     end
-  end
-
-  def clear_attachment
-    @postcard.image = nil
-    @postcard.save
   end
 
   def destroy

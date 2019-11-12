@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Postcard < ApplicationRecord
+  # :rails_root/public/system/:class/:attachment/:id_partition/:style/:filename
   has_attached_file :image, styles: { medium: '300x300>', thumb: '100x100>', small: '50x50' }, default_url: '/images/:style/missing.png'
   validates_attachment_content_type :image, content_type: %r{\Aimage/.*\z}
 

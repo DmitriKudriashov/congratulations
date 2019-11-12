@@ -17,7 +17,6 @@ class HolidaysController < AuthenticatedController
 
   def update
     if @holiday.update(holiday_params)
-      # redirect_to holiday_path(@holiday)
       redirect_to holidays_path
     else
       render :edit
@@ -29,8 +28,7 @@ class HolidaysController < AuthenticatedController
   def create
     @holiday = Holiday.new(holiday_params)
     if @holiday.save
-      # redirect_to holiday_path(@holiday), notice: 'Success!'
-      redirect_to holidays_path
+      redirect_to holidays_path, notice: 'Saved Successfully!'
     else
       render :new
     end
