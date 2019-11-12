@@ -27,7 +27,6 @@ class EmailCardsController < AuthenticatedController
   def show; end
 
   def create
-    # byebug
     @email_card = EmailCard.new(email_card_params) # @card.email_cards.new(email_card_params)
 
     if @email_card.save

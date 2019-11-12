@@ -1,32 +1,26 @@
 <%= form_with model: @postcard, html: { multipart: true }, local: true do |form| %>
 
-<!--   <p>
-    <%= form.label :id %>
-  </p>
+  <div>
+    <%= form.label :id %>:
+    <a style="color: navy; font-size: 16px"><%= @postcard.id %> </a>
+  </div>
 
   <p>
-    <%= form.text_field :id %>
+    <%= 'Holiday: ' %>
+    <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
   </p>
- -->
-
- <!--  <p>
-    <%= form.text_field :filename %>
-   --></p>
-<p>
-  <%= 'Holiday: ' %>
-  <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
-</p>
-<p>
-    <%= form.file_field :image %>
+  <p>
+    <a>
+      <%= form.file_field :image %>
+    </a>
     <%#= form.input :image, as: :file !!!  undefined method `input' for #<ActionView::Helpers::FormBuilder:0 ..%>
-
-   <%= image_tag @postcard.image.url(:medium) %>
-
-</p>
-<p>
-  <%= form.label :filename %> <br>
-  <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
-</p>
+    <%= image_tag @postcard.image.url(:medium) if @postcard.image? %>
+    <%#= form.hidden_field :image_cache %>
+  </p>
+  <p>
+    <%= form.label :filename %> <br>
+    <%= form.text_field :filename, id: :postcard_filename, class: 'form-control' %>
+  </p>
 
   <br>
   <p> <%= form.submit %> </p>

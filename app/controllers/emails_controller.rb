@@ -83,11 +83,6 @@ class EmailsController < AuthenticatedController
   end
 
   def destroy
-    # email_texts = EmailText.where(email_id: @email.id)
-    # email_texts.each(&:destroy) if email_texts.present?
-
-    # email_cards = EmailCard.where(email_id: @email.id)
-    # email_cards.each(&:destroy) if email_cards.present?
     destroy_related_texts_cards(@email)
     destroy_common(@email)
     redirect_to emails_path
