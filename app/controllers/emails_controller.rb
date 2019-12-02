@@ -97,7 +97,7 @@ class EmailsController < AuthenticatedController
   end
 
   def destroy_unchecked
-    Email.all.where(checkit: 0).each do |email|
+    Email.where(checkit: 0).each do |email|
       # byebug
       @email = email
       destroy_related_texts_cards(email)
@@ -164,19 +164,11 @@ class EmailsController < AuthenticatedController
 
   def loop_by_mail_addresses(person, list_people_mails)
     person.companies_people.each do |companies_person|
-      mail_address = MailAddress.where(companies_person_id: companies_person.id).first # .order(updated_at: :desc)
+      mail_address = MailAddress.where(companies_person_id: companies_person.id).first
       mail_address = MailAddress.create([{ email: person.email, companies_person_id: companies_person.id }]).first unless mail_address.present?
-      list_people_mails << hash_for_mail(person, mail_address, companies_person)
+      list_people_mails << { person_id: person.id, mail_address_id: mail_address.id, companies_id: companies_person.company_id }
     end
     list_people_mails
-  end
-
-  def hash_for_mail(person, mail_address, companies_person)
-    data_hash = {}
-    data_hash[:person_id] = person.id
-    data_hash[:mail_address_id] = mail_address.id
-    data_hash[:companies_id] = companies_person.company_id
-    data_hash
   end
 
   def create_emails_for_date(holiday_date, will_send_date, list_people_mails)
@@ -192,7 +184,6 @@ class EmailsController < AuthenticatedController
         holiday_id: for_holiday.id,
         address: person.email,
         mail_address_id: data_hash[:mail_address_id],
-        will_send: will_send_date,
         person_id: person.id,
         checkit: 0,
         year: will_send_date.year,
@@ -248,8 +239,8 @@ class EmailsController < AuthenticatedController
   end
 
   def free_card_ids_array(email)
-    holiday_cards = all_cards_for_holiday(email.holiday_id)
-    person_cards_used = already_used_card_person_for_holiday(email.holiday_id, email.person_id)
+    holiday_cards = Postcard.where(holiday_id: email.holiday_id).select(:id)
+    person_cards_used = Postcard.left_outer_joins(email_cards: :email).where(postcards: {holiday_id: email.holiday_id}, emails: {person_id: email.person_id}).select(:id).uniq
     make_array(holiday_cards) - make_array(person_cards_used)
   end
 
@@ -257,14 +248,6 @@ class EmailsController < AuthenticatedController
     ids = []
     array_objects.each { |object| ids << object.id }
     ids
-  end
-
-  def already_used_card_person_for_holiday(holiday_id, person_id)
-    Postcard.all.left_outer_joins(email_cards: :email).where(postcards: {holiday_id: holiday_id}, emails: {person_id: person_id}).select(:id).uniq
-  end
-
-  def all_cards_for_holiday(holiday_id)
-    Postcard.all.where(holiday_id: holiday_id).select(:id)
   end
 
   def add_postcard(email)

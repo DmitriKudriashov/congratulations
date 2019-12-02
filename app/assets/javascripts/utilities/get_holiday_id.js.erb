@@ -1,0 +1,26 @@
+document.addEventListener('turbolinks:load', function() {
+  var control = document.getElementById('new-email_card')
+  if (control) {
+    control.addEventListener('click', putNewHref)
+  };
+});
+
+function putNewHref(){
+  document.getElementById('new-email_card').href = calculateHref()
+}
+
+
+function calculateHref(){
+  var href = document.getElementById('new-email_card').href
+  console.log(href)
+  var h_id = document.getElementById("email_holiday_id").value
+  console.log(h_id)
+  var pos = href.search('\\?')
+  console.log(pos)
+  if (pos > 0){
+    var new_href = href.substring(0,pos)+"?holiday_id="+h_id
+  }
+  console.log(new_href)
+  return new_href
+}
+

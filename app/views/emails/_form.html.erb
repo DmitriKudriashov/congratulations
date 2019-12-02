@@ -1,15 +1,15 @@
 <%= form_with model: @email, local: true do |form| %>
   <div>
     <a style="font-weight: bold; font-size: 14px;  margin: 1%">YEAR:</a>
-    <a  style="color: navy; font-weight: bold; font-size: 20px;"><%= @email.year %> </a>
+    <a style="color: navy; font-weight: bold; font-size: 20px;"><%= @email.year %> </a>
     <a style="margin: 1%"> id: </a> <a style="color: navy"><%= "#{@email.id}" %></a>
 
     <br>
 
-    TO: <a style="color: red; font-size: 20px"><%= " #{@email.person.name}" %></a>
+    TO: <a style="color: red; font-size: 20px" id="name"><%= " #{@email.person.name}" %></a>
     <%#= form.collection_select :person_id, Person.all, :id, :name, prompt: 'Select person' %>
   </div>
-    <a ><%= 'HOLIDAY: ' %>
+    <a><%= 'HOLIDAY: ' %>
       <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
     </a>
     <div>
@@ -56,5 +56,4 @@
     <%= form.check_box :checkit %>
     <a style="margin: 22%;"><%= form.submit %></a>
   </div>
-
 <% end %>
