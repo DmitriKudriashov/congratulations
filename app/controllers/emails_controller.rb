@@ -116,9 +116,25 @@ class EmailsController < AuthenticatedController
   def process_by_dates(holiday_dates, date)
     holiday_dates.each do |holiday_date|
       holiday = Holiday.find(holiday_date.holiday_id)
-      list_people_mails = create_list_people_mails(holiday)
+      list_people_mails = create_list_people_mails(holiday, date)
       create_emails_for_date(holiday_date, date, list_people_mails)
     end
+  end
+
+  def create_list_people_mails(holiday, date)
+    # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
+    # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
+
+    people_holiday =  Person.birthdays_to_date(date.day, date.month).joins(companies_people: [company: [companies_holidays: :holiday]])
+      .left_outer_joins(companies_people: [company: [country: [countries_holidays: :holiday]]])
+      .where("holidays.id = ?", holiday.id).order(:name).uniq
+
+    list_people_mails = []
+    people_holiday.each do |person|
+      list_people_mails = loop_by_mail_addresses(person, list_people_mails)
+    end
+
+     list_people_mails
   end
 
   def set_holiday(date)
@@ -146,21 +162,6 @@ class EmailsController < AuthenticatedController
     create_emails_for_date(holiday_date, date, list_people_mails)
   end
 
-  def create_list_people_mails(holiday)
-    # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
-    # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
-
-    people_holiday =  Person.joins(companies_people: [company: [companies_holidays: :holiday]])
-                            .left_outer_joins(companies_people: [company: [country: [countries_holidays: :holiday]]])
-                            .where("holidays.id = ? ", holiday.id).order(:name).uniq
-
-    list_people_mails = []
-    people_holiday.each do |person|
-      list_people_mails = loop_by_mail_addresses(person, list_people_mails)
-    end
-
-     list_people_mails
-  end
 
   def loop_by_mail_addresses(person, list_people_mails)
     person.companies_people.each do |companies_person|
@@ -186,6 +187,7 @@ class EmailsController < AuthenticatedController
         mail_address_id: data_hash[:mail_address_id],
         person_id: person.id,
         checkit: 0,
+        will_send: will_send_date,
         year: will_send_date.year,
         message: add_cardtext(for_holiday).to_s
       )
@@ -201,7 +203,7 @@ class EmailsController < AuthenticatedController
     email.will_send = opt[:will_send]
     email.message = opt[:message]
     email.person_id = opt[:person_id]
-    email.year = opt[:will_send].year
+    email.year = opt[:year]
     email.subject = opt[:subject]
   end
 
