@@ -1,9 +1,9 @@
 <h1> Edit Link Email - PostCard</h1>
   <%= render 'form' %>
 <p>
-  <%#= link_to 'Back to All links Email-PostCard', edit_email_path(@email_card.email_id) %>
-</p><br>
-<p>
+  <%= link_to "Back to Email for :  #{Email.where(id: params[:email_id]).first.name}" , edit_email_path(params[:email_id]) %>
+  <br>
   <%= link_to 'Back to all Emails', emails_path %>
 </p>
+
 

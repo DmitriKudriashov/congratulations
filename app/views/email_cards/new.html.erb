@@ -2,9 +2,7 @@
   <%= render 'form' %>
 <br>
 <p>
-  <%# if params[:email_id].nil? %>
-  <%= link_to 'Back to Email ', edit_email_path(@email_card.email_id) %>
+  <%= link_to "Back to Email for :  #{Email.where(id: params[:email_id]).first.name}" , edit_email_path(params[:email_id]) %>
   <br>
   <%= link_to 'Back to All Emails - PostCards', email_cards_path %>
-  <%#= link_to 'Back to All Emails - PostCards', email_email_cards_path(params[:email_id]) %>
 </p>

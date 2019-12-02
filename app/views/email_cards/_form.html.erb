@@ -1,13 +1,16 @@
-<%= form_with model:  @email_card, local: true do |form| %>
+<%= form_with model: @email_card, local: true do |form| %>
   <p>
-    <%= 'Email: ' %>
-    <%= form.collection_select :email_id, Email.all, :id, :name, prompt: 'Select Email' %>
+    <%= 'for This Email: ' %>
+    <a style="color: white; font-weight: bold; font-size: 16px; background-color: navy">
+      <%= form.collection_select :email_id, Email.where(id: params[:email_id]), :id, :name %>
+    </a>
   </p>
   <p>
     <%= 'Post Card: ' %>
-    <%= form.collection_select :postcard_id, Postcard.all, :id, :filename, prompt: 'Select PostCard' %>
+    <%= form.collection_select :postcard_id, postcards_for_select(params[:holiday_id], params[:id]), :id, :filename %>
   </p>
   <br>
-  <p> <%= form.submit %> </p>
+  <p>  <%= form.submit %> </p>
 <% end %>
 <br>
+

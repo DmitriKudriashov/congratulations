@@ -1,7 +1,10 @@
 <%= form_with model: @holiday, local: true do |form| %>
+  id:
+  <a style="color: navy; font-size: 16px">
+    <%= @holiday.id %>
+  </a>
   <p>
     <%= "Holiday name:" %>
-
     <%= form.text_field :name, size: 50 %>
   </p>
   <p>
