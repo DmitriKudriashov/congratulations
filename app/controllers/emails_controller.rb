@@ -113,21 +113,20 @@ class EmailsController < AuthenticatedController
 
   private
 
-  def process_by_dates(holiday_dates, date)
+  def process_by_dates(holiday_dates, date, year)
     holiday_dates.each do |holiday_date|
       holiday = Holiday.find(holiday_date.holiday_id)
-      list_people_mails = create_list_people_mails(holiday, date)
+      list_people_mails = create_list_people_mails(holiday, date, year)
       create_emails_for_date(holiday_date, date, list_people_mails)
     end
   end
 
-  def create_list_people_mails(holiday, date)
+  def create_list_people_mails(holiday, date, year)
     # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
     # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
 
-    people_holiday =  Person.joins(companies_people: [company: [companies_holidays: :holiday]])
-      .left_outer_joins(companies_people: [company: [country: [countries_holidays: [holiday: :dates_holidays]]]])
-      .where("holidays.id = ? and dates_holidays.date = ?", holiday.id, date).order(:name).uniq
+    people_holiday =  Person.left_outer_joins(companies_people: [company: [{companies_holidays: [holiday: :dates_holidays]}, {country: :countries_holidays}]])
+      .where("countries_holidays.holiday_id = companies_holidays.holiday_id and companies_holidays.holiday_id = ? and dates_holidays.day = ? and dates_holidays.month=? and dates_holidays.year=?", holiday.id, date.day, date.month, year )
 
     list_people_mails = []
     people_holiday.each do |person|
@@ -141,11 +140,11 @@ class EmailsController < AuthenticatedController
 
     # 1) Holidays w/o calc option Holiday
     holiday_dates = DatesHoliday.holidays_to_date(date.day, date.month, 0).joins(:holiday)
-    process_by_dates(holiday_dates, date) if holiday_dates.present?
+    process_by_dates(holiday_dates, date, 0) if holiday_dates.present?
 
     # 2) Holidays with calc option Holiday
     holiday_dates = DatesHoliday.holidays_to_date(date.day, date.month, date.year).joins(:holiday)
-    process_by_dates(holiday_dates, date) if holiday_dates.present?
+    process_by_dates(holiday_dates, date, date.year) if holiday_dates.present?
 
     # Birthday's
     list_people_mails = []
