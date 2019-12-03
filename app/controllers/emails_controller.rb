@@ -125,9 +125,9 @@ class EmailsController < AuthenticatedController
     # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
     # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
 
-    people_holiday =  Person.birthdays_to_date(date.day, date.month).joins(companies_people: [company: [companies_holidays: :holiday]])
-      .left_outer_joins(companies_people: [company: [country: [countries_holidays: :holiday]]])
-      .where("holidays.id = ?", holiday.id).order(:name).uniq
+    people_holiday =  Person.joins(companies_people: [company: [companies_holidays: :holiday]])
+      .left_outer_joins(companies_people: [company: [country: [countries_holidays: [holiday: :dates_holidays]]]])
+      .where("holidays.id = ? and dates_holidays.date = ?", holiday.id, date).order(:name).uniq
 
     list_people_mails = []
     people_holiday.each do |person|
@@ -154,7 +154,7 @@ class EmailsController < AuthenticatedController
       list_people_mails = loop_by_mail_addresses(person, list_people_mails)
     end
 
-    return unless people_birthdays.present?
+    return unless list_people_mails.present?
 
     holiday = Holiday.where(name: 'Birthday').first
     holiday_date = DatesHoliday.create_date_holiday(date, holiday)
