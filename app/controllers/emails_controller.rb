@@ -126,7 +126,9 @@ class EmailsController < AuthenticatedController
     # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
 
     people_holiday =  Person.left_outer_joins(companies_people: [company: [{companies_holidays: [holiday: :dates_holidays]}, {country: :countries_holidays}]])
-      .where("countries_holidays.holiday_id = companies_holidays.holiday_id and companies_holidays.holiday_id = ? and dates_holidays.day = ? and dates_holidays.month=? and dates_holidays.year=?", holiday.id, date.day, date.month, year )
+      .where("(countries_holidays.holiday_id = ? or companies_holidays.holiday_id = ?) and companies_holidays.holiday_id = ?
+      and dates_holidays.day = ? and dates_holidays.month=? and dates_holidays.year=?",
+      holiday.id, holiday.id, holiday.id, date.day, date.month, year ).uniq
 
     list_people_mails = []
     people_holiday.each do |person|

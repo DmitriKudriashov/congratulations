@@ -59,6 +59,7 @@ class GreetingsMailer < ApplicationMailer
     when "/^#{png}/"
       'png'
     when "/^#{jpg}"
+      'jpg'
     when "/^#{jpg2}"
       'jpeg'
     else
