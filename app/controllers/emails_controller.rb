@@ -113,8 +113,8 @@ class EmailsController < AuthenticatedController
 
   private
 
-  def process_by_dates(holiday_dates, date, year)
-    holiday_dates.each do |holiday_date|
+  def process_by_dates(holidays_in_date, date, year)
+    holidays_in_date.each do |holiday_date|
       holiday = Holiday.find(holiday_date.holiday_id)
       list_people_mails = create_list_people_mails(holiday, date, year)
       create_emails_for_date(holiday_date, date, list_people_mails)
@@ -141,12 +141,12 @@ class EmailsController < AuthenticatedController
   def set_holiday(date)
 
     # 1) Holidays w/o calc option Holiday
-    holiday_dates = DatesHoliday.holidays_to_date(date.day, date.month, 0).joins(:holiday)
-    process_by_dates(holiday_dates, date, 0) if holiday_dates.present?
+    holidays_in_date = DatesHoliday.holidays_to_date(date.day, date.month, 0).joins(:holiday)
+    process_by_dates(holidays_in_date, date, 0) if holidays_in_date.present?
 
     # # 2) Holidays with calc option Holiday
-    # holiday_dates = DatesHoliday.holidays_to_date(date.day, date.month, date.year).joins(:holiday)
-    # process_by_dates(holiday_dates, date, date.year) if holiday_dates.present?
+    # holidays_in_date = DatesHoliday.holidays_to_date(date.day, date.month, date.year).joins(:holiday)
+    # process_by_dates(holidays_in_date, date, date.year) if holidays_in_date.present?
 
     # # Birthday's
     # list_people_mails = []
