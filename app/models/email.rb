@@ -9,7 +9,7 @@ class Email < ApplicationRecord
 
   belongs_to :mail_address
   belongs_to :holiday
-  belongs_to :person
+  #061219 belongs_to :person
   attr_reader :error_sent
 
   self.per_page = all.count / 5

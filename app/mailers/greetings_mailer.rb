@@ -5,7 +5,8 @@ class GreetingsMailer < ApplicationMailer
 
   def send_message(email, user)
     @name = email.person.name
-    @address = Holiday.find(email.holiday_id).name.upcase == 'BIRTHDAY' ? email.address : company_mail_address(email)
+    @address = email.address
+    # Holiday.find(email.holiday_id).name.upcase == 'BIRTHDAY' ? email.address : company_mail_address(email)
     if address.nil?
       flash[:alert] = "Not found email for: #{email.person.name}!!! "
       return
@@ -25,12 +26,14 @@ class GreetingsMailer < ApplicationMailer
       }
       @files << postcard.filename
     end
-    new_address = address_checked
-    if new_address == @address
-      mail from: @from, to: new_address, subject: email.subject
-    else
-      mail from: @from, to: address, bcc: new_address, subject: email.subject
-    end
+      mail from: @from, to: address, subject: email.subject
+
+    # new_address = address_checked
+    # if new_address == @address
+    #   mail from: @from, to: new_address, subject: email.subject
+    # else
+    #   mail from: @from, to: address, bcc: new_address, subject: email.subject
+    # end
   end
 
   def personal_address(email)
@@ -42,6 +45,10 @@ class GreetingsMailer < ApplicationMailer
   end
 
   private
+
+  def new_addresses_list
+
+  end
 
   def address_checked
     # return nil if @address.index('@').to_i.eql?(0)
