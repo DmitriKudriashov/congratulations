@@ -98,7 +98,6 @@ class EmailsController < AuthenticatedController
 
   def destroy_unchecked
     Email.where(checkit: 0).each do |email|
-      # byebug
       @email = email
       destroy_related_texts_cards(email)
       email.destroy

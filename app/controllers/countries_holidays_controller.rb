@@ -10,8 +10,8 @@ class CountriesHolidaysController < AuthenticatedController
 
   def new
     @countries_holiday = @holiday.nil? ? CountriesHoliday.new : @holiday.countries_holidays.new
-    @countries_holiday.holiday_id = 1
-    @countries_holiday.country_id = 1
+    @countries_holiday.holiday_id = Holiday.first
+    @countries_holiday.country_id = Country.first
   end
 
   def new_country_holiday
