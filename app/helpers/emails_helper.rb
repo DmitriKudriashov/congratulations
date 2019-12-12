@@ -6,9 +6,9 @@ module EmailsHelper
     checkit.to_i.positive?
   end
 
-  def set_email_cards(id)
-    @email_cards = EmailCard.where(email_id: id)
-  end
+  # def set_email_cards(id)
+  #   @email_cards = EmailCard.where(email_id: id)
+  # end
 
   def delete_all_unchecked
     # byebug

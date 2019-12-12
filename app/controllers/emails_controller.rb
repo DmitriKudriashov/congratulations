@@ -4,6 +4,7 @@ class EmailsController < AuthenticatedController
   before_action :find_email, only: %i[show update destroy]
   before_action :set_email_cards, only: %i[show edit]
   before_action :set_email_texts, only: %i[show edit]
+  before_action :set_mail_address_emails, only: %[show edit]
 
   def index
     year = Time.now.year
@@ -299,6 +300,10 @@ class EmailsController < AuthenticatedController
 
   def set_email_cards
     @email_cards = find_email.email_cards
+  end
+
+  def set_mail_address_emails
+    @mail_address_emails = MailAddressesEmail.joins(mail_address: [companies_people: :company]).where(email_id: params[:id])
   end
 
   def set_email_texts
