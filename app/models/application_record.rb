@@ -16,4 +16,4 @@ class ApplicationRecord < ActiveRecord::Base
     first_month
   end
 end
-# 905397238533 - Zak
+

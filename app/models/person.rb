@@ -8,10 +8,9 @@ class Person < ApplicationRecord
   FOR_30_DAYS_DIFFERENT_YEARS = '((day(birthday) <= ? and month(birthday) = ?) or month(birthday) < ? ) or ((day(birthday) >= ? and month(birthday) = ?) or month(birthday) > ? )'.freeze
 
 
-  has_many :companies_people, dependent: :restrict_with_error
+  #111219 has_many :companies_people, dependent: :restrict_with_error
   has_many :companies, through: :companies_people
   #061219 has_many :emails, dependent: :restrict_with_error
-
 
   scope :selectmonth, ->(m) { where('month(birthday) = ?', m) }
   scope :birthday_men, ->(date) { where('birthday = ?', date) }

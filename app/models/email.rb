@@ -7,9 +7,9 @@ class Email < ApplicationRecord
   has_many :email_texts, dependent: :restrict_with_error
   has_many :cardtexts, through: :email_texts
 
-  belongs_to :mail_address
+  has_many :mail_address, through: :mail_addresses_emails
   belongs_to :holiday
-  #061219 belongs_to :person
+
   attr_reader :error_sent
 
   self.per_page = all.count / 5
@@ -17,15 +17,15 @@ class Email < ApplicationRecord
 
   scope :emails_for_send, ->(date) { where(will_send: date, checkit: 1, sent_date: nil) }
 
-  def greetings_text
-    message
-    # cardtexts.first.present? ? cardtexts.first.text : 'Text not avalable !'
-  end
+  # def greetings_text
+  #   message
+  #   # cardtexts.first.present? ? cardtexts.first.text : 'Text not avalable !'
+  # end
 
-  def self.new_emails_to_date(_date)
-    dh = DatesHoliday.first
-    dh.holiday.companies.first.people.first.dob_month
-  end
+  # def self.new_emails_to_date(_date)
+  #   dh = DatesHoliday.first
+  #   dh.holiday.companies.first.people.first.dob_month
+  # end
 
   def send_now(current_user)
     return if self.will_send > Date.today
