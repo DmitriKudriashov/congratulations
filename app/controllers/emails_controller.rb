@@ -113,31 +113,6 @@ class EmailsController < AuthenticatedController
 
   private
 
-  def process_by_dates(holidays_in_date, date, year)
-    holidays_in_date.each do |holiday_date|
-      holiday = Holiday.find(holiday_date.holiday_id)
-      list_people_mails = create_list_people_mails(holiday, date, year)
-      create_emails_for_date(holiday_date, date, list_people_mails)
-    end
-  end
-
-  def create_list_people_mails(holiday, date, year)
-    # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
-    # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
-
-    people_holiday =  Person.left_outer_joins(companies_people: [company: [{companies_holidays: [holiday: :dates_holidays]}, {country: :countries_holidays}]])
-      .where("(countries_holidays.holiday_id = ? or companies_holidays.holiday_id = ?)
-      and dates_holidays.day = ? and dates_holidays.month=? and dates_holidays.year=?",
-      holiday.id, holiday.id, date.day, date.month, year ).uniq
-
-    list_people_mails = []
-    people_holiday.each do |person|
-      list_people_mails = loop_by_mail_addresses(person, list_people_mails)
-    end
-
-     list_people_mails
-  end
-
   def set_holiday(date)
 
     # 1) Holidays w/o calc option Holiday
@@ -149,59 +124,119 @@ class EmailsController < AuthenticatedController
     # process_by_dates(holidays_in_date, date, date.year) if holidays_in_date.present?
 
     # # Birthday's
-    # list_people_mails = []
+    # list_address_emails = []
     # people_birthdays = Person.birthdays_to_date(date.day, date.month)
     # people_birthdays.each do |person|
-    #   list_people_mails = loop_by_mail_addresses(person, list_people_mails)
+    #   list_address_emails = loop_by_mail_addresses(person, list_address_emails)
     # end
 
-    # return unless list_people_mails.present?
+    # return unless list_address_emails.present?
 
     # holiday = Holiday.where(name: 'Birthday').first
     # holiday_date = DatesHoliday.create_date_holiday(date, holiday)
 
-    # create_emails_for_date(holiday_date, date, list_people_mails)
+    # create_emails_for_date(holiday_date, date, list_address_emails)
   end
 
 
-  def loop_by_mail_addresses(person, list_people_mails)
+  def process_by_dates(holidays_in_date, date, year)
+    holidays_in_date.each do |holiday_date|
+      holiday = Holiday.find(holiday_date.holiday_id)
+      if holiday.name.upcase == "BIRTHDAY"
+        list_address_emails = create_list_address_emails_birthday(holiday, date, year)
+        create_emails_for_date(holiday_date, date, list_address_emails)
+      else
+        list_address_emails = create_list_emails(holiday, date, year)
+      end
+    end
+  end
+
+  def create_list_emails(holiday, date, year)
+    # list_emails = MailAddress.left_outer_joins(companies_person: [company: [
+    #     {country: [countries_holidays: [holiday: :dates_holidays]]},
+    #     {companies_holidays: [holiday: :dates_holidays]}
+    #   ]]).where(
+    #   "(dates_holidays.holiday_id=? or dates_holidays_holidays.holiday_id=?) and companies_people.company_id=? "
+    #   ,holiday.id, holiday.id, ).distinct
+
+      list_emails_holiday = Company.joins(companies_holidays: [holiday: :dates_holidays] )
+        .where("dates_holidays.day=? and dates_holidays.month=? and dates_holidays.year=?", date.day, date.month, year)
+      list_emails_country = Company.joins(country: [countries_holidays: [holiday: :dates_holidays]] )
+        .where("dates_holidays.day=? and dates_holidays.month=? and dates_holidays.year=?", date.day, date.month, year)
+
+      array_id_companies_holidays = []
+      list_emails_holiday.each {|x| array_id_companies_holidays << x.id}
+      array_companies_countries = []
+      list_emails_country.each {|x| array_companies_countries << x.id }
+      (array_id_companies_holidays + array_companies_countries).uniq!.sort!
+
+      list_address_emails = []
+      list_emails_holiday.each {|x| list_address_emails << x.email}
+      list_emails_country.each {|x| list_address_emails << x.email}
+      list_address_emails.uniq!.sort!
+  end
+
+  # def filter
+  #   "(dates_holidays.holiday_id=? or dates_holidays_holidays.holiday_id=?) and companies.id=?"
+  # end
+
+  def create_list_address_emails_birthday(holiday, date, year)
+    # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
+    # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
+
+    people_holiday =  Person.left_outer_joins(companies_people: [company: [{companies_holidays: [holiday: :dates_holidays]}, {country: :countries_holidays}]])
+      .where("(countries_holidays.holiday_id = ? or companies_holidays.holiday_id = ?)
+      and dates_holidays.day = ? and dates_holidays.month=? and dates_holidays.year=?",
+      holiday.id, holiday.id, date.day, date.month, year ).uniq
+
+    list_address_emails = []
+    people_holiday.each do |person|
+      list_address_emails = loop_by_mail_addresses(person, list_address_emails)
+    end
+
+     list_address_emails
+  end
+
+
+
+  def loop_by_mail_addresses(person, list_address_emails)
     person.companies_people.each do |companies_person|
       mail_address = MailAddress.where(companies_person_id: companies_person.id).first
       mail_address = MailAddress.create([{ email: person.email, companies_person_id: companies_person.id }]).first unless mail_address.present?
-      list_people_mails << { person_id: person.id, mail_address_id: mail_address.id, companies_id: companies_person.company_id }
+      list_address_emails << { person_id: person.id, mail_address_id: mail_address.id, companies_id: companies_person.company_id }
     end
     # binding.pry
-    list_people_mails
+    list_address_emails
   end
 
-  def create_emails_for_date(holiday_date, will_send_date, list_people_mails)
+  def create_emails_for_date(holiday_date, will_send_date, list_address_emails)
     return if holiday_date.nil?
     for_holiday = Holiday.find(holiday_date.holiday_id)
 
     subject = for_holiday.name.upcase == 'BIRTHDAY' ? 'HAPPY BIRTHDAY!' : "#{for_holiday.name.upcase} GREETINGS!"
     address = ''
-    return unless list_people_mails.present?
+    return unless list_address_emails.present?
     i = 0
-    person_name = ''
+    person_name = 'Dear colleagues'
     person_id = 0
-    list_people_mails.each do |data_hash|
-      i += 1
-      if i == 1
-        person = Person.find(data_hash[:person_id])
-        person_name  =  person.name
-        person_id = person.id
-      end
-      address += "#{MailAddress.find(data_hash[:mail_address_id]).email}, "
+    list_address_emails.each do |data_hash|
+      # i += 1
+      # if i == 1
+      #   person = Person.find(data_hash[:person_id])
+      #   person_name  =  person.name
+      #   person_id = person.id
+      # end
+      # address += "#{MailAddress.find(data_hash[:mail_address_id]).email}, "
     end
-    address = address[0..(address.size - 3)] if address[-2] == ','
+    # address = address[0..(address.size - 3)] if address[-2] == ','
     binding.pry
     create_new_email(
       name: person_name,
       subject: subject,
       holiday_id: for_holiday.id,
-      address: address,
+      address: '' ,
       mail_address_id: 0,
-      person_id: person_id,
+      person_id: 0,
       checkit: 0,
       will_send: will_send_date,
       year: will_send_date.year,

@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
       err = object.errors.messages[:base].first
       flash[:alert] = "Error destroy: #{object.model_name.name},  record:  #{object.id}. #{err}!"
     end
+    err
     # begin
     #   object.destroy!
     # rescue ActiveRecord::RecordNotDestroyed => e

@@ -2,7 +2,7 @@
 
 class CompaniesPerson < ApplicationRecord
   belongs_to :company
-  # belongs_to :person
+  belongs_to :person
   has_many :mail_addresses, dependent: :restrict_with_error
 
   self.per_page = all.count / 5

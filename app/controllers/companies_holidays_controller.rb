@@ -49,7 +49,6 @@ class CompaniesHolidaysController < AuthenticatedController
 
   def destroy
     destroy_common(@companies_holiday)
-    # byebug
     redirect_to redirect_after
   end
 
