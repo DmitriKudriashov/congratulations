@@ -1,2 +1,2 @@
-module CompaniesEmailHelper
+module CompaniesEmailsHelper
 end
