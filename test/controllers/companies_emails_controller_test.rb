@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MailAddressesEmailControllerTest < ActionDispatch::IntegrationTest
+class CompaniesEmailsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

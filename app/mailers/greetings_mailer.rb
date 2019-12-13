@@ -40,9 +40,9 @@ class GreetingsMailer < ApplicationMailer
     email.person.email.present? ? email.person.email : nil
   end
 
-  def company_mail_address(email)
-    email.mail_address_id.to_i.zero? ? personal_address(email) : email.mail_address.email
-  end
+  # def company_mail_address(email)
+  #   email.mail_address_id.to_i.zero? ? personal_address(email) : email.mail_address.email
+  # end
 
   private
 

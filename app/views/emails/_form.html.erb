@@ -33,11 +33,12 @@
           <%#= form.text_field :address, size: 60,  %>
           <%= form.text_area :address, rows: 1, cols: 100,  class: 'form-control'  %>
         </a>
-        <a style="size: 100;  margin: 10%">
-          <%= 'Company Email Address: ' %>
-          <%= form.collection_select :mail_address_id, MailAddress.joins(:companies_person).where('companies_people.person_id =  ?', @email.person_id), :id,
+<!--         <a style="size: 100;  margin: 10%">
+          <%#= 'Company Email Address: ' %>
+          <%#= form.collection_select :mail_address_id, MailAddress.joins(:companies_person).where('companies_people.person_id =  ?', @email.person_id), :id,
               :email, prompt: 'Select Mail Address Company', size: 40 %>
         </a>
+ -->
       </div>
     <% end %>
     <div>

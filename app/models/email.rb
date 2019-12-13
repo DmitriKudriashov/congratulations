@@ -7,7 +7,7 @@ class Email < ApplicationRecord
   has_many :email_texts, dependent: :restrict_with_error
   has_many :cardtexts, through: :email_texts
 
-  has_many :mail_address, through: :mail_addresses_emails
+  has_many :company, through: :companies_emails
   belongs_to :holiday
 
   attr_reader :error_sent

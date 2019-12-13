@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     resources :email_texts, shallow: true do
       resources :cardtexts, shallow: true
     end
-    resources :mail_addresses_emails, shallow: true, except:  %i[index edit]
+    resources :companies_emails, shallow: true, except:  %i[index edit]
   end
 
   resources :email_cards, only: %i[index create edit]

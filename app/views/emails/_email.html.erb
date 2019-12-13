@@ -16,7 +16,7 @@
     <% if email.sent_date.present?  %>
     <%= email.address %>
     <% else %>
-    <%= text_area_tag(:text, "#{email.address}; \n #{email.mail_address.email}", size: :auto)  %>
+    <%= text_area_tag(:text, "#{email.address}", size: :auto)  %>
     <% end %>
   </td>
   <td>

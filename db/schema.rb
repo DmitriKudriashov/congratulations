@@ -142,11 +142,11 @@ ActiveRecord::Schema.define(version: 2019_12_11_185334) do
     t.index ["email"], name: "index_mail_addresses_on_email"
   end
 
-  create_table "mail_addresses_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "email_id"
-    t.bigint "mail_address_id"
-    t.index ["email_id"], name: "index_mail_addresses_emails_on_email_id"
-    t.index ["mail_address_id"], name: "index_mail_addresses_emails_on_mail_address_id"
+    t.bigint "company_id"
+    t.index ["email_id"], name: "index_companies_emails_on_email_id"
+    t.index ["company_id"], name: "index_companies_emails_on_company_id"
   end
 
   create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(version: 2019_12_11_185334) do
   add_foreign_key "email_texts", "cardtexts"
   add_foreign_key "email_texts", "emails"
   add_foreign_key "emails", "holidays"
-  add_foreign_key "emails", "mail_addresses"
+  add_foreign_key "emails", "companies"
   add_foreign_key "holidays", "types"
   add_foreign_key "mail_addresses", "companies_people"
   add_foreign_key "postcards", "holidays"
