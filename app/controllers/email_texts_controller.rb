@@ -38,8 +38,9 @@ class EmailTextsController < AuthenticatedController
   end
 
   def destroy
-    destroy_common(@email_text)
-    redirect_to email_email_texts_path(@email_text.email_id)
+    if destroy_common(@email_text)
+      redirect_to email_email_texts_path(@email_text.email_id)
+    end
   end
 
   def search

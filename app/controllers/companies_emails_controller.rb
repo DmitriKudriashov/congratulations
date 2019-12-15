@@ -1,8 +1,8 @@
 class CompaniesEmailsController < ApplicationController
   before_action :set_companies_emails, only: %i[index]
-  before_action :find_companies_email, only: %i[show edit update destroy]
-  # before_action :find_company, only: %i[new] # create]
-  before_action :find_email, only: %i[new create]
+  before_action :find_companies_email, only: %i[show edit update]
+  before_action :find_company, only: %i[new update create] # create]
+  before_action :find_email, only: %i[new update create destroy]
 
   def index; end
 
@@ -24,7 +24,7 @@ class CompaniesEmailsController < ApplicationController
 
   def update
     if @companies_email.update(companies_email_params)
-      redirect_to redirect_after, notice: 'Company-Email  was successfully updated.'
+      redirect_after
     else
       render :edit
     end
@@ -33,21 +33,37 @@ class CompaniesEmailsController < ApplicationController
   def show; end
 
   def redirect_after
-    companies_emails_path
+    if @email.present?
+      redirect_to edit_email_path(@email.id), notice: 'Company-Email  was successfully updated.'
+    else
+      redirect_to companies_emails_path
+    end
   end
 
   def create
     @companies_email = @email.nil? ? CompaniesEmail.new(companies_email_params) : @email.companies_emails.new(companies_email_params)
     if @companies_email.save
-      redirect_to redirect_after, notice: 'Successully created!'
+      if @email.present?
+        redirect_to edit_email_path(@email.id), notice: 'Successully created!'
+      else
+        redirect_to companies_emails_path
+      end
     else
       render :new
     end
   end
 
   def destroy
-    destroy_common(@companies_email)
-    redirect_to redirect_after
+
+    if destroy_common(@companies_email)
+      if @email.present?
+        redirect_to edit_email_path(@email.id), notice: 'Company-Email  was successfully deleted !.'
+      else
+        redirect_to companies_emails_path
+      end
+    else
+      redirect_to companies_emails_path
+    end
   end
 
   def search
@@ -58,15 +74,19 @@ class CompaniesEmailsController < ApplicationController
   private
 
   def find_company
-    @company = Company.find(params[:company_id]) unless params[:company_id].nil?
+    if params[:id].present?
+      @company = find_companies_email.company
+    end
   end
 
   def find_email
-    @email = email.find(params[:email_id])
+    if  params[:id].present?
+      @email = find_companies_email.email
+    end
   end
 
   def set_companies_emails
-    @companies_emails = CompaniesEmail.order(:email_id).paginate(page: params[:page]) # .all
+    @companies_emails = CompaniesEmail.order(:email_id).paginate(page: params[:page])
   end
 
   def find_companies_email

@@ -1,0 +1,17 @@
+<% if @companies_emails.present? %>
+  <table class="table table-bordered">
+    <thead class="thead-light" align="center">
+      <tr>
+        <th> # </th>
+        <th> Email </th>
+        <th> Company </th>
+      </tr>
+    </thead>
+    <%= render @companies_emails  %>
+  </table>
+<% else %>
+  <p>
+    <%= 'Empty list' %>
+  </p>
+<% end %>
+

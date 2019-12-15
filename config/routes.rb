@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   end
 
   resources :email_cards, only: %i[index create edit]
-
+  resources :companies_emails, only: %i[index create edit]
   resources :mail_addresses
 
   resources :companies_people, only: %i[index new create]

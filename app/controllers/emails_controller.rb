@@ -4,7 +4,7 @@ class EmailsController < AuthenticatedController
   before_action :find_email, only: %i[show update destroy]
   before_action :set_email_cards, only: %i[show edit]
   before_action :set_email_texts, only: %i[show edit]
-  before_action :set_mail_address_emails, only: %[show edit]
+  before_action :set_companies_emails, only: %[show edit]
 
   def index
     year = Time.now.year
@@ -15,7 +15,10 @@ class EmailsController < AuthenticatedController
     @email = Email.new
   end
 
-  def edit; end
+  def edit
+    set_companies_emails
+    # binding.pry
+  end
 
   def update
     email_previous = Email.find(params[:id])
@@ -64,7 +67,6 @@ class EmailsController < AuthenticatedController
     date_from = Date.today
     date_to = date_from + 30
 
-    # dates_holidays = DatesHoliday.holidays_in_period(date_from, date_to)
     (date_from..date_to).each do |will_send_date|
       set_holiday(will_send_date)
     end
@@ -85,23 +87,12 @@ class EmailsController < AuthenticatedController
   end
 
   def destroy
-    destroy_related_texts_cards(@email)
-    destroy_common(@email)
-    redirect_to emails_path
-  end
-
-  def destroy_related_texts_cards(email)
-    email_texts = EmailText.where(email_id: email.id)
-    email_texts.each(&:destroy) if email_texts.present?
-
-    email_cards = EmailCard.where(email_id: email.id)
-    email_cards.each(&:destroy) if email_cards.present?
+    redirect_to emails_path if destroy_common(@email)
   end
 
   def destroy_unchecked
     Email.where(checkit: 0).each do |email|
       @email = email
-      destroy_related_texts_cards(email)
       email.destroy
     end
     redirect_to emails_path
@@ -248,18 +239,6 @@ class EmailsController < AuthenticatedController
      end
   end
 
-  def set_email_fields(email, opt = {})
-    email.name = opt[:name]
-    email.holiday_id = opt[:holiday_id]
-    email.address = opt[:address]
-    email.mail_address_id = opt[:mail_address_id]
-    email.checkit = opt[:checkit]
-    email.will_send = opt[:will_send]
-    email.message = opt[:message]
-    # email.person_id = opt[:person_id]
-    email.year = opt[:year]
-    email.subject = opt[:subject]
-  end
 
   def already_exists?(opt = {})
     email = Email.where(holiday_id: opt[:holiday_id], year: opt[:year])
@@ -276,7 +255,7 @@ class EmailsController < AuthenticatedController
 
   def create_new_email(opt = {})
     @email_new = Email.new
-    set_email_fields(@email_new, opt)
+    @email_new.set_email_fields(opt)
     unless already_exists?(opt)
       return @email_new if @email_new.save
     end
@@ -289,6 +268,18 @@ class EmailsController < AuthenticatedController
     end
   end
 
+  def add_postcard(email)
+    cards_no_using_id = free_postcard(email)
+    # binding.pry
+    return unless cards_no_using_id.present?
+    begin
+      new_link_email_card = EmailCard.create([{email_id: email.id, postcard_id: cards_no_using_id}])
+    rescue ActiveRecord::RecordNotUnique => e
+      flash[:alert] = "This postcard: #{Postcard.find(cards_no_using_id).nane} Already Attached  !"
+      return
+    end
+  end
+
   def free_postcard(email)
     postcards_for_holiday = Postcard.where(holiday_id: email.holiday_id)
     unless postcards_for_holiday.present?
@@ -297,14 +288,16 @@ class EmailsController < AuthenticatedController
       return
     end
     array_postcards_ids = free_card_ids_array(email)
+    # binding.pry
     array_postcards_ids.present? ? array_postcards_ids.sort[0] : nil
   end
 
   def free_card_ids_array(email)
-    holiday_cards = Postcard.where(holiday_id: email.holiday_id).select(:id)
+    holiday_postcards_all = Postcard.where(holiday_id: email.holiday_id).select(:id)
     # person_cards_used = Postcard.left_outer_joins(email_cards: :email).where(postcards: {holiday_id: email.holiday_id}, emails: {person_id: email.person_id}).select(:id).uniq
-    person_cards_used = Postcard.left_outer_joins(email_cards: :email).where(postcards: {holiday_id: email.holiday_id}).select(:id).uniq
-    make_array(holiday_cards) - make_array(person_cards_used)
+    holiday_cards_used = Postcard.joins(email_cards: :email).where(postcards: {holiday_id: email.holiday_id}).select(:id).uniq
+    # binding.pry
+    make_array(holiday_postcards_all) - make_array(holiday_cards_used)
   end
 
   def make_array(array_objects)
@@ -313,25 +306,10 @@ class EmailsController < AuthenticatedController
     ids
   end
 
-  def add_postcard(email)
-    cards_no_using_id = free_postcard(email)
-    return unless cards_no_using_id.present?
-
-    begin
-      new_link_email_card = EmailCard.create(
-        email_id: email.id,
-        postcard_id: cards_no_using_id
-      )
-    rescue ActiveRecord::RecordNotUnique => e
-      flash[:alert] = "This postcard: #{Postcard.find(cards_no_using_id).nane} Already Attached  !"
-      return
-    end
-  end
 
   def add_cardtext(holiday)
     texts = Cardtext.where(holiday_id: holiday.id).order(updated_at: :desc).first.text.to_s
     # return '' unless texts.present?
-
     # texts.order(updated_at: :desc).first.text
   end
 
@@ -349,7 +327,8 @@ class EmailsController < AuthenticatedController
   end
 
   def set_companies_emails
-    @companies_emails = CompaniesEmail.joins(:companies).where(email_id: params[:id])
+    # binding.pry
+    @companies_emails = find_email.companies_emails #CompaniesEmail.where(email_id: params[:id])
   end
 
   def set_email_texts

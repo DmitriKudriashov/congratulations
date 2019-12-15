@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class Email < ApplicationRecord
-  has_many :email_cards, dependent: :restrict_with_error
+  has_many :email_cards, dependent: :delete_all
   has_many :postcards, through: :email_cards
 
-  has_many :email_texts, dependent: :restrict_with_error
+  has_many :email_texts, dependent: :delete_all
   has_many :cardtexts, through: :email_texts
 
   has_many :company, through: :companies_emails
   belongs_to :holiday
+  has_many :companies_emails, dependent: :delete_all
+  #[:destroy, :delete_all, :nullify, :restrict_with_error, :restrict_with_exception],
 
   attr_reader :error_sent
 
@@ -26,7 +28,6 @@ class Email < ApplicationRecord
   #   dh = DatesHoliday.first
   #   dh.holiday.companies.first.people.first.dob_month
   # end
-
   def send_now(current_user)
     return if self.will_send > Date.today
     @error_sent = nil
@@ -40,5 +41,24 @@ class Email < ApplicationRecord
       self.address = new_mail[:to]
       save
     end
+  end
+
+  def set_email_fields(opt = {})
+    fill_new(opt)
+  end
+
+  private
+
+  def fill_new(opt = {})
+    self.name = opt[:name]
+    self.holiday_id = opt[:holiday_id]
+    self.address = opt[:address]
+    self.mail_address_id = opt[:mail_address_id]
+    self.checkit = opt[:checkit]
+    self.will_send = opt[:will_send]
+    self.message = opt[:message]
+    # self.person_id = opt[:person_id]
+    self.year = opt[:year]
+    self.subject = opt[:subject]
   end
 end

@@ -31,13 +31,15 @@ class EmailCardsController < AuthenticatedController
 
     if @email_card.save
       redirect_to edit_email_path(@email_card.email_id), notice: 'Successully created!'
+    else
       render :new
     end
   end
 
   def destroy
-    destroy_common(@email_card)
-    redirect_to edit_email_path(@email_card.email_id)
+    if destroy_common(@email_card)
+      redirect_to edit_email_path(@email_card.email_id)
+    end
   end
 
   def search

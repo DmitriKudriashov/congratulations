@@ -1,0 +1,16 @@
+<%= form_with model: @companies_email, local: true do |form| %>
+  <p>
+    <%= 'for This Email: ' %>
+    <a style="color: white; font-weight: bold; font-size: 16px; background-color: navy">
+      <%= form.collection_select :email_id, Email.all, :id, :name %>
+    </a>
+  </p>
+  <p>
+    <%= 'Post Card: ' %>
+    <%= form.collection_select :company_id, Company.all, :id, :name %>
+  </p>
+  <br>
+  <p>  <%= form.submit %> </p>
+<% end %>
+<br>
+

@@ -41,7 +41,7 @@ class CountriesHolidaysController < AuthenticatedController
   end
 
   def destroy
-    if destroy_common(@countries_holiday).nil?
+    if destroy_common(@countries_holiday)
       redirect_to countries_holidays_path,  notice: 'Country Holiday was Successully Deleted!'
     else
       redirect_to countries_holidays_path,  notice: "Error Delete! For Id: #{@countries_holiday.id}"
