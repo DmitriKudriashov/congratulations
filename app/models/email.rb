@@ -28,18 +28,22 @@ class Email < ApplicationRecord
   #   dh = DatesHoliday.first
   #   dh.holiday.companies.first.people.first.dob_month
   # end
+
   def send_now(current_user)
     return if self.will_send > Date.today
     @error_sent = nil
-    new_mail = GreetingsMailer.send_message(self, current_user)
-    begin
-      new_mail.deliver_now!
-    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
-      return @error_sent
-    else
-      self.sent_date = Time.now
-      self.address = new_mail[:to]
-      save
+    self.companies_emails.each do |companies_email|
+
+      new_mail = GreetingsMailer.send_message(self, companies_email, current_user)
+      begin
+        new_mail.deliver_now!
+      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+        return @error_sent
+      else
+        self.sent_date = Time.now
+        self.address = new_mail[:to]
+        save
+      end
     end
   end
 

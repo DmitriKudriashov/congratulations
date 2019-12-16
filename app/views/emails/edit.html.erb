@@ -14,7 +14,10 @@
 <!-- <table>
   <tbody>
     <tr>
- -->      <div>
+ -->
+      <div>
+        <%= render @email_card %>
+<!--
       <% if @email_cards.present? %>
         <table class="table">
           <thead class="thead-light" align="center">
@@ -49,10 +52,13 @@
           <%= 'Empty list' %>
         </p>
       <% end %>
+ -->
       </div>
+
       <div>
         Companies recipients
       </div>
+
       <div>
       <% if @companies_emails.present? %>
         <table class="table" id="addresses">
@@ -84,7 +90,9 @@
           </tbody>
         </table>
       <% else %>
-        <%= 'Empty recipients list' %>
+        <p>
+          <%= 'Empty recipients list' %>
+        </p>
       <% end %>
     </div>
   <!--   </tr>

@@ -22,7 +22,6 @@ class EmailsController < AuthenticatedController
 
   def update
     email_previous = Email.find(params[:id])
-    # unless already_exists?(holiday_id: email_params[:holiday_id].to_i, person_id: email_previous.person_id, year: email_params[:will_send].to_date.year, id:  email_previous.id)
     unless already_exists?(holiday_id: email_params[:holiday_id].to_i, year: email_params[:will_send].to_date.year, id:  email_previous.id)
       begin
         @email.update(email_params)

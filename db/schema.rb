@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_185334) do
+ActiveRecord::Schema.define(version: 2019_12_15_202759) do
 
   create_table "cardtexts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "filename"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 2019_12_11_185334) do
     t.index ["country_id"], name: "index_companies_on_country_id"
     t.index ["email"], name: "index_companies_on_email"
     t.index ["name"], name: "index_companies_on_name", unique: true
+  end
+
+  create_table "companies_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "email_id"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_companies_emails_on_company_id"
+    t.index ["email_id"], name: "index_companies_emails_on_email_id"
   end
 
   create_table "companies_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -106,7 +113,7 @@ ActiveRecord::Schema.define(version: 2019_12_11_185334) do
 
   create_table "emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", default: ""
-    t.string "address", default: "", null: false
+    t.string "address", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "mail_address_id"
@@ -140,13 +147,6 @@ ActiveRecord::Schema.define(version: 2019_12_11_185334) do
     t.datetime "updated_at", null: false
     t.index ["companies_person_id"], name: "index_mail_addresses_on_companies_person_id"
     t.index ["email"], name: "index_mail_addresses_on_email"
-  end
-
-  create_table "companies_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "email_id"
-    t.bigint "company_id"
-    t.index ["email_id"], name: "index_companies_emails_on_email_id"
-    t.index ["company_id"], name: "index_companies_emails_on_company_id"
   end
 
   create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -218,7 +218,6 @@ ActiveRecord::Schema.define(version: 2019_12_11_185334) do
   add_foreign_key "email_texts", "cardtexts"
   add_foreign_key "email_texts", "emails"
   add_foreign_key "emails", "holidays"
-  add_foreign_key "emails", "companies"
   add_foreign_key "holidays", "types"
   add_foreign_key "mail_addresses", "companies_people"
   add_foreign_key "postcards", "holidays"
