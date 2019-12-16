@@ -6,6 +6,8 @@ class EmailsController < AuthenticatedController
   before_action :set_email_texts, only: %i[show edit]
   before_action :set_companies_emails, only: %[show edit]
 
+  attr_reader :people_birthdays
+
   def index
     year = Time.now.year
     @emails = Email.all.order(will_send: :desc).paginate(page: params[:page]) # where(year: year)
@@ -64,8 +66,8 @@ class EmailsController < AuthenticatedController
 
   def create_emails
     date_from = Date.today
-    date_to = date_from + 30
-
+    date_to = date_from + 2
+    # binding.pry
     (date_from..date_to).each do |will_send_date|
       set_holiday(will_send_date)
     end
@@ -106,27 +108,31 @@ class EmailsController < AuthenticatedController
 
   def set_holiday(date)
 
-    # 1) Holidays w/o calc option Holiday
-    holidays_in_date = DatesHoliday.holidays_to_date(date.day, date.month, 0).joins(:holiday)
-    process_by_dates(holidays_in_date, date, 0) if holidays_in_date.present?
+    # # 1) Holidays w/o calc option Holiday
+    # holidays_in_date = DatesHoliday.holidays_to_date(date.day, date.month, 0).joins(:holiday)
+    # process_by_dates(holidays_in_date, date, 0) if holidays_in_date.present?
 
     # # 2) Holidays with calc option Holiday
     # holidays_in_date = DatesHoliday.holidays_to_date(date.day, date.month, date.year).joins(:holiday)
     # process_by_dates(holidays_in_date, date, date.year) if holidays_in_date.present?
 
-    # # Birthday's
-    # list_companies_id = []
-    # people_birthdays = Person.birthdays_to_date(date.day, date.month)
-    # people_birthdays.each do |person|
-    #   list_companies_id = loop_by_mail_addresses(person, list_companies_id)
-    # end
+    # Birthday's
 
-    # return unless list_companies_id.present?
+    list_companies_id = []
+    people_birthdays = Person.birthdays_to_date(date.day, date.month)
+    # binding.pry
+    people_birthdays.each do |person|
+      CompaniesPerson.where(person_id: person.id).each do |companies_person|
+        list_companies_id << companies_person.id
+      end
+    end
+    # binding.pry
 
-    # holiday = Holiday.where(name: 'Birthday').first
-    # holiday_date = DatesHoliday.create_date_holiday(date, holiday)
+    return unless list_companies_id.present?
 
-    # create_emails_for_date(holiday_date, date, list_companies_id)
+    holiday = Holiday.where(name: 'Birthday').first
+    holiday_date = DatesHoliday.create_date_holiday(date, holiday)
+    create_emails_for_date(holiday_date, date, list_companies_id)
   end
 
 
@@ -183,59 +189,84 @@ class EmailsController < AuthenticatedController
 
     list_companies_id = []
     people_holiday.each do |person|
-      list_companies_id = loop_by_mail_addresses(person, list_companies_id)
+      list_companies_id = loop_by_companies_people(person, list_companies_id)
     end
 
      list_companies_id
   end
 
-  def loop_by_mail_addresses(person, list_companies_id)
+  def loop_by_companies_people(person, list_companies_ids)
     person.companies_people.each do |companies_person|
-      mail_address = MailAddress.where(companies_person_id: companies_person.id).first
-      mail_address = MailAddress.create([{ email: person.email, companies_person_id: companies_person.id }]).first unless mail_address.present?
-      list_companies_id << companies_person.company_id
+      # mail_address = MailAddress.where(companies_person_id: companies_person.id).first
+      # mail_address = MailAddress.create([{ email: person.email, companies_person_id: companies_person.id }]).first unless mail_address.present?
+      list_companies_ids << companies_person.company_id
     end
-    list_companies_id
+    list_companies_ids
   end
 
   def create_emails_for_date(holiday_date, will_send_date, list_companies_id)
     return if holiday_date.nil?
-    for_holiday = Holiday.find(holiday_date.holiday_id)
-
-    subject = for_holiday.name.upcase == 'BIRTHDAY' ? 'HAPPY BIRTHDAY!' : "#{for_holiday.name.upcase} GREETINGS!"
-    address = ''
     return unless list_companies_id.present?
-    i = 0
-    person_name = 'Dear colleagues'
-    person_id = 0
-    # list_companies_id.each do |data_hash|
-    #   i += 1
-    #   if i == 1
-    #     person = Person.find(data_hash[:person_id])
-    #     person_name  =  person.name
-    #     person_id = person.id
-    #   end
-    #   address += "#{MailAddress.find(data_hash[:mail_address_id]).email}, "
-    # end
-    # address = address[0..(address.size - 3)] if address[-2] == ','
-    # binding.pry
 
-    @email_new = create_new_email(
-      name: person_name,
-      subject: subject,
-      holiday_id: for_holiday.id,
-      address: '' ,
-      mail_address_id: 0,
-      # person_id: 0,
-      checkit: 0,
-      will_send: will_send_date,
-      year: will_send_date.year,
-      message: add_cardtext(for_holiday).to_s
-    )
-    if @email_new.present?
-      add_postcard(@email_new)
-      create_list_mail_recipient(@email_new, list_companies_id)
+    for_holiday = Holiday.find(holiday_date.holiday_id)
+      address = ''
+      person_id = 0
+
+    if for_holiday.name.upcase == 'BIRTHDAY'
+      subject = 'HAPPY BIRTHDAY!'
+      # i = 0
+      # list_companies_id.each do |data_hash|
+      #   i += 1
+      #   if i == 1
+      #     person = Person.find(data_hash[:person_id])
+      #     email_name  =  person.name
+      #     person_id = person.id
+      #   end
+      #   address += "#{MailAddress.find(data_hash[:mail_address_id]).email}, "
+      # end
+      # address = address[0..(address.size - 3)] if address[-2] == ','
+
+      list_companies_id.each do |companies_person_id|
+        company_person = CompaniesPerson.find(companies_person_id)
+        email_name = "GREETINGS #{Person.find(company_person.person_id).name} (#{Company.find(company_person.company_id).name} )"
+        @email_new = create_new_email(
+          name: email_name,
+          subject: subject,
+          holiday_id: for_holiday.id,
+          address: '' ,
+          mail_address_id: 0,
+          checkit: 0,
+          will_send: will_send_date,
+          year: will_send_date.year,
+          message: add_cardtext(for_holiday).to_s
+          )
+        # binding.pry
+         # if @email_new.present?
+         #    add_postcard(@email_new)
+         #    create_list_mail_recipient(@email_new, list_companies_id)
+         # end
+      end
+    else
+      subject =  "#{for_holiday.name.upcase} GREETINGS!"
+      email_name = 'Dear colleagues'
+
+      @email_new = create_new_email(
+        name: email_name,
+        subject: subject,
+        holiday_id: for_holiday.id,
+        address: '' ,
+        mail_address_id: 0,
+        checkit: 0,
+        will_send: will_send_date,
+        year: will_send_date.year,
+        message: add_cardtext(for_holiday).to_s
+      )
+     if @email_new.present?
+        add_postcard(@email_new)
+        create_list_mail_recipient(@email_new, list_companies_id)
      end
+
+    end
   end
 
 
