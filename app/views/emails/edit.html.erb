@@ -15,86 +15,15 @@
   <tbody>
     <tr>
  -->
-      <div>
-        <%= render @email_card %>
-<!--
-      <% if @email_cards.present? %>
-        <table class="table">
-          <thead class="thead-light" align="center">
-            <tr>
-              <th> Post Card </th>
-              <th> Holiday </th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @email_cards.each do |email_card| %>
-            <tr>
-              <td>
-                <%= image_tag email_card.postcard.image.url(:small) %>
-                <%= email_card.postcard.filename %>
-              </td>
-              <td>
-                <%= email_card.postcard.holiday.name %>
-              </td>
-              <td>
-                <%= link_to 'edit', edit_email_card_path(email_card.id, {holiday_id: @email.holiday_id, email_id: @email.id}), id: "edit-email-card" %>
-              </td>
-              <td>
-                <%= link_to 'delete', email_card_path(email_card),
-                            method: :delete, data: { confirm: 'Are you sure' } %>
-              </td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <p>
-          <%= 'Empty list' %>
-        </p>
-      <% end %>
- -->
-      </div>
-
-      <div>
-        Companies recipients
-      </div>
-
-      <div>
-      <% if @companies_emails.present? %>
-        <table class="table" id="addresses">
-          <thead class="thead-light" align="center">
-            <tr>
-              <th>Company</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-          <% @companies_emails.each do |companies_email| %>
-            <tr>
-              <td>
-                <%=companies_email.company.name %>
-              </td>
-              <td>
-                <%= companies_email.company.email %>
-              </td>
-              <td>
-                <%= link_to 'edit', edit_companies_email_path(companies_email.id) %>
-              </td>
-              <td>
-                <%= link_to 'delete', companies_email_path(companies_email.id),
-                            method: :delete, data: { confirm: 'Are you sure' } %>
-              </td>
-
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <p>
-          <%= 'Empty recipients list' %>
-        </p>
-      <% end %>
-    </div>
+<div>
+  <%= render 'email_card' %>
+</div>
+<div>
+  Companies recipients
+</div>
+<div>
+  <%= render 'companies_email' %>
+</div>
   <!--   </tr>
   </tbody>
 
