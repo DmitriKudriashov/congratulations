@@ -39,7 +39,7 @@
   <td align="center">
     <%= email.year %>
   </td>
-    <% if  email.checkit > 0 %>
+    <% if  email.checkit.to_i > 0 %>
   <td class="s_e_d">
       <% if email.sent_date.to_i.zero? %>
         <%= link_to 'SEND', "/emails/send/#{email.id}" %>

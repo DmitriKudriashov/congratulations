@@ -8,7 +8,8 @@ class Email < ApplicationRecord
   has_many :cardtexts, through: :email_texts
 
   has_many :company, through: :companies_emails
-  belongs_to :holiday
+  # 181219 belongs_to :holiday
+  belongs_to :people
   has_many :companies_emails, dependent: :delete_all
   #[:destroy, :delete_all, :nullify, :restrict_with_error, :restrict_with_exception],
 
@@ -18,16 +19,6 @@ class Email < ApplicationRecord
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
 
   scope :emails_for_send, ->(date) { where(will_send: date, checkit: 1, sent_date: nil) }
-
-  # def greetings_text
-  #   message
-  #   # cardtexts.first.present? ? cardtexts.first.text : 'Text not avalable !'
-  # end
-
-  # def self.new_emails_to_date(_date)
-  #   dh = DatesHoliday.first
-  #   dh.holiday.companies.first.people.first.dob_month
-  # end
 
   def send_now(current_user)
     return if self.will_send > Date.today
@@ -61,8 +52,9 @@ class Email < ApplicationRecord
     self.checkit = opt[:checkit]
     self.will_send = opt[:will_send]
     self.message = opt[:message]
-    # self.person_id = opt[:person_id]
+    self.person_id = opt[:person_id]
     self.year = opt[:year]
     self.subject = opt[:subject]
+    self.dates_holiday_id = opt[:dates_holiday_id]
   end
 end
