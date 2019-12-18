@@ -12,7 +12,7 @@ class Holiday < ApplicationRecord
 
   has_many :cardtexts, dependent: :restrict_with_error
   has_many :postcards, dependent: :restrict_with_error
-  # 181219 has_many :emails, validate: false #dependent: :restrict_with_error
+  has_many :emails #, validate: false #dependent: :restrict_with_error
 
   self.per_page = all.count / 5
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE

@@ -8,8 +8,8 @@ class Email < ApplicationRecord
   has_many :cardtexts, through: :email_texts
 
   has_many :company, through: :companies_emails
-  # 181219 belongs_to :holiday
-  belongs_to :people
+  belongs_to :holiday
+  # belongs_to :people
   has_many :companies_emails, dependent: :delete_all
   #[:destroy, :delete_all, :nullify, :restrict_with_error, :restrict_with_exception],
 
