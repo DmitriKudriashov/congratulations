@@ -69,7 +69,6 @@ class EmailsController < AuthenticatedController
     @ind_date  = 0
     (date_from..date_to).each do |will_send_date|
       @ind_date += 1
-      # binding.pry
       set_holiday(will_send_date)
     end
     redirect_to emails_path
@@ -89,7 +88,10 @@ class EmailsController < AuthenticatedController
   end
 
   def destroy
-    redirect_to emails_path if destroy_common(@email)
+    # redirect_to emails_path if destroy_common(@email)
+    if @email.destroy
+      redirect_to emails_path
+    end
   end
 
   def destroy_unchecked
@@ -145,7 +147,6 @@ class EmailsController < AuthenticatedController
         # create_emails_for_date(holiday_date, date, list_companies_id)
       else
         list_companies_id = create_list_emails(date, year)
-        binding.pry
         create_emails_for_date(holiday_date, date, list_companies_id)
       end
     end
@@ -210,9 +211,9 @@ class EmailsController < AuthenticatedController
     return if holiday_date.nil?
     return unless list_companies_id.present?
 
-      for_holiday = Holiday.find(holiday_date.holiday_id)
-      address = ''
-      person_id = 0
+    for_holiday = Holiday.find(holiday_date.holiday_id)
+    address = ''
+    person_id = 0
 
     if for_holiday.name.upcase == 'BIRTHDAY'
       subject = 'HAPPY BIRTHDAY!'
@@ -220,7 +221,7 @@ class EmailsController < AuthenticatedController
         company_person = CompaniesPerson.find(companies_person_id)
         email_name = "GREETINGS #{Person.find(company_person.person_id).name} (#{Company.find(company_person.company_id).name} )"
         address = Company.find(company_person.company_id).email
-        binding.pry
+        # binding.pry
         @email_new = create_new_email(
           name: email_name,
           subject: subject,
@@ -257,22 +258,20 @@ class EmailsController < AuthenticatedController
         message: add_cardtext(for_holiday).to_s,
         dates_holiday_id: holiday_date.id
      )
-     if @email_new.present?
+
+     if email_new.id.present?
         add_postcard(@email_new)
         create_list_mail_recipient(@email_new, list_companies_id)
      end
-
     end
   end
 
 
   def already_exists?(opt = {})
-
-    email = Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id])
-    # binding.pry
-    if email.present?
+    email_another = Email.where(holiday_id: opt[:holiday_id], year: opt[:year], person_id: opt[:person_id])
+    if email_another.present?
       if opt[:id].present?
-        return email.first.id.to_i == opt[:id].to_i ? false : true
+        return email_another.first.id.to_i == opt[:id].to_i ? false : true
       else
         return true
       end
@@ -282,15 +281,12 @@ class EmailsController < AuthenticatedController
   end
 
   def create_new_email(opt = {})
-
     @email_new = Email.new
     @email_new.set_email_fields(opt)
-    # unless already_exists?(opt)
-    # if @email_new.save.inspect
-      binding.pry
+    unless already_exists?(opt)
       @email_new.save
-    # end
-
+    end
+    @email_new
   end
 
   def create_list_mail_recipient(email, list_companies_id)
@@ -300,6 +296,7 @@ class EmailsController < AuthenticatedController
   end
 
   def add_postcard(email)
+
     cards_no_using_id = free_postcard(email)
     return unless cards_no_using_id.present?
     begin

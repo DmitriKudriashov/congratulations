@@ -9,7 +9,7 @@ class Email < ApplicationRecord
 
   has_many :company, through: :companies_emails
   belongs_to :holiday
-  # belongs_to :people
+  # belongs_to :person
   has_many :companies_emails, dependent: :delete_all
   #[:destroy, :delete_all, :nullify, :restrict_with_error, :restrict_with_exception],
 
@@ -36,6 +36,32 @@ class Email < ApplicationRecord
         save
       end
     end
+  end
+
+  def self.check(opt = {})
+    e = self.new
+
+    e.new_for_check(opt)
+  end
+  def self.opt
+    opt = {}
+    opt[:name]  = ''
+    opt[:holiday_id] = 8
+    opt[:address] = 'asdsa@www.com'
+    opt[:mail_address_id] = 0
+    opt[:checkit] = 0
+    opt[:will_send] = Date.today
+    opt[:message] = 'MESSAGE'
+    opt[:person_id] = 1
+    opt[:year] = 2019
+    opt[:subject] = 'subject qqqqq'
+    opt[:dates_holiday_id] = 0
+    opt
+  end
+  def new_for_check(opt = {})
+    set_email_fields(opt)
+    self.save
+    self
   end
 
   def set_email_fields(opt = {})
