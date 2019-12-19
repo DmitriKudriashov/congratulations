@@ -1,24 +1,24 @@
 <tr>
-<!--   <td >
-    <%#= email.id %>
-  </td>
- -->  <td >
-    <%= email.person.name %>
+  <td >
+    <%= email.id %>
   </td>
   <td >
     <%= email.name %>
   </td>
-  <td >
+  <td>
     <%= email.subject %>
-    <%#= text_area_tag(:text, email.subject, size: :auto)  %>
   </td>
-  <td >
-    <% if email.sent_date.present?  %>
-    <%= email.address %>
-    <% else %>
-    <%= text_area_tag(:text, "#{email.address}; \n #{email.mail_address.email}", size: :auto)  %>
-    <% end %>
+  <td>
+   <%= text_area_tag(:text, list_companies(email), size: :auto) %>
   </td>
+<!--   <td>
+    <%# if email.sent_date.present?  %>
+    <%#= email.address %>
+    <%# else %>
+    <%#= text_area_tag(:text, "#{email.address}", size: :auto)  %>
+    <%# end %>
+  </td>
+ -->
   <td>
     <%= email.holiday.name if email.holiday_id.present? %>
   </td>
@@ -39,8 +39,7 @@
   <td align="center">
     <%= email.year %>
   </td>
-
-    <% if  email.checkit > 0 %>
+    <% if  email.checkit.to_i > 0 %>
   <td class="s_e_d">
       <% if email.sent_date.to_i.zero? %>
         <%= link_to 'SEND', "/emails/send/#{email.id}" %>

@@ -27,18 +27,19 @@ class EmailCardsController < AuthenticatedController
   def show; end
 
   def create
-    @email_card = EmailCard.new(email_card_params) # @card.email_cards.new(email_card_params)
+    @email_card = EmailCard.new(email_card_params)
 
     if @email_card.save
-      redirect_to edit_email_path(@email_card.email_id), notice: 'Successully created!' # email_email_cards_path(@email)
+      redirect_to edit_email_path(@email_card.email_id), notice: 'Successully created!'
     else
       render :new
     end
   end
 
   def destroy
-    destroy_common(@email_card)
-    redirect_to edit_email_path(@email_card.email_id)
+    if destroy_common(@email_card)
+      redirect_to edit_email_path(@email_card.email_id)
+    end
   end
 
   def search

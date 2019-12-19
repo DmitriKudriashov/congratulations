@@ -1,0 +1,34 @@
+<% if @companies_emails.present? %>
+  <table class="table" id="addresses">
+    <thead class="thead-light" align="center">
+      <tr>
+        <th>Company</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @companies_emails.each do |companies_email| %>
+      <tr>
+        <td>
+          <%=companies_email.company.name %>
+        </td>
+        <td>
+          <%= companies_email.company.email %>
+        </td>
+        <td>
+          <%= link_to 'edit', edit_companies_email_path(companies_email.id) %>
+        </td>
+        <td>
+          <%= link_to 'delete', companies_email_path(companies_email.id),
+                      method: :delete, data: { confirm: 'Are you sure' } %>
+        </td>
+
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    <%= 'Empty recipients list' %>
+  </p>
+<% end %>

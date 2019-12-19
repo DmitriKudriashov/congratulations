@@ -46,9 +46,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def destroy
-    # redirect_after('Date was successfully Destroy!')
     if @dates_holiday.destroy
-      # binding.pry
       redirect_to dates_holidays_path, notice: 'Date was successfully Destroy!'
     end
   end

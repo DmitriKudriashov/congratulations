@@ -1,0 +1,19 @@
+<tr>
+  <td>
+    <%= companies_email.id %>
+  </td>
+  <td>
+    <%= companies_email.email.name %>
+  </td>
+  <td>
+    <%= companies_email.company.name %>
+  </td>
+
+  <td>
+    <%= link_to 'edit', edit_companies_email_path(companies_email.id) %>
+  </td>
+  <td>
+    <%= link_to 'delete', companies_email_path(companies_email),
+                method: :delete, data: { confirm: 'Are you sure' } %>
+  </td>
+</tr>

@@ -11,8 +11,8 @@ class CompaniesHolidaysController < AuthenticatedController
   def new
     if @holiday.nil?
       @companies_holiday = CompaniesHoliday.new
-      @companies_holiday.holiday_id = 1
-      @companies_holiday.company_id = 1
+      @companies_holiday.holiday_id = Holiday.first
+      @companies_holiday.company_id = Company.first
     else
       @companies_holiday = @holiday.companies_holidays.new
     end
@@ -49,7 +49,6 @@ class CompaniesHolidaysController < AuthenticatedController
 
   def destroy
     destroy_common(@companies_holiday)
-    # byebug
     redirect_to redirect_after
   end
 

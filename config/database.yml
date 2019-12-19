@@ -12,7 +12,7 @@ default: &default
 
 development:
   <<: *default
-  database: greetings_development
+  database: greetings_181219
 
 test:
   <<: *default

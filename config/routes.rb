@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # post '/dates_holidays', to: 'dates_holidays#create'
   resources :dates_holidays, only: %i[index new create]
 
-  resources :people # , only: [:index, :new, :create]
+  resources :people
   resources :countries
 
   get '/emails/send/:id(.:format)', to: 'emails#send_e'
@@ -36,12 +36,13 @@ Rails.application.routes.draw do
     end
 
     resources :email_texts, shallow: true do
-      resources :cardtexts, shallow: true # ,  except: [:index, :new, :create]
+      resources :cardtexts, shallow: true
     end
+    resources :companies_emails, shallow: true, except:  %i[index edit]
   end
 
   resources :email_cards, only: %i[index create edit]
-
+  resources :companies_emails, only: %i[index create edit]
   resources :mail_addresses
 
   resources :companies_people, only: %i[index new create]
@@ -52,13 +53,8 @@ Rails.application.routes.draw do
 
   resources :types
   resources :holidays do
-    resources :dates_holidays, shallow: true # , except: :index
+    resources :dates_holidays, shallow: true
     resources :companies_holidays, shallow: true
-    # do #, except: :index
-    #  member do
-    #    # post :create
-    #  end
-    # end
     resources :countries_holidays, shallow: true
   end
 end

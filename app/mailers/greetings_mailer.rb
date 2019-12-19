@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 class GreetingsMailer < ApplicationMailer
-  attr_reader :address
+  attr_reader :address, :email, :user
 
-  def send_message(email, user)
-    @name = email.person.name
-    @address = Holiday.find(email.holiday_id).name.upcase == 'BIRTHDAY' ? email.address : company_mail_address(email)
-    if address.nil?
-      flash[:alert] = "Not found email for: #{email.person.name}!!! "
-      return
+  def send_message(email, companies_email,  user)
+    @email = email
+    @user = user
+    @address = companies_email.company.email
+    @email = companies_email.email
+    if address.present?
+      send_email_to_recipient
     end
+  end
 
+  def send_email_to_recipient
     @greetings_text = email.message
     @from = %("STAFF CENTRE" < #{user.email} >)
     @files = []
@@ -25,26 +28,28 @@ class GreetingsMailer < ApplicationMailer
       }
       @files << postcard.filename
     end
+
     new_address = address_checked
     if new_address == @address
       mail from: @from, to: new_address, subject: email.subject
     else
       mail from: @from, to: address, bcc: new_address, subject: email.subject
     end
+
   end
 
   def personal_address(email)
     email.person.email.present? ? email.person.email : nil
   end
 
-  def company_mail_address(email)
-    email.mail_address_id.to_i.zero? ? personal_address(email) : email.mail_address.email
-  end
 
   private
 
+  def new_addresses_list
+
+  end
+
   def address_checked
-    # return nil if @address.index('@').to_i.eql?(0)
     position = @address.index('@staff-centre.com').to_i
     position.eql?(0) ? @address : "#{@address[0..position]}staff-centre-com.pronov.net"
   end

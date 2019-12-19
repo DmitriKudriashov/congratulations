@@ -1,0 +1,34 @@
+      <% if @email_cards.present? %>
+        <table class="table">
+          <thead class="thead-light" align="center">
+            <tr>
+              <th> Post Card </th>
+              <th> Holiday </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @email_cards.each do |email_card| %>
+            <tr>
+              <td>
+                <%= image_tag email_card.postcard.image.url(:small) %>
+                <%= email_card.postcard.filename %>
+              </td>
+              <td>
+                <%= email_card.postcard.holiday.name %>
+              </td>
+              <td>
+                <%= link_to 'edit', edit_email_card_path(email_card.id, {holiday_id: @email.holiday_id, email_id: @email.id}), id: "edit-email-card" %>
+              </td>
+              <td>
+                <%= link_to 'delete', email_card_path(email_card),
+                            method: :delete, data: { confirm: 'Are you sure' } %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>
+          <%= 'Empty list' %>
+        </p>
+      <% end %>

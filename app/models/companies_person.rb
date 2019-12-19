@@ -3,7 +3,7 @@
 class CompaniesPerson < ApplicationRecord
   belongs_to :company
   belongs_to :person
-  has_many :mail_addresses, dependent: :restrict_with_error
+  has_many :mail_addresses , dependent: :delete_all
 
   self.per_page = all.count / 5
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE

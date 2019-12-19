@@ -2,7 +2,7 @@
 
 class DatesHoliday < ApplicationRecord
   belongs_to :holiday
-
+  # has_many :emails, validate: false
   validates :date, presence: true
 
   self.per_page = all.count / 5

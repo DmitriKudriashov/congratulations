@@ -10,7 +10,7 @@ class Person < ApplicationRecord
 
   has_many :companies_people, dependent: :restrict_with_error
   has_many :companies, through: :companies_people
-  has_many :emails, dependent: :restrict_with_error
+  has_many :emails #, ->{ where "emails.person_id > 0" } # 181219     dependent: :restrict_with_error
 
   scope :selectmonth, ->(m) { where('month(birthday) = ?', m) }
   scope :birthday_men, ->(date) { where('birthday = ?', date) }

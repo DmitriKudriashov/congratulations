@@ -1,0 +1,8 @@
+<h1> New Link: Company - Email </h1>
+  <%= render 'form' %>
+<br>
+<p>
+  <%= link_to "Back to Email for :  #{Email.where(id: params[:email_id]).first.name}" , edit_email_path(params[:email_id]) %>
+  <br>
+  <%= link_to 'Back to All Emails - PostCards', companies_emails_path %>
+</p>

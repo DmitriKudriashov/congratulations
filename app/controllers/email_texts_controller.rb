@@ -10,8 +10,6 @@ class EmailTextsController < AuthenticatedController
 
   def new
     @email_text =  @email.nil? ? EmailText.new : @email.email_texts.new
-    # @email_text.cardtext_id = 1
-    # @email_text.email_id = 1
   end
 
   def new_email_text
@@ -40,8 +38,9 @@ class EmailTextsController < AuthenticatedController
   end
 
   def destroy
-    destroy_common(@email_text)
-    redirect_to email_email_texts_path(@email_text.email_id)
+    if destroy_common(@email_text)
+      redirect_to email_email_texts_path(@email_text.email_id)
+    end
   end
 
   def search

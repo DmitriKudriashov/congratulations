@@ -10,8 +10,8 @@ class CountriesHolidaysController < AuthenticatedController
 
   def new
     @countries_holiday = @holiday.nil? ? CountriesHoliday.new : @holiday.countries_holidays.new
-    @countries_holiday.holiday_id = 1
-    @countries_holiday.country_id = 1
+    @countries_holiday.holiday_id = Holiday.first
+    @countries_holiday.country_id = Country.first
   end
 
   def new_country_holiday
@@ -22,7 +22,7 @@ class CountriesHolidaysController < AuthenticatedController
 
   def update
     if @countries_holiday.update(countries_holiday_params)
-      redirect_to holiday_path(@countries_holiday.holiday), notice: 'CountriesHoliday was successfully updated.'
+      redirect_to countries_holidays_path,  notice: 'Country Holiday was successfully updated!'
     else
       render :edit
     end
@@ -33,15 +33,19 @@ class CountriesHolidaysController < AuthenticatedController
   def create
     @countries_holiday = CountriesHoliday.new(countries_holiday_params)
     if @countries_holiday.save
-      redirect_to holiday_countries_holidays_path(@countries_holiday.holiday_id), notice: 'Successully created!'
+      redirect_to countries_holidays_path,  notice: 'Country Holiday was Successully created!'
+        # redirect_to holiday_countries_holidays_path(@countries_holiday.holiday_id), notice: 'Successully created!'
     else
       render :new
     end
   end
 
   def destroy
-    destroy_common(@countries_holiday)
-    redirect_to holiday_path(@countries_holiday.holiday_id)
+    if destroy_common(@countries_holiday)
+      redirect_to countries_holidays_path,  notice: 'Country Holiday was Successully Deleted!'
+    else
+      redirect_to countries_holidays_path,  notice: "Error Delete! For Id: #{@countries_holiday.id}"
+    end
   end
 
   def search
