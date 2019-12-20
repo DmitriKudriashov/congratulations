@@ -13,7 +13,7 @@ class Email < ApplicationRecord
   has_many :companies_emails, dependent: :delete_all
   #[:destroy, :delete_all, :nullify, :restrict_with_error, :restrict_with_exception],
 
-  attr_reader :error_sent
+  attr_reader :error_sent, :count_successfully, :count_total
 
   self.per_page = all.count / 5
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
@@ -21,26 +21,45 @@ class Email < ApplicationRecord
   scope :emails_for_send, ->(date) { where(will_send: date, checkit: 1, sent_date: nil) }
 
   def send_now(current_user)
+    @count_successfully = 0
+    @count_total = 0
     return if self.will_send > Date.today
     @error_sent = nil
-    self.companies_emails.each do |companies_email|
 
-      new_mail = GreetingsMailer.send_message(self, companies_email, current_user)
-      begin
-        new_mail.deliver_now!
-      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
-        return @error_sent
-      else
-        self.sent_date = Time.now
-        self.address = new_mail[:to]
-        save
+    self.companies_emails.each do |companies_email|
+      if companies_email.company.email.present?
+        @count_total += 1
+        new_mail = new_email_send(self, companies_email, current_user)
+        if new_mail.present?
+          @count_successfully += 1
+        end
       end
+    end
+    if @count_total == @count_successfully
+      self.sent_date = Time.now
+      # self.address = new_mail[:to].present? ? new_mail[:to] : 'Without addres'
+      self.address = 'Without address '
+      self.save
+      true
+    else
+      false
+    end
+  end
+
+  def new_email_send(email, companies_email, current_user)
+    new_mail = GreetingsMailer.send_message(email, companies_email, current_user)
+    begin
+      new_mail.deliver_now!
+    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
+      # binding.pry
+      return nil
+    else
+      return new_mail
     end
   end
 
   def self.check(opt = {})
     e = self.new
-
     e.new_for_check(opt)
   end
   def self.opt

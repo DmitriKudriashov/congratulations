@@ -7,8 +7,8 @@ class GreetingsMailer < ApplicationMailer
     @email = email
     @user = user
     @address = companies_email.company.email
-    @email = companies_email.email
-    if address.present?
+    # @email = companies_email.email
+    if @address.present?
       send_email_to_recipient
     end
   end
