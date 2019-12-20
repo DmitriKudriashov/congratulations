@@ -22,12 +22,13 @@ class Email < ApplicationRecord
 
   def send_now(current_user)
     @count_successfully = 0
-    @count_total = elf.companies_emails.count
+    @count_total = 0
     return if self.will_send > Date.today
     @error_sent = nil
 
     self.companies_emails.each do |companies_email|
       if companies_email.company.email.present?
+        @count_total += 1
         new_mail = new_email_send(self, companies_email, current_user)
         if new_mail.present?
           @count_successfully += 1
@@ -38,7 +39,10 @@ class Email < ApplicationRecord
       self.sent_date = Time.now
       # self.address = new_mail[:to].present? ? new_mail[:to] : 'Without addres'
       self.address = 'Without address '
-      save if self.address.present?
+      self.save
+      true
+    else
+      false
     end
   end
 
@@ -46,8 +50,9 @@ class Email < ApplicationRecord
     new_mail = GreetingsMailer.send_message(email, companies_email, current_user)
     begin
       new_mail.deliver_now!
-    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
-      return nil #@error_sent
+    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
+      # binding.pry
+      return nil
     else
       return new_mail
     end

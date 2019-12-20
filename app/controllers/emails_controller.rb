@@ -50,13 +50,7 @@ class EmailsController < AuthenticatedController
       flash[:alert] = " Will be send #{@email.will_send} ! "
     else
       retvalue = @email.send_now(current_user)
-      if retvalue.nil?
-        flash[:alert] = "Don't sended message to: #{@email.address}! "
-      elsif @email.error_sent.present?
-        flash[:alert] = " ERROR SEND EMAIL ! #{@email.error_sent.message} "
-      else
-        flash[:notice] = ' This is Email Sent SUCCESSFULY ! '
-      end
+      flash[:notice] =  retvalue ? ' This is Email Sent SUCCESSFULY ! ' : " ERROR SEND EMAIL ! " #{@email.error_sent.message} "
     end
     redirect_to emails_path
   end
