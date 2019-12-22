@@ -1,11 +1,16 @@
-<h1>
-Hi, <%= @name %><br>
-</h1>
-<h2><%= @greetings_text %></h2>
-<% @files.each do |file| %>
-<%= image_tag attachments[file].url %>
-<br>
+<% if @name.present? %>
+  <h1> <%= @name %>
+    <br>
+  </h1>
 <% end %>
+<% if @greetings_text.present? %>
+    <h2><%= @greetings_text %></h2>
+<% end %>
+<% @files.each do |file| %>
+  <%= image_tag attachments[file].url %>
+  <br>
+<% end %>
+
 <div style="font-family: 'Arial'; font-size: 11">
 Best Regards,
 </div>

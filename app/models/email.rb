@@ -50,8 +50,10 @@ class Email < ApplicationRecord
     new_mail = GreetingsMailer.send_message(email, companies_email, current_user)
     begin
       new_mail.deliver_now!
-    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => @error_sent
-      # binding.pry
+      # HTTPError, HTTPFatalError, HTTPRetriableError, HTTPServerException
+      # HTTPGenericRequest, HTTPResponse
+    rescue Net::SMTPAuthenticationError,  Net::SMTPFatalError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPUnknownError, Net::SMTPUnsupportedCommand => @error_sent
+      binding.pry
       return nil
     else
       return new_mail

@@ -15,7 +15,9 @@ class GreetingsMailer < ApplicationMailer
 
   def send_email_to_recipient
     @greetings_text = email.message
-    @from = %("STAFF CENTRE" < #{user.email} >)
+    # staff_address = 'anna.stukalenko@staff.od.ua'
+    # @from =  %("STAFF CENTRE" < #{staff_address} >)
+    @from =  %("STAFF CENTRE" < #{user.email} >)
     @files = []
     email.postcards.each do |postcard|
       file_with_picture = postcard.image.path

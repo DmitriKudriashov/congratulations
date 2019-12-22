@@ -236,8 +236,8 @@ class EmailsController < AuthenticatedController
          # end
       end
     else
-      subject =  "#{for_holiday.name.upcase} GREETINGS!"
-      email_name = 'Dear colleagues'
+      subject =  "Dear colleagues! We wish you a #{for_holiday.name}"
+      email_name = "#{for_holiday.name.upcase}"  #'Dear colleagues'
 
       @email_new = create_new_email(
         name: email_name,

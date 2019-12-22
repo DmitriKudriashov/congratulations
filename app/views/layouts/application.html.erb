@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -38,16 +39,13 @@
       <% else %>
         <p>
           <%= link_to 'Login' , new_user_session_path %>
-          <!-- | -->
-          <%#= link_to 'Sign Up' , new_user_registration_path %>
         </p>
       <% end %>
     </div>
-
-    <div class="container">
-      <%= render 'shared/flash' %>
-      <%= yield %>
-    </div>
+       <div>
+          <%= render 'shared/flash' %>
+          <%= yield %>
+        </div>
   </body>
 </html>
 
