@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmailsController < AuthenticatedController
-  before_action :find_email, only: %i[show update] # destroy]
+  before_action :find_email, only: %i[show update destroy]
   before_action :set_email_cards, only: %i[show edit]
   before_action :set_email_texts, only: %i[show edit]
   before_action :set_companies_emails, only: %[show edit]
@@ -157,7 +157,7 @@ class EmailsController < AuthenticatedController
         .where("dates_holidays.day=? and dates_holidays.month=? and dates_holidays.year=?", date.day, date.month, year.to_i)
       list_emails_country = Company.joins(country: [countries_holidays: [holiday: :dates_holidays]])
         .where("dates_holidays.day=? and dates_holidays.month=? and dates_holidays.year=?", date.day, date.month, year.to_i)
-         if date.day == 25
+
       array_id_companies_holidays = []
       list_emails_holiday.each {|x| array_id_companies_holidays << x.id}
       array_companies_countries = []
