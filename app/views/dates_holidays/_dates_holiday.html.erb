@@ -4,7 +4,7 @@
     <%= dates_holiday.year == 0 ? day_month : "#{day_month}/#{dates_holiday.year}"%>
   </td>
   <td>
-    <%= dates_holiday.holiday.name %>
+    <%= Holiday.find(dates_holiday.holiday_id).name if dates_holiday.present? %>
   </td>
 
   <td>

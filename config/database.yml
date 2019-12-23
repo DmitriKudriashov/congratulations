@@ -12,7 +12,8 @@ default: &default
 
 development:
   <<: *default
-  database: greetings_181219
+  database: greetings_development
+  #greetings_181219
 
 test:
   <<: *default

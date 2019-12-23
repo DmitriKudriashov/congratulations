@@ -6,6 +6,11 @@
   <%= 'Holiday: ' %>
   <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
 </p>
+
+<p>
+  Year:  <%= form.text_field :year %>
+
+</p>
 <br>
 
 <p> <%= form.submit %> </p>
