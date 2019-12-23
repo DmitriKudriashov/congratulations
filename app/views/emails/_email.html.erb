@@ -3,10 +3,12 @@
     <%= email.id %>
   </td>
   <td >
-    <%= email.name %>
+    <%#= email.name %>
+    <%= text_area_tag(:text, email.name, size: :auto) if email.name.present? %>
   </td>
   <td>
-    <%= email.subject %>
+    <%#= email.subject %>
+    <%= text_area_tag(:text, email.subject, size: :auto) if email.subject.present? %>
   </td>
   <td>
    <%= text_area_tag(:text, list_companies(email), size: :auto) %>
@@ -20,7 +22,8 @@
   </td>
  -->
   <td>
-    <%= email.holiday.name if email.holiday_id.present? %>
+    <%#= email.holiday.name if email.holiday_id.present? %>
+    <%=  text_area_tag(:text, email.holiday.name, size: :auto) if email.holiday_id.present? %>
   </td>
   <td>
     <%= text_area_tag(:text, email.message, size: :auto) if email.message.present? %>
