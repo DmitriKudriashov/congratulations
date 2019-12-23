@@ -4,6 +4,8 @@
       <tr>
         <th>Company</th>
         <th>Email</th>
+        <th>Comment</th>
+
       </tr>
     </thead>
     <tbody>
@@ -14,6 +16,9 @@
         </td>
         <td>
           <%= companies_email.company.email %>
+        </td>
+        <td>
+          <%= companies_email.comment %>
         </td>
         <td>
           <%= link_to 'edit', edit_companies_email_path(companies_email.id) %>

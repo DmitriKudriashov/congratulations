@@ -29,10 +29,6 @@ class DatesHolidaysController < AuthenticatedController
       render :edit
     else
       @dates_holiday.update(dates_holiday_params)
-      # set_date_year_holiday
-      # binding.pry
-      # @dates_holiday.save
-      # binding.pry
       redirect_after('Date was successfully updated.!')
     end
   end

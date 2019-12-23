@@ -58,7 +58,6 @@ class EmailCardsController < AuthenticatedController
   end
 
   def find_email
-    # binding.pry
     if params[:email_card].present?
        @email = Email.find(params[:email_card][:email_id]) if params[:email_card].present?
     end
