@@ -35,18 +35,18 @@ class DatesHoliday < ApplicationRecord
   def set_day_month_year
     self.day = 0
     self.month = 0
-    if date.present?
+    if self.date.present?
       self.day = date.day
       self.month = date.month
-      self.year = holiday.calc.present? ? date.year : 0
+      if self.holiday.present?
+        self.year = self.holiday.calc.to_i.zero? ? 0 : self.date.year
+       end
     end
   end
 
   def update(params)
     date = params[:date].to_date
-    self.day = date.day
-    self.month = date.month
-    self.year = holiday.calc.present? ? date.year : 0
+    set_day_month_year
     super(params) if valid?
   end
 
@@ -56,7 +56,6 @@ class DatesHoliday < ApplicationRecord
 
   def self.create_date_holiday(date, holiday)
     year = holiday.calc.nil? ? 0 : date.year
-
     find_or_create_by(
       day: date.day,
       month: date.month,

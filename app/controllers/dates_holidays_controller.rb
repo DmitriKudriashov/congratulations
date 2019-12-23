@@ -29,6 +29,10 @@ class DatesHolidaysController < AuthenticatedController
       render :edit
     else
       @dates_holiday.update(dates_holiday_params)
+      # set_date_year_holiday
+      # binding.pry
+      # @dates_holiday.save
+      # binding.pry
       redirect_after('Date was successfully updated.!')
     end
   end
@@ -38,6 +42,8 @@ class DatesHolidaysController < AuthenticatedController
   def create
     @dates_holiday = @holiday.nil? ? DatesHoliday.new(dates_holiday_params) : @holiday.dates_holidays.new(dates_holiday_params)
     if @dates_holiday.save
+      set_date_year_holiday
+      @dates_holiday.save
       redirect_after('Successully created!')
     else
       error_message
@@ -58,14 +64,16 @@ class DatesHolidaysController < AuthenticatedController
 
   private
 
-  def set_date_year_new_holiday
+  def set_date_year_holiday
     @date = dates_holiday_params[:date].to_date
     @new_holiday = Holiday.find(dates_holiday_params[:holiday_id])
-    @year = @new_holiday.calc.present? ? @date.year : 0
+    @year = @new_holiday.calc.to_i.zero? ? 0 : @date.year
+
+    @dates_holiday.year = @year
   end
 
   def already_exists?
-    set_date_year_new_holiday
+    set_date_year_holiday
     date_holiday_existing = DatesHoliday.holiday_to_date(@new_holiday.id, @date.day, @date.month, @year).first
     date_holiday_existing.present? ? check_exists_id_with_current_id(date_holiday_existing) : false
   end
