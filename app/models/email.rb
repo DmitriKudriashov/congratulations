@@ -54,15 +54,12 @@ class Email < ApplicationRecord
       # HTTPGenericRequest, HTTPResponse
     rescue Net::SMTPAuthenticationError,  Net::SMTPFatalError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPUnknownError, Net::SMTPUnsupportedCommand => @error_sent
       companies_email.comment = @error_sent
-      companies_email.save
-
-      return nil
+      new_mail = nil
     else
       companies_email.comment = Time.now
-      companies_email.save
-
-      return new_mail
     end
+    companies_email.save
+    new_mail
   end
 
   def self.check(opt = {})
