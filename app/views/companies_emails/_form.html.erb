@@ -6,8 +6,12 @@
     </a>
   </p>
   <p>
-    <%= 'Post Card: ' %>
+    <%= 'TO Company: ' %>
     <%= form.collection_select :company_id, Company.all, :id, :name %>
+  </p>
+  <p>
+    <%= 'Comment:' %>
+    <%= form.text_area :comment, rows: 1, cols: 60, class: 'form-control' %>
   </p>
   <br>
   <p>  <%= form.submit %> </p>

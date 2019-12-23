@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_17_093025) do
+ActiveRecord::Schema.define(version: 2019_12_23_162908) do
 
-  create_table "cardtexts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "cardtexts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "filename"
     t.text "text"
     t.datetime "created_at", null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["holiday_id"], name: "index_cardtexts_on_holiday_id"
   end
 
-  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", default: ""
     t.bigint "country_id", null: false
     t.datetime "created_at", null: false
@@ -33,14 +33,15 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["name"], name: "index_companies_on_name", unique: true
   end
 
-  create_table "companies_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "email_id"
     t.bigint "company_id"
+    t.string "comment", default: ""
     t.index ["company_id"], name: "index_companies_emails_on_company_id"
     t.index ["email_id"], name: "index_companies_emails_on_email_id"
   end
 
-  create_table "companies_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "holiday_id", null: false
     t.datetime "created_at", null: false
@@ -50,7 +51,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["holiday_id"], name: "index_companies_holidays_on_holiday_id"
   end
 
-  create_table "companies_people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies_people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "person_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["person_id"], name: "index_companies_people_on_person_id"
   end
 
-  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", default: ""
     t.string "code", default: ""
     t.datetime "created_at", null: false
@@ -69,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
-  create_table "countries_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "countries_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "country_id", null: false
     t.bigint "holiday_id", null: false
     t.datetime "created_at", null: false
@@ -79,7 +80,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["holiday_id"], name: "index_countries_holidays_on_holiday_id"
   end
 
-  create_table "dates_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "dates_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "day", default: 1, null: false
     t.integer "month", default: 1, null: false
     t.integer "year", default: 0, null: false
@@ -91,7 +92,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["holiday_id"], name: "index_dates_holidays_on_holiday_id"
   end
 
-  create_table "email_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "email_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "email_id", null: false
     t.bigint "postcard_id", null: false
     t.datetime "created_at", null: false
@@ -101,7 +102,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["postcard_id"], name: "index_email_cards_on_postcard_id"
   end
 
-  create_table "email_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "email_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "email_id", null: false
     t.bigint "cardtext_id", null: false
     t.datetime "created_at", null: false
@@ -111,7 +112,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["email_id"], name: "index_email_texts_on_email_id"
   end
 
-  create_table "emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", default: ""
     t.string "address", null: false
     t.datetime "created_at", null: false
@@ -132,7 +133,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["mail_address_id"], name: "index_emails_on_mail_address_id"
   end
 
-  create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -142,7 +143,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["type_id"], name: "index_holidays_on_type_id"
   end
 
-  create_table "mail_addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "mail_addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "email", default: ""
     t.bigint "companies_person_id", null: false
     t.datetime "created_at", null: false
@@ -151,7 +152,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["email"], name: "index_mail_addresses_on_email"
   end
 
-  create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", default: ""
     t.string "email", default: ""
     t.datetime "created_at", null: false
@@ -161,7 +162,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["name"], name: "index_people_on_name", unique: true
   end
 
-  create_table "postcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "postcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "filename", default: ""
     t.binary "image", limit: 4294967295
     t.datetime "created_at", null: false
@@ -175,14 +176,14 @@ ActiveRecord::Schema.define(version: 2019_12_17_093025) do
     t.index ["holiday_id"], name: "index_postcards_on_holiday_id"
   end
 
-  create_table "types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_types_on_name"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

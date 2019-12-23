@@ -26,7 +26,6 @@ class PostcardsController < AuthenticatedController
   def create
     @postcard = Postcard.new(postcard_params)
     if @postcard.save
-      # binding.pry
       redirect_to postcards_path
     else
       render :new

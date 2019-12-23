@@ -53,9 +53,14 @@ class Email < ApplicationRecord
       # HTTPError, HTTPFatalError, HTTPRetriableError, HTTPServerException
       # HTTPGenericRequest, HTTPResponse
     rescue Net::SMTPAuthenticationError,  Net::SMTPFatalError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPUnknownError, Net::SMTPUnsupportedCommand => @error_sent
-      binding.pry
+      companies_email.comment = @error_sent
+      companies_email.save
+
       return nil
     else
+      companies_email.comment = Time.now
+      companies_email.save
+
       return new_mail
     end
   end
@@ -64,6 +69,18 @@ class Email < ApplicationRecord
     e = self.new
     e.new_for_check(opt)
   end
+  def new_for_check(opt = {})
+    set_email_fields(opt)
+    self.save
+    self
+  end
+
+  def set_email_fields(opt = {})
+    fill_new(opt)
+  end
+
+  private
+
   def self.opt
     opt = {}
     opt[:name]  = ''
@@ -79,17 +96,6 @@ class Email < ApplicationRecord
     opt[:dates_holiday_id] = 0
     opt
   end
-  def new_for_check(opt = {})
-    set_email_fields(opt)
-    self.save
-    self
-  end
-
-  def set_email_fields(opt = {})
-    fill_new(opt)
-  end
-
-  private
 
   def fill_new(opt = {})
     self.name = opt[:name]
