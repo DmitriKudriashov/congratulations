@@ -94,6 +94,6 @@ class CompaniesEmailsController < ApplicationController
   end
 
   def companies_email_params
-    params.require(:companies_email).permit(:email_id, :company_id)
+    params.require(:companies_email).permit(:email_id, :company_id, :comment)
   end
 end

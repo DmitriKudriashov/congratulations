@@ -23,11 +23,11 @@ class Email < ApplicationRecord
   def send_now(current_user)
     @count_successfully = 0
     @count_total = 0
-    return if self.will_send > Date.today
+    return if self.will_send > Date.today || self.sent_date.present?
     @error_sent = nil
 
     self.companies_emails.each do |companies_email|
-      if companies_email.company.email.present?
+      if companies_email.company.email.present? && !companies_email.comment.present?
         @count_total += 1
         new_mail = new_email_send(self, companies_email, current_user)
         if new_mail.present?
@@ -49,7 +49,7 @@ class Email < ApplicationRecord
   def new_email_send(email, companies_email, current_user)
     new_mail = GreetingsMailer.send_message(email, companies_email, current_user)
     begin
-      new_mail.deliver_now!
+      new_mail.deliver_now
       # HTTPError, HTTPFatalError, HTTPRetriableError, HTTPServerException
       # HTTPGenericRequest, HTTPResponse
     rescue Net::SMTPAuthenticationError,  Net::SMTPFatalError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPUnknownError, Net::SMTPUnsupportedCommand => @error_sent
