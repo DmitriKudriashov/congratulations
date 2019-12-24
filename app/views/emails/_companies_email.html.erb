@@ -12,7 +12,8 @@
     <% @companies_emails.each do |companies_email| %>
       <tr>
         <td>
-          <%=companies_email.company.name %>
+          (<%= companies_email.id %>)
+          <%= companies_email.company.name %>
         </td>
         <td>
           <%= companies_email.company.email %>
