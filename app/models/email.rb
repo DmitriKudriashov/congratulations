@@ -21,6 +21,7 @@ class Email < ApplicationRecord
   scope :emails_for_send, ->(date) { where(will_send: date, checkit: 1, sent_date: nil) }
 
   def send_now(current_user)
+    return unless current_user.present?
     @count_successfully = 0
     @count_total = 0
     return if self.will_send > Date.today || self.sent_date.present?
@@ -29,16 +30,17 @@ class Email < ApplicationRecord
     self.companies_emails.each do |companies_email|
       if companies_email.company.email.present? && !companies_email.comment.present?
         @count_total += 1
-        new_mail = new_email_send(self, companies_email, current_user)
-        if new_mail.present?
+        @new_mail = new_email_send(self, companies_email, current_user)
+        if @new_mail.present?
           @count_successfully += 1
         end
       end
     end
-    if @count_total == @count_successfully
+    if @count_total == @count_successfully && @count_successfully > 0
       self.sent_date = Time.now
       # self.address = new_mail[:to].present? ? new_mail[:to] : 'Without addres'
-      self.address = 'Without address '
+      self.address = @count_successfully == 1 && @new_mail[:to].present? ? @new_mail[:to] : 'Without address '
+      binding.pry
       self.save
       true
     else
