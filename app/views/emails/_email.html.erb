@@ -1,19 +1,23 @@
 <tr>
-  <td >
+  <td>
     <%= email.id %>
   </td>
   <td >
-    <%#= email.name %>
     <%= text_area_tag(:text, email.name, size: :auto) if email.name.present? %>
   </td>
   <td>
-    <%#= email.subject %>
     <%= text_area_tag(:text, email.subject, size: :auto) if email.subject.present? %>
   </td>
   <td>
-   <%= text_area_tag(:text, list_companies(email), size: :auto) %>
+    <% @list_companies = list_companies(email) %>
+    <% if  @list_companies.present? %>
+    <%=  text_area_tag(:text, @list_companies, size: :auto) %>
+    <% else %>
+    <%=  email.address %>
+    <% end %>
   </td>
-<!--   <td>
+<!--
+  <td>
     <%# if email.sent_date.present?  %>
     <%#= email.address %>
     <%# else %>

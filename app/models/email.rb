@@ -27,20 +27,29 @@ class Email < ApplicationRecord
     return if self.will_send > Date.today || self.sent_date.present?
     @error_sent = nil
 
-    self.companies_emails.each do |companies_email|
-      if companies_email.company.email.present? && !companies_email.comment.present?
-        @count_total += 1
-        @new_mail = new_email_send(self, companies_email, current_user)
-        if @new_mail.present?
-          @count_successfully += 1
+    if self.companies_emails.present?
+      self.companies_emails.each do |companies_email|
+        if companies_email.company.email.present? && !companies_email.comment.present?
+          @count_total += 1
+          # @new_mail = new_email_send(self, companies_email, current_user)
+          @new_mail = new_email_send(companies_email, current_user)
+          if @new_mail.present?
+            @count_successfully += 1
+          end
         end
       end
+    else
+      @count_total += 1
+      # @new_mail = new_email_send(self, nil, current_user)
+      @new_mail = new_email_send(nil, current_user)
+      if @new_mail.present?
+        @count_successfully += 1
+      end
     end
+
     if @count_total == @count_successfully && @count_successfully > 0
       self.sent_date = Time.now
-      # self.address = new_mail[:to].present? ? new_mail[:to] : 'Without addres'
       self.address = @count_successfully == 1 && @new_mail[:to].present? ? @new_mail[:to] : 'Without address '
-      binding.pry
       self.save
       true
     else
@@ -48,19 +57,26 @@ class Email < ApplicationRecord
     end
   end
 
-  def new_email_send(email, companies_email, current_user)
-    new_mail = GreetingsMailer.send_message(email, companies_email, current_user)
+  # def new_email_send(email, companies_email, current_user)
+  def new_email_send(companies_email, current_user)
+    new_mail = GreetingsMailer.send_message(self, companies_email, current_user)
     begin
       new_mail.deliver_now
       # HTTPError, HTTPFatalError, HTTPRetriableError, HTTPServerException
       # HTTPGenericRequest, HTTPResponse
-    rescue Net::SMTPAuthenticationError,  Net::SMTPFatalError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPUnknownError, Net::SMTPUnsupportedCommand => @error_sent
-      companies_email.comment = @error_sent
+    rescue Net::SMTPAuthenticationError,
+           Net::SMTPFatalError,
+           Net::SMTPServerBusy,
+           Net::SMTPSyntaxError,
+           Net::SMTPUnknownError,
+           Net::SMTPUnsupportedCommand => @error_sent
+
+      companies_email.comment = @error_sent if companies_email.present?
       new_mail = nil
     else
-      companies_email.comment = Time.now
+      companies_email.comment = Time.now  if companies_email.present?
     end
-    companies_email.save
+    companies_email.save  if companies_email.present?
     new_mail
   end
 

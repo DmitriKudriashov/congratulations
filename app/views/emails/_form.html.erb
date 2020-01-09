@@ -18,20 +18,20 @@
     <%= 'Subject: '  %>
     <%= form.text_field :subject, size: 60 %>
   </div>
-<!--   <% if @email.sent_date.present? %>
-    <a style="size: 100; margin: 10%">
+  <% unless @email.companies_emails.present? %>
+<!--     <a style="size: 100; margin: 10%">
       <%#= form.label :address %>
       <%#= form.text_area :address, rows: 1, cols: 100,  class: 'form-control'  %>
     </a>
-  <% else %>
+  <%# else %>
+ -->
     <div>
       <a style="size: 100;">
-        <%#= form.label :address %>
-        <%#= form.text_area :address, rows: 1, cols: 100,  class: 'form-control'  %>
+        <%= form.label :address %>
+        <%= form.text_area :address, rows: 1, cols: 100,  class: 'form-control'  %>
       </a>
     </div>
   <% end %>
- -->
   <div>
     <%= 'Message' %>
     <%= form.text_area :message, rows: 2, cols: 60, class: 'form-control' %>
@@ -51,10 +51,13 @@
 
   </div>
   <div>
-    Email recipients:
-  </div>
-  <div>
-     <%= text_area_tag(:text, list_companies(@email), size: :auto) %>
+    <% @list_companies = list_companies(@email) %>
+    <% if  @list_companies.present? %>
+    <div>
+      Email recipients:
+    </div>
+    <%= text_area_tag(:text,  @list_companies, cols: 100) %>
+    <% end %>
   </div>
   <a style="margin: 22%;"><%= form.submit %></a>
 
