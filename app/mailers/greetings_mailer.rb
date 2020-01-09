@@ -6,8 +6,7 @@ class GreetingsMailer < ApplicationMailer
   def send_message(email, companies_email,  user)
     @email = email
     @user = user
-    @address = companies_email.company.email
-    # @email = companies_email.email
+    @address = companies_email.present? ? companies_email.company.email : email.address
     if @address.present?
       send_email_to_recipient
     end
@@ -15,8 +14,6 @@ class GreetingsMailer < ApplicationMailer
 
   def send_email_to_recipient
     @greetings_text = email.message
-    # staff_address = 'anna.stukalenko@staff.od.ua'
-    # @from =  %("STAFF CENTRE" < #{staff_address} >)
     @from =  %("STAFF CENTRE" < #{user.email} >)
     @files = []
     email.postcards.each do |postcard|

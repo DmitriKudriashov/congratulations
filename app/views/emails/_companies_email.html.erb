@@ -1,4 +1,8 @@
 <% if @companies_emails.present? %>
+  <div>
+    Companies recipients
+  </div>
+
   <table class="table" id="addresses">
     <thead class="thead-light" align="center">
       <tr>
@@ -35,6 +39,6 @@
   </table>
 <% else %>
   <p>
-    <%= 'Empty recipients list' %>
+    <%#= 'Empty recipients list' %>
   </p>
 <% end %>
