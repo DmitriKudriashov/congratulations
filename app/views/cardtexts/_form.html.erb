@@ -2,7 +2,7 @@
 
 <p>
   <%= 'Holiday: ' %>
-  <%= form.collection_select :holiday_id, Holiday.all, :id, :name, prompt: 'Select holiday' %>
+  <%= form.collection_select :holiday_id, Holiday.order(:name), :id, :name, prompt: 'Select holiday' %>
 </p>
 <p>
   <%= "Short description" %><br>

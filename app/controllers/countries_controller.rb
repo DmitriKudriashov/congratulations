@@ -14,7 +14,6 @@ class CountriesController < AuthenticatedController
 
   def update
     if @country.update(country_params)
-      # redirect_to country_path(@country), notice: 'Success!'
       redirect_to countries_path, notice: 'Success!'
     else
       render :edit
@@ -26,7 +25,6 @@ class CountriesController < AuthenticatedController
   def create
     @country = Country.new(country_params)
     if @country.save
-      # redirect_to country_path(@country), notice: 'Success!'
       redirect_to countries_path, notice: 'Success!'
     else
       render :new
@@ -46,7 +44,7 @@ class CountriesController < AuthenticatedController
   private
 
   def set_countries
-    @countries = Country.paginate(page: params[:page]) # .all
+    @countries = Country.order(:name).paginate(page: params[:page])
   end
 
   def find_country

@@ -10,7 +10,7 @@ class EmailsController < AuthenticatedController
 
   def index
     year = Time.now.year
-    @emails = Email.all.order(will_send: :desc).paginate(page: params[:page]) # where(year: year)
+    @emails = Email.order(will_send: :desc).paginate(page: params[:page]) # where(year: year)
   end
 
   def new
@@ -59,7 +59,7 @@ class EmailsController < AuthenticatedController
 
   def create_emails
     date_from = Date.today
-    date_to = date_from + 15
+    date_to = date_from + $Period
     @ind_date  = 0
     (date_from..date_to).each do |will_send_date|
       @ind_date += 1

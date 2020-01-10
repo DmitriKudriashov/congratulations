@@ -1,12 +1,12 @@
 <%= form_with model: @companies_person, local: true do |form| %>
   <p>
     <%= 'Company: ' %>
-    <%= form.collection_select :company_id, Company.all, :id, :name, prompt: 'Select company' %>
+    <%= form.collection_select :company_id, Company.order(:name), :id, :name, prompt: 'Select company' %>
   </p>
 
   <p>
     <%= 'Person: ' %>
-    <%= form.collection_select :person_id, Person.all, :id, :name, prompt: 'Select person' %>
+    <%= form.collection_select :person_id, Person.order(:name), :id, :name, prompt: 'Select person' %>
   </p>
 
   <br>

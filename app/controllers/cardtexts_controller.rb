@@ -46,7 +46,7 @@ class CardtextsController < AuthenticatedController
   private
 
   def set_cardtexts
-    @cardtexts = Cardtext.paginate(page: params[:page]) # .all
+    @cardtexts = Cardtext.order(:filename).paginate(page: params[:page])
   end
 
   def find_cardtext
