@@ -9,7 +9,7 @@
   </p>
   <p>
     <%= 'Type: ' %>
-    <%= form.collection_select :type_id, Type.all, :id, :name,
+    <%= form.collection_select :type_id, Type.order(:name), :id, :name,
         { prompt: "Type select", id: "holiday_type_id" } %>
   </p>
   <p>

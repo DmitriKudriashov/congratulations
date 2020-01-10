@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationRecord < ActiveRecord::Base
+  $Period = 15
+
   $PER_PAGE = 12
   self.per_page = $PER_PAGE
   scope :select_year, ->(y) { where(year: y) }
