@@ -7,7 +7,7 @@ class Postcard < ApplicationRecord
 
   validates :image, attachment_presence: true
   validates_with AttachmentPresenceValidator, attributes: :image
-  validates_with AttachmentSizeValidator, attributes: :image, less_than: 5.megabytes
+  validates_with AttachmentSizeValidator, attributes: :image, less_than: 200.megabytes
 
   has_many :email_cards, dependent: :restrict_with_error
   has_many :emails, through: :email_cards
