@@ -34,8 +34,9 @@
   </td>
   <td>
     <% email.postcards.each do |postcard|  %>
-      <%= image_tag postcard.image.url(:small) %>
-    <% end %>
+      <%= image_tag postcard.image.url(:small) %><br>
+      <a style="font-size: 8px"><%= postcard.filename %></a><br>
+  <% end %>
   </td>
   <td align="center">
     <%= email.will_send if email.will_send.present? %>
