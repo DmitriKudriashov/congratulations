@@ -26,8 +26,8 @@
   </td>
  -->
   <td>
-    <%#= email.holiday.name if email.holiday_id.present? %>
-    <%=  text_area_tag(:text, email.holiday.name, size: :auto) if email.holiday_id.present? %>
+    <%= email.holiday.name if email.holiday_id.present? %>
+    <%#=  text_area_tag(:text, email.holiday.name, size: :auto) if email.holiday_id.present? %>
   </td>
   <td>
     <%= text_area_tag(:text, email.message, size: :auto) if email.message.present? %>

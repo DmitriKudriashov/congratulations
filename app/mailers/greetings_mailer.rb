@@ -28,25 +28,21 @@ class GreetingsMailer < ApplicationMailer
       @files << postcard.filename
     end
 
-    new_address = address_checked
-    if new_address == @address
-      mail from: @from, to: new_address, subject: email.subject
-    else
-      mail from: @from, to: address, bcc: new_address, subject: email.subject
-    end
+    # new_address = address_checked
+    # if new_address == @address
+    #   mail from: @from, to: new_address, subject: email.subject
+    # else
+    #   mail from: @from, to: address, bcc: new_address, subject: email.subject
+    # end
 
+    mail from: @from, to: address, subject: email.subject
   end
 
   def personal_address(email)
     email.person.email.present? ? email.person.email : nil
   end
 
-
   private
-
-  def new_addresses_list
-
-  end
 
   def address_checked
     position = @address.index('@staff-centre.com').to_i
