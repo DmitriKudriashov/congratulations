@@ -11,6 +11,4 @@ class CompaniesPerson < ApplicationRecord
   def name_company_and_name_person
     "#{company.name}, #{person.name}"
   end
-
-  def list_companies_people; end
 end

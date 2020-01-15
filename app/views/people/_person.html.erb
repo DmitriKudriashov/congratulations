@@ -7,11 +7,13 @@
   </td>
   <td>
     <%= person.email %>
+    <% if person.this_email_use.present? %>
+    <a style="color: red; font-weight: bold;" > ( Use this For Mailer ) </a>
+    <% end %>
   </td>
   <td>
     <%= person.id %>
   </td>
-
 <!--   <td>
     <%#= link_to 'show', person_path(person) %>
   </td>

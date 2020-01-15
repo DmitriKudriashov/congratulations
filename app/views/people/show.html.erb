@@ -13,6 +13,7 @@
 <p>
   Email:
   <%= @person.email %>
+  <%= ( 'Use this Email For Mailer' )if @person.this_email_use.present? %>
 </p>
 
 <%= link_to 'Edit person', edit_person_path(@person) %>

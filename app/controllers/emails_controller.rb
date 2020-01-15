@@ -9,8 +9,7 @@ class EmailsController < AuthenticatedController
   attr_reader :people_birthdays, :email_new
 
   def index
-    year = Time.now.year
-    @emails = Email.order(will_send: :desc).paginate(page: params[:page]) # where(year: year)
+    set_emails
   end
 
   def new
@@ -125,17 +124,13 @@ class EmailsController < AuthenticatedController
 
     holiday = Holiday.where(name: 'Birthday').first
     holiday_date = DatesHoliday.create_date_holiday(date, holiday)
-    # binding.pry
     create_emails_for_date(holiday_date, date, list_companies_person_id)
   end
 
   def process_by_dates(holidays_in_date, date, year)
     holidays_in_date.each do |holiday_date|
       holiday = Holiday.find(holiday_date.holiday_id)
-      if holiday.name.upcase == "BIRTHDAY"
-        # list_companies_id = create_list_companies_id_birthday(holiday, date, year)
-        # create_emails_for_date(holiday_date, date, list_companies_id)
-      else
+      unless holiday.name.upcase == "BIRTHDAY"
         list_companies_id = create_list_emails(date, year)
         create_emails_for_date(holiday_date, date, list_companies_id)
       end
@@ -143,13 +138,6 @@ class EmailsController < AuthenticatedController
   end
 
   def create_list_emails(date, year)
-    # list_emails = MailAddress.left_outer_joins(companies_person: [company: [
-    #     {country: [countries_holidays: [holiday: :dates_holidays]]},
-    #     {companies_holidays: [holiday: :dates_holidays]}
-    #   ]]).where(
-    #   "(dates_holidays.holiday_id=? or dates_holidays_holidays.holiday_id=?) and companies_people.company_id=? "
-    #   ,holiday.id, holiday.id, ).distinct
-
       list_emails_holiday = Company.joins(companies_holidays: [holiday: :dates_holidays])
         .where("dates_holidays.day=? and dates_holidays.month=? and dates_holidays.year=?", date.day, date.month, year.to_i)
       list_emails_country = Company.joins(country: [countries_holidays: [holiday: :dates_holidays]])
@@ -160,41 +148,6 @@ class EmailsController < AuthenticatedController
       array_companies_countries = []
       list_emails_country.each {|x| array_companies_countries << x.id }
       (array_id_companies_holidays + array_companies_countries).uniq.sort!
-
-      # list_companies_id = []
-      # list_emails_holiday.each {|x| list_companies_id << x.id}
-      # list_emails_country.each {|x| list_companies_id << x.id}
-      # list_companies_id.uniq!.sort!
-  end
-
-  # def filter
-  #   "(dates_holidays.holiday_id=? or dates_holidays_holidays.holiday_id=?) and companies.id=?"
-  # end
-
-  def create_list_companies_id_birthday(holiday, date, year)
-    # нужен список людей и имайлов для компаний, которых нужно поздравить с этим праздником
-    # MailAddress.joins([{companies_person: [:person, {company: [{companies_holidays: [holiday: :dates_holidays]},{country: :countries_holidays }]}]}], :emails).select('emails.id').order('dates_holidays.id')
-
-    people_holiday =  Person.left_outer_joins(companies_people: [company: [{companies_holidays: [holiday: :dates_holidays]}, {country: :countries_holidays}]])
-      .where("(countries_holidays.holiday_id = ? or companies_holidays.holiday_id = ?)
-      and dates_holidays.day = ? and dates_holidays.month=? and dates_holidays.year=?",
-      holiday.id, holiday.id, date.day, date.month, year ).uniq
-
-    list_companies_id = []
-    people_holiday.each do |person|
-      list_companies_id = loop_by_companies_people(person, list_companies_id)
-    end
-
-     list_companies_id
-  end
-
-  def loop_by_companies_people(person, list_companies_ids)
-    person.companies_people.each do |companies_person|
-      # mail_address = MailAddress.where(companies_person_id: companies_person.id).first
-      # mail_address = MailAddress.create([{ email: person.email, companies_person_id: companies_person.id }]).first unless mail_address.present?
-      list_companies_ids << companies_person.company_id
-    end
-    list_companies_ids
   end
 
   def create_emails_for_date(holiday_date, will_send_date, list_companies_id)
@@ -211,7 +164,7 @@ class EmailsController < AuthenticatedController
       list_companies_person_id.each do |companies_person_id|
         company_person = CompaniesPerson.find(companies_person_id)
         email_name = "GREETINGS #{Person.find(company_person.person_id).name} (#{Company.find(company_person.company_id).name} )"
-        address = Company.find(company_person.company_id).email
+        address = company_person.person.this_email_use.present? ? company_person.person.email :  company_person.company.email
         @email_new = create_new_email(
           name: email_name,
           subject: subject,
@@ -228,11 +181,10 @@ class EmailsController < AuthenticatedController
       end
       if @email_new.present?
         add_postcard(@email_new)
-        # create_list_mail_recipient(@email_new, list_companies_person_id)
       end
     else
       subject =  "Dear colleagues! We wish you a #{for_holiday.name}"
-      email_name = "#{for_holiday.name.upcase}"  #'Dear colleagues'
+      email_name = "#{for_holiday.name.upcase}"
       @email_new = create_new_email(
         name: email_name,
         subject: subject,
@@ -308,7 +260,6 @@ class EmailsController < AuthenticatedController
 
   def free_card_ids_array(email)
     holiday_postcards_all = Postcard.where(holiday_id: email.holiday_id).select(:id)
-    # person_cards_used = Postcard.left_outer_joins(email_cards: :email).where(postcards: {holiday_id: email.holiday_id}, emails: {person_id: email.person_id}).select(:id).uniq
     holiday_cards_used = Postcard.joins(email_cards: :email).where(postcards: {holiday_id: email.holiday_id}).select(:id).uniq
     make_array(holiday_postcards_all) - make_array(holiday_cards_used)
   end
@@ -323,13 +274,10 @@ class EmailsController < AuthenticatedController
   def add_cardtext(holiday)
     card_texts_for_holiday = Cardtext.where(holiday_id: holiday.id)
     texts = card_texts_for_holiday.order(updated_at: :desc).first.text.to_s if card_texts_for_holiday.present?
-    # return '' unless texts.present?
-    # texts.order(updated_at: :desc).first.text
   end
 
   def set_emails
-    year = Time.now.year
-    @emails = Email.where(year: year).order(updated_at: :desc)
+    @emails = Email.order(will_send: :desc).paginate(page: params[:page])
   end
 
   def find_email

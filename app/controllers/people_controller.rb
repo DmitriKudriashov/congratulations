@@ -52,7 +52,7 @@ class PeopleController < AuthenticatedController
   end
 
   def person_params
-    params.require(:person).permit(:name, :email, :country_id, :company_id, :birthday)
+    params.require(:person).permit(:name, :email, :this_email_use, :country_id, :company_id, :birthday)
   end
 
   def rescue_with_person_not_found
