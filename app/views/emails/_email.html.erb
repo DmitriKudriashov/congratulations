@@ -16,18 +16,8 @@
     <%=  email.address %>
     <% end %>
   </td>
-<!--
-  <td>
-    <%# if email.sent_date.present?  %>
-    <%#= email.address %>
-    <%# else %>
-    <%#= text_area_tag(:text, "#{email.address}", size: :auto)  %>
-    <%# end %>
-  </td>
- -->
   <td>
     <%= email.holiday.name if email.holiday_id.present? %>
-    <%#=  text_area_tag(:text, email.holiday.name, size: :auto) if email.holiday_id.present? %>
   </td>
   <td>
     <%= text_area_tag(:text, email.message, size: :auto) if email.message.present? %>

@@ -9,14 +9,15 @@
     <%= 'Birthday: ' %>
     <%#= date_select :person, :birthday, start_year: Time.now.year - 70, end_year: Time.now.year - 18 %>
     <%= date_field :person, :birthday %>
-
   </p>
-
   <p>
     <%= 'Email: ' %>
     <%= form.text_field :email, size: 80 %>
   </p>
-
+  <p>
+    <%= 'Use this Email for Mailer: '%>
+    <%= form.check_box :this_email_use %>
+  </p>
   <br>
   <p> <%= form.submit %> </p>
 <% end %>
