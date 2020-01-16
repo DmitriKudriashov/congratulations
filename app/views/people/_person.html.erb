@@ -1,6 +1,9 @@
 <tr>
   <td>
     <%= person.name %>
+    <% list = "" %>
+    <% person.companies_people.each {|cp| list += "#{cp.company.name} \n" } %>
+    <a style="color: blue; " > <%= "( #{list} )" %></a>
   </td>
   <td>
     <%= person.birthday_format %>
