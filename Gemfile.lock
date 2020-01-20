@@ -387,6 +387,7 @@ DEPENDENCIES
   meta_request
   mini_racer
   mysql2 (>= 0.4.4)
+  nested_form
   nokogiri (>= 1.10.4)
   octicons_helper
   octokit (~> 4.0)
