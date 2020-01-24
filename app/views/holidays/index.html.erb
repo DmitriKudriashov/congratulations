@@ -1,4 +1,3 @@
-
 <h3> Holidays </h3>
 <div class="digg_pagination">
   <%= will_paginate @holidays, :container => false %>
@@ -21,10 +20,12 @@
             <%= octicon 'arrow-up', class: 'text-success hide' %>
             <%= octicon 'arrow-down' , class: 'text-success hide' %>
           </th>
-          <th>
+          <th name="column3" class="pointer col-md-auto">
             <%= 'Calculated' %>
           </th>
-          <th> N </th>
+          <th name="column4" class="pointer col-md-auto">
+            N
+          </th>
         </tr>
       </thead>
       <%= render @holidays %>

@@ -15,9 +15,13 @@
   <p>
     <%= form.text_field :name %>
   </p>
-
-
-  <br>
+<!--
+    <%#= form.fields_for :holidays do |builder| %>
+    <%#= render "holidays_fields", :form => builder %>
+    <%# end %>
+ -->
   <p> <%= form.submit %> </p>
 <% end %>
 <br>
+
+

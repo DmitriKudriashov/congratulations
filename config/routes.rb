@@ -51,10 +51,14 @@ Rails.application.routes.draw do
     resources :companies_people, shallow: true
   end
 
-  resources :types
-  resources :holidays do
+  resources :types #, only: %i[index new create]
+  # resources :holidays, only: %i[index new create]
+  # resources :types, only: %[edit]  do
+  resources :holidays do #, shallow: true, only: %[edit] do
     resources :dates_holidays, shallow: true
     resources :companies_holidays, shallow: true
     resources :countries_holidays, shallow: true
   end
+  # end
+
 end
