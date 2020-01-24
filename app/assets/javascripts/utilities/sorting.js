@@ -26,7 +26,10 @@ function sortRowsByTitle() {
   console.log(body_prev)
 
   var head =  table.getElementsByTagName('thead')[0]
+    console.log(head)
+
   var head_length = head.rows[0].children.length
+    console.log(head_length)
 
   if (head.querySelector('.octicon-arrow-up').classList.contains('hide')) {
     sortedRows.sort(compareRowsAsc)

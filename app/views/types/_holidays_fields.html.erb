@@ -1,4 +1,4 @@
-<table>
+<table class="table" >
   <thead class="thead-light" align="center">
     <tr>
       <th>
@@ -10,25 +10,30 @@
       <th> N </th>
     </tr>
   </thead>
-  <%#= render 'holidays', f: :f %>
-<!--   <tbody>
-        <%#= %>
-    <tr>
-      <td>
-        <%#= %>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-    </tr>
-        <%#= %>
+   <tbody>
+    <% @type.holidays.each do |holiday| %>
+      <tr>
+        <td>
+          <%= holiday.name %>
+        </td>
+        <td>
+          <%= holiday.calc == 1 ? "YES" : '' %>
+        </td>
+        <td>
+          <%= holiday.id %>
+        </td>
+        <td class="s_e_d">
+          <%#= link_to 'edit', edit_holiday_path(holiday.id) %>
+        </td>
+        <td class="s_e_d">
+          <%#= link_to 'delete', holiday_path(holiday),
+                      method: :delete, data: { confirm: 'Are you sure' } %>
+        </td>
 
+      </tr>
+    <% end %>
   </tbody>
- -->
 </table>
-
-
 
 <!-- <div>
   <%#= form.label :name, "Holiday:" %>

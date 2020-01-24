@@ -3,10 +3,15 @@
     <%= companies_person.id %>
   </td>
   <td>
-    <%= companies_person.company.name %>
+    <a style="color: blue; font-weight: bold;" ><%= companies_person.company.name %> </a>
+    <%= "(  #{companies_person.company.email} )" %>
   </td>
   <td>
-    <%= companies_person.person.name %>
+    <%= "#{companies_person.person.name} " %>
+    <a style="color: blue;" ><%="(#{companies_person.person.email})" %></a>
+    <% if companies_person.person.this_email_use.present? %>
+    <a style="color: red; font-weight: bold;" > ( Use this For Mailer ) </a>
+    <% end %>
   </td>
 <!--   <td>
     <%#= link_to 'show', companies_person_path(companies_person) %>

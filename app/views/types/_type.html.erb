@@ -5,6 +5,10 @@
   <td>
     <%= type.name %>
   </td>
+  <td>
+    <% list_holidays = holidays_of_type(type) %>
+    <%= text_area_tag(:text, list_holidays, size: :auto)  if list_holidays.present?  %>
+  </td>
 
 <!--   <td>
     <%#= link_to 'show', type_path(type) %>
@@ -13,7 +17,6 @@
   <td>
     <%= link_to 'edit', edit_type_path(type) %>
   </td>
-
   <td>
     <%= link_to 'delete', type_path(type),
                 method: :delete, data: { confirm: 'Are you sure' } %>
