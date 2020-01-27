@@ -1,20 +1,15 @@
 document.addEventListener('turbolinks:load', function() {
   var control = document.querySelector('.tab-sorted')
-
+  console.log(control)
   if (control) {
-    var thead = control.getElementsByTagName('thead')[0]
-    var th_control = thead.querySelector('.sort-by-title')
-     console.log(th_control)
-    if (th_control) {
-        th_control.addEventListener('click', sortRowsByTitle())
-      }
-    }
+    control.addEventListener('click', sortRowsByTitle)
+  }
 });
 
 function sortRowsByTitle() {
   var table = document.querySelector('.tab-sorted')
   console.log(table)
-  var body_prev = table.lastElementChild //getElementsByTagName('tbody')[0]
+  var body_prev = table.getElementsByTagName('tbody')[0]
   console.log(body_prev)
   var rows = body_prev.querySelectorAll('tr')
   console.log(rows)
@@ -45,8 +40,6 @@ function sortRowsByTitle() {
 
   console.log(body_prev)
 
-  // var  sorted_body = document.createElement('tbody')
-
   var sorted_body = document.createElement('tbody')
   // sorted_body.classList.add('sort-body')
   for (var m = 0; m < sortedRows.length; m++) {
@@ -59,6 +52,7 @@ function sortRowsByTitle() {
   console.log(body_prev.parentNode)
 
   body_prev.parentNode.replaceChild(sorted_body, body[0])
+
 }
 
 function compareRowsAsc(row1, row2) {

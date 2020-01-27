@@ -7,8 +7,8 @@
 
 <table class="container">
   <% if @holidays.present? %>
-    <table class="tab-sorted table table-bordered">
-      <thead class="thead-light" align="center">
+    <table class="tab-sorted table table-bordered"  id="holidays_table">
+      <thead class="thead-light" id="head" align="center">
         <tr>
           <th name="column1" class="sort-by-title pointer col-md-auto">
             <%= 'Holiday' %>
