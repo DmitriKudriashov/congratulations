@@ -8,7 +8,6 @@
 
 <a style="margin: 2%"><%= left_out_holidays %> </a>
 
-<%# if @dates_holidays.present? %>
   <table class="table table-bordered">
     <thead class="thead-light" align="center">
       <tr>
@@ -21,12 +20,6 @@
     </thead>
     <%= render @dates_holidays %>
   </table>
-<%# else %>
-<!--   <p>
-    <%= 'Empty list' %>
-  </p>
- -->
- <%# end %>
 <div class="digg_pagination">
   <%= will_paginate @dates_holidays, :container => false %>
 </div>

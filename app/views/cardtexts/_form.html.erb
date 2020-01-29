@@ -12,8 +12,7 @@
   <%= form.label :text %><br>
   <%= form.text_area :text, rows: 7, cols: 60, class: 'form-control' %>
 </p>
-
-<br>
-  <p> <%= form.submit %> </p>
+<% raw '<br>' %>
+<p> <%= form.submit %> </p>
 <% end %>
-<br>
+<%= raw '<br>' %>

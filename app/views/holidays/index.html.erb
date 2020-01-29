@@ -8,17 +8,17 @@
 <table class="container">
   <% if @holidays.present? %>
     <table class="tab-sorted table table-bordered">
-      <thead class="thead-light" align="center">
+      <thead class="thead-light" id="head" align="center">
         <tr>
           <th name="column1" class="sort-by-title pointer col-md-auto">
             <%= 'Holiday' %>
-            <%= octicon 'arrow-up', class: 'text-success hide' %>
-            <%= octicon 'arrow-down' , class: 'text-success hide' %>
+            <%= octicon 'arrow-up', class: 'text-success' %>
+            <%= octicon 'arrow-down', class: 'text-success hide' %>
           </th>
           <th name="column2" class="pointer col-md-auto">
             <%= 'Type' %>
             <%= octicon 'arrow-up', class: 'text-success hide' %>
-            <%= octicon 'arrow-down' , class: 'text-success hide' %>
+            <%= octicon 'arrow-down', class: 'text-success hide' %>
           </th>
           <th name="column3" class="pointer col-md-auto">
             <%= 'Calculated' %>

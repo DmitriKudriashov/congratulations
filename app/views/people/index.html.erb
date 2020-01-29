@@ -5,10 +5,14 @@
   </div>
   <%= link_to 'New Person', new_person_path %>
   <% if @people.present? %>
-    <table style="font-size: 12px" class="table table-bordered">
+    <table class="tab-sorted table table-bordered" style="font-size: 12px">
       <thead class="thead-light" align="center">
         <tr>
-          <th> Name and Company </th>
+          <th name="column1" class="sort-by-title pointer col-md-auto">
+            <%= 'Name and Company' %>
+            <%= octicon 'arrow-up', class: 'text-success' %>
+            <%= octicon 'arrow-down' , class: 'text-success hide' %>
+          </th>
           <th> Birthday </th>
           <th> Email </th>
           <th> N rec </th>
@@ -21,7 +25,6 @@
       <%= 'Empty list' %>
     </p>
   <% end %>
-  <br>
   <div class="digg_pagination">
      <%= will_paginate @people, :container => false %>
   </div>
