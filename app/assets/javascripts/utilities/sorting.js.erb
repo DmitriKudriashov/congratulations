@@ -2,7 +2,12 @@ document.addEventListener('turbolinks:load', function() {
   var control = document.querySelector('.tab-sorted')
   console.log(control)
   if (control) {
-    control.addEventListener('click', sortRowsByTitle)
+    var thead = control.getElementsByTagName('thead')[0]
+    var th_control = thead.querySelector('.sort-by-title')
+     console.log(th_control)
+    if (th_control) {
+      th_control.addEventListener('click', sortRowsByTitle)
+    }
   }
 });
 
@@ -52,7 +57,6 @@ function sortRowsByTitle() {
   console.log(body_prev.parentNode)
 
   body_prev.parentNode.replaceChild(sorted_body, body[0])
-
 }
 
 function compareRowsAsc(row1, row2) {

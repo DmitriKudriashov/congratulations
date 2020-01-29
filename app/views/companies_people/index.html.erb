@@ -5,7 +5,6 @@
   </div>
   <%= link_to 'New Company Person', new_companies_person_path %>
   <%= render 'header_companies_people_list' %>
-  <br>
   <div class="digg_pagination">
     <%= will_paginate @companies_people, :container => false %>
   </div>
