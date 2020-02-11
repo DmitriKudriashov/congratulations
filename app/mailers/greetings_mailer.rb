@@ -50,25 +50,29 @@ class GreetingsMailer < ApplicationMailer
   end
 
   def get_image_extension(local_file_path)
-    png = 'x89PNG' # Regexp.new("\x89PNG".force_encoding("binary"))
-    jpg = 'xFF\xD8\xFF\xE0\x00\x10JFIF' # Regexp.new("\xff\xd8\xff\xe0\x00\x10JFIF".force_encoding("binary"))
-    jpg2 = 'xFF\xD8\xFF\xE1(.*){2}Exif' # Regexp.new("\xff\xd8\xff\xe1(.*){2}Exif".force_encoding("binary"))
-    case IO.read(local_file_path, 10)
-    when /^GIF8/
-      'gif'
-    when "/^#{png}/"
-      'png'
-    when "/^#{jpg}"
-      'jpg'
-    when "/^#{jpg2}"
-      'jpeg'
-    else
-      mime_type = `file #{local_file_path} --mime-type`.gsub("\n", '') # Works on linux and mac
-      raise UnprocessableEntity, 'unknown file type' unless mime_type
-
-      mime_type.split(':')[1].split('/')[1].gsub('x-', '').gsub(/jpeg/, 'jpg').gsub(/text/, 'txt').gsub(/x-/, '')
-    end
+    ext = File.extname(local_file_path)
+    ext[1,ext.size]
   end
+  # def get_image_extension(local_file_path)
+  #   png = 'x89PNG' # Regexp.new("\x89PNG".force_encoding("binary"))
+  #   jpg = 'xFF\xD8\xFF\xE0\x00\x10JFIF' # Regexp.new("\xff\xd8\xff\xe0\x00\x10JFIF".force_encoding("binary"))
+  #   jpg2 = 'xFF\xD8\xFF\xE1(.*){2}Exif' # Regexp.new("\xff\xd8\xff\xe1(.*){2}Exif".force_encoding("binary"))
+  #   case IO.read(local_file_path, 10)
+  #   when /^GIF8/
+  #     'gif'
+  #   when "/^#{png}/"
+  #     'png'
+  #   when "/^#{jpg}"
+  #     'jpg'
+  #   when "/^#{jpg2}"
+  #     'jpeg'
+  #   else
+  #     mime_type = `file #{local_file_path} --mime-type`.gsub("\n", '') # Works on linux and mac
+  #     raise UnprocessableEntity, 'unknown file type' unless mime_type
+
+  #     mime_type.split(':')[1].split('/')[1].gsub('x-', '').gsub(/jpeg/, 'jpg').gsub(/text/, 'txt').gsub(/x-/, '')
+  #   end
+  # end
 
   def list_attachments(email)
     atts = {}
