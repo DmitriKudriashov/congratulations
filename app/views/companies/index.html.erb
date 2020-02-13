@@ -1,18 +1,18 @@
 <h1> Companies </h1>
-<div class="digg_pagination">
-  <%= will_paginate @companies, :container => false %>
-</div>
-
- <%= link_to 'New Company', new_company_path %>
+<%= link_to 'New Company', new_company_path %>
 
 <% if @companies.present? %>
-  <table class="table table-bordered">
+  <table id="dtBasicExample" class="table table-striped table-bordered table-sm">
+  <!-- <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"> -->
+
     <thead class="thead-light" align="center">
       <tr>
-        <th> N rec</th>
-        <th> Name </th>
-        <th> Country </th>
-        <th> Email </th>
+        <th class="th-sm"> N rec </th>
+        <th class="th-sm"> Name  </th>
+        <th class="th-sm"> Country </th>
+        <th class="th-sm"> Email </th>
+        <th>  </th>
+        <th>  </th>
       </tr>
     </thead>
     <%= render @companies %>
@@ -22,8 +22,9 @@
     <%= 'Empty list' %>
   </p>
 <% end %>
-<div class="digg_pagination">
-  <%= will_paginate @companies, :container => false %>
-</div>
-<br>
-
+<!--
+  <div class="digg_pagination">
+    <%#= will_paginate @companies, :container => false %>
+  </div>
+ -->
+ <br>
