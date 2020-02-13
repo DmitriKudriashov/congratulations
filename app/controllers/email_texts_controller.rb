@@ -59,7 +59,7 @@ class EmailTextsController < AuthenticatedController
   end
 
   def set_email_texts
-    @email_texts = EmailText.paginate(page: params[:page])
+    @email_texts = EmailText.all #paginate(page: params[:page])
   end
 
   def find_email_text

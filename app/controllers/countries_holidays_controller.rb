@@ -64,7 +64,7 @@ class CountriesHolidaysController < AuthenticatedController
   end
 
   def set_countries_holidays
-    @countries_holidays = CountriesHoliday.joins(:country, :holiday).order('countries.name', 'holidays.name').paginate(page: params[:page])
+    @countries_holidays = CountriesHoliday.joins(:country, :holiday).order('countries.name', 'holidays.name') #.paginate(page: params[:page])
   end
 
   def find_countries_holiday

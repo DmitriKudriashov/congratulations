@@ -278,7 +278,7 @@ class EmailsController < AuthenticatedController
   end
 
   def set_emails
-    @emails = Email.order(will_send: :desc).paginate(page: params[:page])
+    @emails = Email.order(will_send: :desc) #.paginate(page: params[:page])
   end
 
   def find_email

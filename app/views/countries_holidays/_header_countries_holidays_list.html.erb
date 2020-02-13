@@ -1,5 +1,5 @@
       <% if @countries_holidays.present? %>
-        <table class="table table-bordered">
+        <table id="dtBasicExample" class="table table-striped table-bordered table-sm">
           <thead class="thead-light" align="center">
             <tr>
               <th> # </th>
@@ -7,6 +7,8 @@
               <th> Code </th>
               <th> Holiday </th>
               <th> Type </th>
+              <th>  </th>
+              <th>  </th>
             </tr>
           </thead>
           <%= render @countries_holidays %>

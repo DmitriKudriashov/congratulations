@@ -1,13 +1,12 @@
-<div>
   <h1>Companies People</h1>
+<!--
   <div class="digg_pagination">
-    <%= will_paginate @companies_people, :container => false %>
+    <%#= will_paginate @companies_people, :container => false %>
   </div>
+ -->
+<div>
   <%= link_to 'New Company Person', new_companies_person_path %>
   <%= render 'header_companies_people_list' %>
-  <div class="digg_pagination">
-    <%= will_paginate @companies_people, :container => false %>
-  </div>
 </div>
 <br>
 <p>

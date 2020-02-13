@@ -47,7 +47,7 @@ class HolidaysController < AuthenticatedController
   private
 
   def set_holidays
-    @holidays = Holiday.order(:name).paginate(page: params[:page])
+    @holidays = Holiday.order(:name) #.paginate(page: params[:page])
   end
 
   def find_holiday

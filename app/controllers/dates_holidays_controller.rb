@@ -92,7 +92,7 @@ class DatesHolidaysController < AuthenticatedController
   end
 
   def set_dates_holidays
-    @dates_holidays = DatesHoliday.paginate(page: params[:page])
+    @dates_holidays = DatesHoliday.order(:date) #.paginate(page: params[:page])
   end
 
   def find_dates_holiday

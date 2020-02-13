@@ -1,9 +1,9 @@
 <h1> Emails </h1>
 
-<div class="digg_pagination">
-  <%= will_paginate @emails, :container => false %>
+<!-- <div class="digg_pagination">
+  <%#= will_paginate @emails, :container => false %>
 </div>
-<!-- <li class="nav-item active">
+ --><!-- <li class="nav-item active">
    <%#= link_to 'New Email', new_email_path %>
 </li>
  -->
@@ -34,7 +34,8 @@
  -->
 <table class="container">
   <% if @emails.present? %>
-    <table style="font-size: 12px"  class="table table-bordered">
+    <!-- <table style="font-size: 12px"  class="table table-bordered"> -->
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm">
       <thead class="thead-light" align="center">
         <tr>
           <th> N </th>
@@ -47,6 +48,9 @@
           <th> Will be Send </th>
           <th> Sent  </th>
           <th> YEAR  </th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <%= render @emails %>
@@ -57,10 +61,3 @@
     </p>
   <% end %>
 </table>
-<div class="digg_pagination">
-  <%= will_paginate @emails, :container => false %>
-</div>
-
-<!-- <script type="text/javascript">
-</script>
- -->

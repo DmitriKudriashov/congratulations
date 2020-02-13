@@ -44,7 +44,7 @@ class PeopleController < AuthenticatedController
   private
 
   def set_people
-    @people = Person.order(:name).paginate(page: params[:page])
+    @people = Person.order(:name) #.paginate(page: params[:page])
   end
 
   def find_person

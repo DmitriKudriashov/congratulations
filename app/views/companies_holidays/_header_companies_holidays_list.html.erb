@@ -1,11 +1,13 @@
       <% if @companies_holidays.present? %>
-        <table class="table table-bordered">
+        <table id="dtBasicExample" class="table table-striped table-bordered table-sm">
           <thead class="thead-light" align="center">
             <tr>
               <th> N record</th>
               <th> Company </th>
               <th> Holiday </th>
               <th> Type </th>
+              <th>   </th>
+              <th>   </th>
             </tr>
           </thead>
           <%= render @companies_holidays %>

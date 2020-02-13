@@ -44,7 +44,7 @@ class CountriesController < AuthenticatedController
   private
 
   def set_countries
-    @countries = Country.order(:name).paginate(page: params[:page])
+    @countries = Country.order(:name) #.paginate(page: params[:page])
   end
 
   def find_country
