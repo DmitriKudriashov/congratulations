@@ -69,7 +69,7 @@ class CompaniesHolidaysController < AuthenticatedController
   end
 
   def set_companies_holidays
-    @companies_holidays = CompaniesHoliday.joins(:company, :holiday).order('companies.name', 'holidays.name').paginate(page: params[:page])
+    @companies_holidays = CompaniesHoliday.joins(:company, :holiday).order('companies.name', 'holidays.name') #.paginate(page: params[:page])
   end
 
   def find_companies_holiday
