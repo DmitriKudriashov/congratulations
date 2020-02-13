@@ -64,7 +64,7 @@ class EmailCardsController < AuthenticatedController
   end
 
   def set_email_cards
-    @email_cards = EmailCard.paginate(page: params[:page])
+    @email_cards = EmailCard.all #.paginate(page: params[:page])
   end
 
   def find_email_card

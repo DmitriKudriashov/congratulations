@@ -86,7 +86,7 @@ class CompaniesEmailsController < ApplicationController
   end
 
   def set_companies_emails
-    @companies_emails = CompaniesEmail.order(:email_id).paginate(page: params[:page])
+    @companies_emails = CompaniesEmail.order(:email_id) #.paginate(page: params[:page])
   end
 
   def find_companies_email
