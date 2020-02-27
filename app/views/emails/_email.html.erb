@@ -1,8 +1,8 @@
 <tr>
-  <td>
-    <%= email.id %>
+  <td align="center">
+    <%= email.will_send if email.will_send.present? %>
   </td>
-  <td >
+  <td>
     <%= text_area_tag(:text, email.name, size: :auto) if email.name.present? %>
   </td>
   <td>
@@ -29,14 +29,15 @@
   <% end %>
   </td>
   <td align="center">
-    <%= email.will_send if email.will_send.present? %>
-  </td>
-  <td align="center">
     <%= email.sent_date %>
   </td>
   <td align="center">
     <%= email.year %>
   </td>
+  <td>
+    <%= email.id %>
+  </td>
+
     <% if email.checkit.to_i > 0 %>
   <td class="s_e_d">
       <% if email.sent_date.to_i.zero? %>

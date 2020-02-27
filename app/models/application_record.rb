@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationRecord < ActiveRecord::Base
-  $Period = 15
+  $Period = 25
 
   $PER_PAGE = 12
   self.per_page = $PER_PAGE
