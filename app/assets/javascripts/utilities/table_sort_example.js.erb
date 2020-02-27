@@ -1,18 +1,96 @@
 document.addEventListener('turbolinks:load', function() {
-  $(document).ready(function () {
-    $('#dtBasicExample').DataTable();
-    $('.dataTables_length').addClass('bs-select');
-  });
-
   // $(document).ready(function () {
-  // $('#selectedColumn').DataTable({
-  //   "aaSorting": [],
-  //   columnDefs: [{
-  //   orderable: false,
-  //   targets: 3
-  //   }]
-  // });
+  //   $('#dtBasicExample').DataTable();
   //   $('.dataTables_length').addClass('bs-select');
   // });
+
+  $(document).ready(function () {
+  // // $('#selectedColumn').DataTable({
+  // $('#dtBasicExample').DataTable({
+  //       "paging":   true,
+  //       "ordering": true,
+  //       "info":     true
+  //   // "aaSorting": [],
+  //   // columnDefs: [{
+  //   // orderable: false,
+  //   // targets: 3
+  //   // }]
+  // });
+
+  var table = $('#tableEmails').DataTable();
+  // console.log(table)
+
+   if (table.context.length == 1) {
+      table
+        .column( '0:visible' )
+        .order( 'desc' )
+        .draw();
+    }
+  else {
+      // var table = $('#dtBasicExample').DataTable(
+      //   {
+      //     // scrollX: "100%"
+      //   }
+      //  );
+
+    $(document).ready(function() {
+        var table = $('#dtBasicExample').DataTable();
+
+        // $( table.table().node() )
+        //   .addClass( 'highlight' );
+
+        // 1 - выделить цветом колонку
+        $('#dtBasicExample tbody')
+            .on( 'mouseenter', 'td', function () {
+                var colIdx = table.cell(this).index().column;
+
+                $( table.cells().nodes() ).removeClass( 'highlight' );
+                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            });
+
+        // // 2 - выбрать все данные по строкам
+        // var allData = table.rows().data();
+        // // console.log(allData)
+
+        // 3 - выбрать данные 3й строки
+        // var data = table.row( 2 ).data();
+        // // console.log(data)
+
+        // 4 -
+        // $('#dtBasicExample tbody').on('click', 'tr', function () {
+        //   // прочитать данные кликнутой строчки
+        //   var this_row = table.row( this )
+        //   console.log(this_row)
+        //   this_row.addClass('highlight')
+        //   var rowData = this_row.data()  //table.row( this ).data();
+        //   console.log(rowData)
+
+
+         //  var rowIdy = table.cell(this).row;
+         // console.log(rowIdy)
+         //  $( table.rows().nodes() ).removeClass( 'highlight' );
+         //  $( table.row( rowIdy ).nodes() ).addClass( 'highlight' );
+      });
+
+    // };
+
+
+    // var class_add = $( table.table().node() )
+    //   .addClass( 'highlight' );
+    //  console.log(class_add)
+
+      // по клику на строке таблицы выбираются данные
+      // $('#dtBasicExample tbody').on('click', 'tr', function () {
+      //   var data = table.row( this ).data();
+      //   console.log(data)
+      //   alert( 'You clicked on  ' + data[0] + '\n ' + data[1] + '\n' + data[2]);
+      // });
+    }
+
+  $('.dataTables_length').addClass('bs-select');
+
+  // tbl.column(0).visible( false ) скрыть колонку
+
+  });
 
 });

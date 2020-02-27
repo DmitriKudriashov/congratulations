@@ -6,10 +6,11 @@ class Email < ApplicationRecord
 
   has_many :email_texts, dependent: :delete_all
   has_many :cardtexts, through: :email_texts
-
-  has_many :company, through: :companies_emails
   belongs_to :holiday
-  has_many :companies_emails, dependent: :delete_all
+
+  # has_many :company, through: :companies_emails       # 130220
+  has_many :companies_emails, dependent: :delete_all  # 130220
+
   #[:destroy, :delete_all, :nullify, :restrict_with_error, :restrict_with_exception],
 
   attr_reader :error_sent, :count_successfully, :count_total, :current_user
@@ -46,11 +47,12 @@ class Email < ApplicationRecord
 
   def send_greeting_by_holiday
     self.companies_emails.each do |companies_email|
-      if companies_email.company.email.present? && !companies_email.comment.present?
-        @count_total += 1
-        @new_mail = new_email_send(companies_email)
-        if @new_mail.present?
-          @count_successfully += 1
+      if companies_email.company_id.present?
+        company = Company.find(companies_email.company_id)
+        if company.email.present? && !companies_email.comment.present?
+          @count_total += 1
+          @new_mail = new_email_send(companies_email)
+          @count_successfully += 1 if @new_mail.present?
         end
       end
     end

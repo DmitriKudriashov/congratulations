@@ -15,7 +15,11 @@ module EmailsHelper
     list = ''
     array_companies = []
     email.companies_emails.each do |companies_email|
-      array_companies << "#{companies_email.company.name}" if companies_email.company.email.present?
+      if companies_email.company_id.present?
+        company = Company.find(companies_email.company_id)
+        array_companies << "#{company.name}"
+      end
+      # array_companies << "#{companies_email.company.name}" if companies_email.company.email.present?
     end
     array_companies.sort!
     array_companies.each {|x| i += 1; list += " #{i}. #{x} \n" }
