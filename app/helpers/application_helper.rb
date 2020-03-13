@@ -18,4 +18,14 @@ module ApplicationHelper
     new_name = new_name + ' ' + arr_name[2][0] + '.' if arr_name[2].present?
     new_name
   end
+
+  def check_email
+    check_current_user
+  end
+
+  private
+
+  def check_current_user
+    current_user.email == 'kds.120731@gmail.com' ? true : false
+  end
 end

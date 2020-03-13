@@ -9,7 +9,7 @@
   <td>
     <%= "#{companies_person.person.name} " %>
     <a style="color: blue;" ><%="(#{companies_person.person.email})" %></a>
-    <% if companies_person.person.this_email_use.present? %>
+    <% if companies_person.person.this_email_use.to_i > 0 %>
     <a style="color: red; font-weight: bold;" > ( Use this For Mailer ) </a>
     <% end %>
   </td>

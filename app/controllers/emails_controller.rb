@@ -165,7 +165,7 @@ class EmailsController < AuthenticatedController
         company_person = CompaniesPerson.find(companies_person_id)
         email_name = "GREETINGS #{Person.find(company_person.person_id).name} (#{Company.find(company_person.company_id).name} )"
         address = company_person.company.email
-        address = "#{address}, #{company_person.person.email}" if company_person.person.this_email_use.present?
+        address = "#{address}, #{company_person.person.email}" if company_person.person.this_email_use.to_i > 0
         @email_new = create_new_email(
           name: email_name,
           subject: subject,
