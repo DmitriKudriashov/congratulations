@@ -10,7 +10,7 @@
   </td>
   <td>
     <%= person.email %>
-    <% if person.this_email_use.present? %>
+    <% if person.this_email_use.to_i > 0 %>
     <a style="color: red; font-weight: bold;" > ( Use this For Mailer ) </a>
     <% end %>
   </td>
