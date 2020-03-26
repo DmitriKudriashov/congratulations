@@ -26,6 +26,6 @@ module ApplicationHelper
   private
 
   def check_current_user
-    current_user.email == 'kds.120731@gmail.com' ? true : false
+    current_user.admin
   end
 end
