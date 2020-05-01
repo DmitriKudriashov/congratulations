@@ -20,7 +20,7 @@ document.addEventListener('turbolinks:load', function() {
   var table = $('#tableEmails').DataTable();
   // console.log(table)
 
-   if (table.context.length == 1) {
+  if (table.context.length == 1) {
       table
         .column( '0:visible' )
         .order( 'desc' )
