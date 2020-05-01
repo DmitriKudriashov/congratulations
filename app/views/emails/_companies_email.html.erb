@@ -1,23 +1,28 @@
 <% if @companies_emails.present? %>
   <div>
-    Companies recipients
+    Companies recipients !
   </div>
 
-  <table class="table" id="addresses">
+  <table id="dtBasicExample" class="table table-striped table-bordered table-sm">
     <thead class="thead-light" align="center">
       <tr>
         <th>Company</th>
         <th>Email</th>
         <th>Comment</th>
-
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
     <% @companies_emails.each do |companies_email| %>
       <tr>
         <td>
-          (<%= companies_email.id %>)
           <%= companies_email.company.name %>
+          <a style="color: blue;" >
+           ( <%= companies_email.company.country.name %> )
+          </a>
+
+          (<%= companies_email.id %>)
         </td>
         <td>
           <%= companies_email.company.email %>

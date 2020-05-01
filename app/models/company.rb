@@ -8,6 +8,8 @@ class Company < ApplicationRecord
   has_many :companies_holidays, dependent: :restrict_with_error
   has_many :holidays, through: :companies_holidays
 
+  has_many :companies_emails, dependent: :restrict_with_error
+
   self.per_page = all.count / 5
   self.per_page = per_page > $PER_PAGE ? per_page : $PER_PAGE
 
